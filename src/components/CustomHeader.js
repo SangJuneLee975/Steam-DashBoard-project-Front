@@ -18,7 +18,6 @@ const CustomHeader = () => {
         if (userInfo && userInfo.nickname) {
           setNickname(userInfo.nickname);
         } else {
-          console.error('닉네임을 찾을 수 없습니다:', userInfo);
         }
       }
     } else {

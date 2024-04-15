@@ -13,9 +13,9 @@ const LoginPage = () => {
     setLoading(true);
     try {
       const response = await axiosInstance.post('/user/login', values);
-      const { accessToken, refreshToken } = response.data; // 닉네임을 추출합니다.
+      const { accessToken, refreshToken } = response.data;
       const userInfo = getUserInfoFromToken(accessToken);
-      console.log('로그인 후 받은 사용자 정보: ', userInfo);
+
       if (accessToken && refreshToken) {
         localStorage.setItem('accessToken', accessToken); // 액세스 토큰 저장
         localStorage.setItem('refreshToken', refreshToken); // 리프레시 토큰 저장
@@ -23,11 +23,9 @@ const LoginPage = () => {
         message.success('로그인 성공');
         navigate('/');
       } else {
-        // 토큰이 없는 경우 에러 메시지 출력
         message.error('로그인 실패: 서버로부터 올바른 토큰을 받지 못함');
       }
     } catch (error) {
-      // 오류 발생 시 오류 메시지 출력
       const errorMsg =
         error.response?.data?.message || '로그인 중 문제가 발생했습니다.';
       message.error(errorMsg);
