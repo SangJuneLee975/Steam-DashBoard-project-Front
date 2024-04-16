@@ -1,16 +1,16 @@
 import axios from 'axios';
 
-// Axios ÀÎ½ºÅÏ½º »ı¼º
+// Axios ì¸ìŠ¤í„´ìŠ¤ ìƒì„±
 const axiosInstance = axios.create({
   baseURL: 'http://localhost:8080',
 });
 
-// ¿äÃ» ÀÎÅÍ¼ÁÅÍ Ãß°¡
+// ìš”ì²­ ì¸í„°ì…‰í„° ì¶”ê°€
 axiosInstance.interceptors.request.use(
   (config) => {
-    // ·ÎÄÃ ½ºÅä¸®Áö¿¡¼­ ¾×¼¼½º ÅäÅ«À» °¡Á®¿È
+    // ë¡œì»¬ ìŠ¤í† ë¦¬ì§€ì—ì„œ ì•¡ì„¸ìŠ¤ í† í°ì„ ê°€ì ¸ì˜´
     const accessToken = localStorage.getItem('accessToken');
-    // ¾×¼¼½º ÅäÅ«ÀÌ ÀÖ´Ù¸é ¿äÃ» Çì´õ¿¡ Ãß°¡
+    // ì•¡ì„¸ìŠ¤ í† í°ì´ ìˆë‹¤ë©´ ìš”ì²­ í—¤ë”ì— ì¶”ê°€
     if (accessToken) {
       config.headers['Authorization'] = `Bearer ${accessToken}`;
     }
@@ -23,7 +23,7 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-    // ¾×¼¼½º ÅäÅ«ÀÌ ¸¸·áµÇ¾î  ¿¡·¯°¡ ¹ß»ıÇÑ °æ¿ì, ¸®ÇÁ·¹½Ã ÅäÅ«À¸·Î ¾×¼¼½º ÅäÅ«À» °»½Å
+    // ì•¡ì„¸ìŠ¤ í† í°ì´ ë§Œë£Œë˜ì–´  ì—ëŸ¬ê°€ ë°œìƒí•œ ê²½ìš°, ë¦¬í”„ë ˆì‹œ í† í°ìœ¼ë¡œ ì•¡ì„¸ìŠ¤ í† í°ì„ ê°±ì‹ 
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
@@ -32,11 +32,11 @@ axiosInstance.interceptors.response.use(
           refreshToken,
         });
         const { accessToken } = response.data;
-        localStorage.setItem('accessToken', accessToken); // »õ ¾×¼¼½º ÅäÅ« ÀúÀå
-        originalRequest.headers['Authorization'] = `Bearer ${accessToken}`; // °»½ÅµÈ ¾×¼¼½º ÅäÅ«À¸·Î ¿äÃ» Çì´õ ¼³Á¤
-        return axiosInstance(originalRequest); // ¿äÃ» Àç½Ãµµ
+        localStorage.setItem('accessToken', accessToken); // ìƒˆ ì•¡ì„¸ìŠ¤ í† í° ì €ì¥
+        originalRequest.headers['Authorization'] = `Bearer ${accessToken}`; // ê°±ì‹ ëœ ì•¡ì„¸ìŠ¤ í† í°ìœ¼ë¡œ ìš”ì²­ í—¤ë” ì„¤ì •
+        return axiosInstance(originalRequest); // ìš”ì²­ ì¬ì‹œë„
       } catch (refreshError) {
-        console.error('¾×¼¼½º ÅäÅ« °»½Å ½ÇÆĞ:', refreshError);
+        console.error('ì•¡ì„¸ìŠ¤ í† í° ê°±ì‹  ì‹¤íŒ¨:', refreshError);
         return Promise.reject(refreshError);
       }
     }
