@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, message } from 'antd';
 import axiosInstance from '../api/axiosInstance';
 import { useNavigate } from 'react-router-dom';
@@ -8,6 +8,7 @@ const LoginPage = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [googleAuthUrl, setGoogleAuthUrl] = useState('');
 
   const onFinish = async (values) => {
     setLoading(true);
@@ -35,6 +36,30 @@ const LoginPage = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchGoogleAuthUrl = async () => {
+      console.log('Google 인증 URL 가져오기 시작');
+      try {
+        const { data } = await axiosInstance.get('/oauth/google/login');
+        console.log('Google 인증 URL 가져오기 성공: ', data);
+        setGoogleAuthUrl(data); // 서버로부터 받은 구글 인증 URL 설정
+      } catch (error) {
+        console.error('구글 인증 URL 가져오기 실패:', error);
+        console.error('구글 인증 URL 가져오기 실패:', error);
+      }
+    };
+
+    fetchGoogleAuthUrl();
+  }, []);
+
+  const handleGoogleLogin = () => {
+    console.log(
+      'Google 로그인 버튼 클릭됨, 인증 URL로 리다이렉트: ',
+      googleAuthUrl
+    );
+    window.location.href = googleAuthUrl; // 구글 인증 페이지로 리다이렉트
+  };
+
   return (
     <Form form={form} name="login" onFinish={onFinish} scrollToFirstError>
       <Form.Item
@@ -54,6 +79,12 @@ const LoginPage = () => {
       <Form.Item>
         <Button type="primary" htmlType="submit" loading={loading}>
           로그인
+        </Button>
+      </Form.Item>
+
+      <Form.Item>
+        <Button type="primary" onClick={handleGoogleLogin}>
+          구글 로그인
         </Button>
       </Form.Item>
     </Form>

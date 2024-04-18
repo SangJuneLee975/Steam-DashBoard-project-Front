@@ -16,7 +16,7 @@ const SignupPage = () => {
     }
     try {
       const response = await axios.get(
-        `http://localhost:8080/user/checkUserId`,
+        `https://localhost:8080/user/checkUserId`,
         { params: { userId } }
       );
       if (response.data.isAvailable) {
@@ -34,14 +34,14 @@ const SignupPage = () => {
   };
 
   const onFinish = async (values) => {
-    if (!isUserIdValid) {
-      message.error('아이디 중복 확인이 필요합니다.');
-      return;
-    }
+    //  if (!isUserIdValid) {
+    //    message.error('아이디 중복 확인이 필요합니다.');
+    //     return;
+    //  }
     setLoading(true);
     try {
       const response = await axios.post(
-        'http://localhost:8080/user/signup',
+        'https://localhost:8080/user/signup',
         values
       );
 
