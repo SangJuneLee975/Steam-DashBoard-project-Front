@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Form, Input, Button, message } from 'antd';
 import axiosInstance from '../api/axiosInstance';
 import { useNavigate } from 'react-router-dom';
@@ -10,19 +10,68 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const [googleAuthUrl, setGoogleAuthUrl] = useState('');
 
+  useEffect(() => {
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const code = urlSearchParams.get('code');
+
+    // code가 있으면 구글 콜백 처리
+    if (code) {
+      handleGoogleCallback(code);
+    } else {
+      fetchGoogleAuthUrl();
+    }
+  }, [navigate, handleGoogleCallback]);
+
+  const handleGoogleCallback = useCallback(
+    async (code) => {
+      setLoading(true);
+      try {
+        const response = await axiosInstance.get(
+          `/oauth/google/callback?code=${code}`
+        );
+        const { accessToken, redirectUrl } = response.data;
+
+        if (accessToken) {
+          localStorage.setItem('accessToken', accessToken);
+
+          message.success('로그인 성공');
+          console.log('Redirect URL 서버로부터 확인:', redirectUrl);
+          navigate(redirectUrl || '/');
+        } else {
+          message.error('로그인 실패: 서버로부터 올바른 토큰을 받지 못함');
+        }
+      } catch (error) {
+        message.error('로그인 중 문제가 발생했습니다.');
+        console.error('로그인 에러:', error);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [navigate]
+  );
+
+  const fetchGoogleAuthUrl = async () => {
+    try {
+      const { data } = await axiosInstance.get('/oauth/google/login');
+      setGoogleAuthUrl(data);
+    } catch (error) {
+      console.error('구글 인증 URL 가져오기 실패:', error);
+    }
+  };
+
   const onFinish = async (values) => {
     setLoading(true);
     try {
       const response = await axiosInstance.post('/user/login', values);
-      const { accessToken, refreshToken } = response.data;
-      const userInfo = getUserInfoFromToken(accessToken);
+      const { accessToken, refreshToken, redirectUrl } = response.data;
 
       if (accessToken && refreshToken) {
         localStorage.setItem('accessToken', accessToken); // 액세스 토큰 저장
         localStorage.setItem('refreshToken', refreshToken); // 리프레시 토큰 저장
 
         message.success('로그인 성공');
-        navigate('/');
+
+        navigate(redirectUrl || '/');
       } else {
         message.error('로그인 실패: 서버로부터 올바른 토큰을 받지 못함');
       }
@@ -35,22 +84,6 @@ const LoginPage = () => {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    const fetchGoogleAuthUrl = async () => {
-      console.log('Google 인증 URL 가져오기 시작');
-      try {
-        const { data } = await axiosInstance.get('/oauth/google/login');
-        console.log('Google 인증 URL 가져오기 성공: ', data);
-        setGoogleAuthUrl(data); // 서버로부터 받은 구글 인증 URL 설정
-      } catch (error) {
-        console.error('구글 인증 URL 가져오기 실패:', error);
-        console.error('구글 인증 URL 가져오기 실패:', error);
-      }
-    };
-
-    fetchGoogleAuthUrl();
-  }, []);
 
   const handleGoogleLogin = () => {
     console.log(
