@@ -2,25 +2,24 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Form, Input, Button, message } from 'antd';
 import axiosInstance from '../api/axiosInstance';
 import { useNavigate } from 'react-router-dom';
-import { getUserInfoFromToken } from '../components/parsejwt';
+import { useRecoilState } from 'recoil';
+import { isLoggedInState } from '../recoil/atoms';
 
 const LoginPage = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [googleAuthUrl, setGoogleAuthUrl] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);
 
-  useEffect(() => {
-    const urlSearchParams = new URLSearchParams(window.location.search);
-    const code = urlSearchParams.get('code');
-
-    // code가 있으면 구글 콜백 처리
-    if (code) {
-      handleGoogleCallback(code);
-    } else {
-      fetchGoogleAuthUrl();
+  const fetchGoogleAuthUrl = useCallback(async () => {
+    try {
+      const { data } = await axiosInstance.get('/oauth/google/login');
+      setGoogleAuthUrl(data);
+    } catch (error) {
+      console.error('구글 인증 URL 가져오기 실패:', error);
     }
-  }, [navigate, handleGoogleCallback]);
+  }, []);
 
   const handleGoogleCallback = useCallback(
     async (code) => {
@@ -29,14 +28,13 @@ const LoginPage = () => {
         const response = await axiosInstance.get(
           `/oauth/google/callback?code=${code}`
         );
-        const { accessToken, redirectUrl } = response.data;
+        const { accessToken } = response.data;
 
         if (accessToken) {
           localStorage.setItem('accessToken', accessToken);
-
+          setIsLoggedIn(true); // 상태 업데이트
           message.success('로그인 성공');
-          console.log('Redirect URL 서버로부터 확인:', redirectUrl);
-          navigate(redirectUrl || '/');
+          navigate('/'); // 페이지 이동
         } else {
           message.error('로그인 실패: 서버로부터 올바른 토큰을 받지 못함');
         }
@@ -47,17 +45,26 @@ const LoginPage = () => {
         setLoading(false);
       }
     },
-    [navigate]
+    [navigate, setIsLoggedIn]
   );
 
-  const fetchGoogleAuthUrl = async () => {
-    try {
-      const { data } = await axiosInstance.get('/oauth/google/login');
-      setGoogleAuthUrl(data);
-    } catch (error) {
-      console.error('구글 인증 URL 가져오기 실패:', error);
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
+    const token = urlParams.get('token');
+
+    if (code && !token) {
+      handleGoogleCallback(code);
+    } else if (token) {
+      localStorage.setItem('accessToken', token);
+      setIsLoggedIn(true);
+      message.success('로그인 성공');
+      navigate('/');
+      window.history.replaceState(null, null, window.location.pathname);
+    } else {
+      fetchGoogleAuthUrl();
     }
-  };
+  }, [navigate, setIsLoggedIn, handleGoogleCallback, fetchGoogleAuthUrl]);
 
   const onFinish = async (values) => {
     setLoading(true);

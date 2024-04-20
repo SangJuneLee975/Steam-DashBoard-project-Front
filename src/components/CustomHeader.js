@@ -1,33 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { useRecoilValue } from 'recoil';
-import { Link } from 'react-router-dom';
-import { isLoggedInState } from '../recoil/atoms';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { Link, useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { isLoggedInState, nicknameState } from '../recoil/atoms';
 
 import { getUserInfoFromToken } from '../components/parsejwt';
 
 const CustomHeader = () => {
-  const isLoggedIn = useRecoilValue(isLoggedInState);
-  const [nickname, setNickname] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);
+  const [nickname, setNickname] = useRecoilState(nicknameState); // 닉네임 상태 사용
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (isLoggedIn) {
-      const accessToken = localStorage.getItem('accessToken');
-      if (accessToken) {
-        const userInfo = getUserInfoFromToken(accessToken);
-        console.log(userInfo);
-        if (userInfo && userInfo.nickname) {
-          setNickname(userInfo.nickname);
-        } else {
-        }
+    const token = localStorage.getItem('accessToken');
+    if (token) {
+      const userInfo = getUserInfoFromToken(token);
+      if (userInfo) {
+        setIsLoggedIn(true);
+        setNickname(userInfo.nickname); // 닉네임 설정
       }
-    } else {
-      setNickname('');
     }
-  }, [isLoggedIn]);
+  }, [setIsLoggedIn, setNickname]);
 
   const handleLogout = () => {
-    localStorage.clear();
-    window.location.reload();
+    localStorage.removeItem('accessToken'); // 액세스 토큰 삭제
+    localStorage.removeItem('refreshToken'); // 리프레시 토큰 삭제
+    setIsLoggedIn(false);
+    setNickname(''); // 닉네임 삭제
+    navigate('/login'); // 로그인 페이지로 이동
   };
 
   return (
