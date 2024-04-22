@@ -6,6 +6,7 @@ const SignupPage = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [isUserIdValid, setIsUserIdValid] = useState(false);
+  const [formIsValid, setFormIsValid] = useState(false);
 
   // 아이디 중복 검사 함수
   const checkUserId = async () => {
@@ -34,10 +35,10 @@ const SignupPage = () => {
   };
 
   const onFinish = async (values) => {
-    //  if (!isUserIdValid) {
-    //    message.error('아이디 중복 확인이 필요합니다.');
-    //     return;
-    //  }
+    if (!isUserIdValid) {
+      message.error('아이디 중복 확인이 필요합니다.');
+      return;
+    }
     setLoading(true);
     try {
       const response = await axios.post(
@@ -56,8 +57,18 @@ const SignupPage = () => {
     }
   };
 
+  // 폼 필드가 변경될 때마다 호출
+  const onFieldsChange = (_, allFields) => {
+    // 모든 필드가 유효한지 체크합니다.
+    const allFieldsValid = allFields.every((field) => {
+      return !field.validating && field.errors.length === 0;
+    });
+
+    setFormIsValid(allFieldsValid);
+  };
+
   return (
-    <Form form={form} onFinish={onFinish}>
+    <Form form={form} onFinish={onFinish} onFieldsChange={onFieldsChange}>
       <Form.Item
         name="userId"
         rules={[{ required: true, message: '아이디를 입력해주세요!' }]}
@@ -143,7 +154,12 @@ const SignupPage = () => {
         <Input placeholder="이메일" />
       </Form.Item>
       <Form.Item>
-        <Button type="primary" htmlType="submit" loading={loading}>
+        <Button
+          type="primary"
+          htmlType="submit"
+          loading={loading}
+          disabled={!formIsValid}
+        >
           회원가입
         </Button>
       </Form.Item>

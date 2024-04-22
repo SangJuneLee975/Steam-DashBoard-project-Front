@@ -26,8 +26,8 @@ const CustomHeader = () => {
     localStorage.removeItem('accessToken'); // 액세스 토큰 삭제
     localStorage.removeItem('refreshToken'); // 리프레시 토큰 삭제
     setIsLoggedIn(false);
-    setNickname(''); // 닉네임 삭제
-    navigate('/login'); // 로그인 페이지로 이동
+    setNickname('');
+    navigate('/'); //
   };
 
   return (

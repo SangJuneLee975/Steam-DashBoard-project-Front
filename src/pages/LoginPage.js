@@ -100,6 +100,10 @@ const LoginPage = () => {
     window.location.href = googleAuthUrl; // 구글 인증 페이지로 리다이렉트
   };
 
+  const handleSignUpClick = () => {
+    navigate('/signup'); // 회원가입 페이지로 이동
+  };
+
   return (
     <Form form={form} name="login" onFinish={onFinish} scrollToFirstError>
       <Form.Item
@@ -123,8 +127,21 @@ const LoginPage = () => {
       </Form.Item>
 
       <Form.Item>
-        <Button type="primary" onClick={handleGoogleLogin}>
-          구글 로그인
+        <Button type="primary" onClick={handleSignUpClick}>
+          회원가입
+        </Button>
+      </Form.Item>
+
+      <Form.Item>
+        <Button
+          onClick={handleGoogleLogin}
+          style={{ background: 'none', border: 'none' }}
+        >
+          <img
+            src="/google login.png"
+            alt="Google Login"
+            style={{ maxWidth: '100%', height: 'auto' }}
+          />
         </Button>
       </Form.Item>
     </Form>
