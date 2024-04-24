@@ -10,14 +10,26 @@ const LoginPage = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [googleAuthUrl, setGoogleAuthUrl] = useState('');
+  const [naverAuthUrl, setNaverAuthUrl] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);
 
+  // 구글 로그인 URL 가져오기
   const fetchGoogleAuthUrl = useCallback(async () => {
     try {
       const { data } = await axiosInstance.get('/oauth/google/login');
       setGoogleAuthUrl(data);
     } catch (error) {
       console.error('구글 인증 URL 가져오기 실패:', error);
+    }
+  }, []);
+
+  // 네이버 로그인 URL 가져오기
+  const fetchNaverAuthUrl = useCallback(async () => {
+    try {
+      const { data } = await axiosInstance.get('/oauth/naver/login');
+      setNaverAuthUrl(data);
+    } catch (error) {
+      console.error('네이버 인증 URL 가져오기 실패:', error);
     }
   }, []);
 
@@ -63,8 +75,15 @@ const LoginPage = () => {
       window.history.replaceState(null, null, window.location.pathname);
     } else {
       fetchGoogleAuthUrl();
+      fetchNaverAuthUrl();
     }
-  }, [navigate, setIsLoggedIn, handleGoogleCallback, fetchGoogleAuthUrl]);
+  }, [
+    navigate,
+    setIsLoggedIn,
+    handleGoogleCallback,
+    fetchGoogleAuthUrl,
+    fetchNaverAuthUrl,
+  ]);
 
   const onFinish = async (values) => {
     setLoading(true);
@@ -98,6 +117,10 @@ const LoginPage = () => {
       googleAuthUrl
     );
     window.location.href = googleAuthUrl; // 구글 인증 페이지로 리다이렉트
+  };
+
+  const handleNaverLogin = () => {
+    window.location.href = naverAuthUrl; // 네이버 인증 페이지로 리다이렉트
   };
 
   const handleSignUpClick = () => {
@@ -140,6 +163,19 @@ const LoginPage = () => {
           <img
             src="/google login.png"
             alt="Google Login"
+            style={{ maxWidth: '100%', height: 'auto' }}
+          />
+        </Button>
+      </Form.Item>
+
+      <Form.Item>
+        <Button
+          onClick={handleNaverLogin}
+          style={{ background: 'none', border: 'none' }}
+        >
+          <img
+            src="/naver login.png"
+            alt="Naver Login"
             style={{ maxWidth: '100%', height: 'auto' }}
           />
         </Button>

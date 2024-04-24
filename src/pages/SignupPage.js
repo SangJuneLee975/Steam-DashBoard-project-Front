@@ -59,11 +59,14 @@ const SignupPage = () => {
 
   // 폼 필드가 변경될 때마다 호출
   const onFieldsChange = (_, allFields) => {
-    // 모든 필드가 유효한지 체크합니다.
-    const allFieldsValid = allFields.every((field) => {
-      return !field.validating && field.errors.length === 0;
-    });
-
+    // 모든 필드가 유효한지 체크
+    const allFieldsFilled = allFields.every((field) => field.value);
+    const allFieldsValid =
+      allFields.every(
+        (field) => !field.validating && field.errors.length === 0
+      ) &&
+      allFieldsFilled &&
+      isUserIdValid;
     setFormIsValid(allFieldsValid);
   };
 
@@ -71,7 +74,14 @@ const SignupPage = () => {
     <Form form={form} onFinish={onFinish} onFieldsChange={onFieldsChange}>
       <Form.Item
         name="userId"
-        rules={[{ required: true, message: '아이디를 입력해주세요!' }]}
+        rules={[
+          { required: true, message: '아이디를 입력해주세요!' },
+          { min: 4, max: 12, message: '아이디는 4~12글자 사이여야 합니다.' },
+          {
+            pattern: /^[A-Za-z0-9]+$/,
+            message: '아이디는 영문과 숫자만 사용할 수 있습니다.',
+          },
+        ]}
       >
         <Input
           addonAfter={<Button onClick={checkUserId}>중복 확인</Button>}
@@ -81,9 +91,12 @@ const SignupPage = () => {
       <Form.Item
         name="password"
         rules={[
+          { required: true, message: '비밀번호를 입력해주세요!' },
+          { min: 8, message: '비밀번호는 최소 8글자 이상이어야 합니다.' },
           {
-            required: true,
-            message: '비밀번호를 입력해주세요!',
+            pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+]{8,}$/,
+            //  pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+            message: '비밀번호는 영문과 숫자를 조합해야 합니다.',
           },
         ]}
       >
