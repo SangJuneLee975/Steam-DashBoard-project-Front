@@ -60,13 +60,45 @@ const LoginPage = () => {
     [navigate, setIsLoggedIn]
   );
 
+  const handleNaverCallback = useCallback(
+    async (code, state) => {
+      setLoading(true);
+      try {
+        const response = await axiosInstance.get(
+          `/oauth/naver/callback?code=${code}&state=${state}`
+        );
+        const { accessToken } = response.data;
+
+        if (accessToken) {
+          localStorage.setItem('accessToken', accessToken);
+          setIsLoggedIn(true);
+          message.success('네이버 로그인 성공');
+          navigate('/');
+          window.history.replaceState(null, null, window.location.pathname);
+        } else {
+          message.error(
+            '네이버 로그인 실패: 서버로부터 올바른 토큰을 받지 못함'
+          );
+        }
+      } catch (error) {
+        message.error('네이버 로그인 중 문제가 발생했습니다.');
+        console.error('네이버 로그인 에러:', error);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [navigate, setIsLoggedIn]
+  );
+
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code');
+    const state = urlParams.get('state');
     const token = urlParams.get('token');
 
-    if (code && !token) {
+    if (code && !token && state) {
       handleGoogleCallback(code);
+      handleNaverCallback(code, state);
     } else if (token) {
       localStorage.setItem('accessToken', token);
       setIsLoggedIn(true);
@@ -83,6 +115,7 @@ const LoginPage = () => {
     handleGoogleCallback,
     fetchGoogleAuthUrl,
     fetchNaverAuthUrl,
+    handleNaverCallback,
   ]);
 
   const onFinish = async (values) => {
