@@ -11,13 +11,13 @@ const { Header, Content, Footer } = Layout;
 
 function App() {
   useEffect(() => {
-    // 파라미터에서 token을 추출
+    // 파라미터에서 token,code,state을 추출
     const params = new URLSearchParams(window.location.search);
     const code = params.get('code');
     const state = params.get('state');
     const token = params.get('token');
 
-    // 토큰이 있으면 로컬 스토리지에 저장하고 URL에서 제거함
+    // 파라미터에 token,state,code가 있으면 로컬 스토리지에 저장하고 URL에서 제거함
     const handleLoginCallback = async () => {
       if (code && state) {
         try {
