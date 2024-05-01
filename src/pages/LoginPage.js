@@ -4,6 +4,9 @@ import axiosInstance from '../api/axiosInstance';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { isLoggedInState } from '../recoil/atoms';
+import { useSetRecoilState } from 'recoil';
+import { userNameState } from '../recoil/atoms';
+import '../css/Login.css';
 
 const LoginPage = () => {
   const [form] = Form.useForm();
@@ -12,6 +15,7 @@ const LoginPage = () => {
   const [googleAuthUrl, setGoogleAuthUrl] = useState('');
   const [naverAuthUrl, setNaverAuthUrl] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);
+  const setUserName = useSetRecoilState(userNameState);
 
   // 구글 로그인 URL 가져오기
   const fetchGoogleAuthUrl = useCallback(async () => {
@@ -118,11 +122,22 @@ const LoginPage = () => {
     handleNaverCallback,
   ]);
 
+  //  로그인 처리
+  const handleLoginSuccess = (data) => {
+    const { accessToken, userName } = data;
+    localStorage.setItem('accessToken', accessToken);
+    setUserName(userName); // 사용자 이름 Recoil 상태 업데이트
+    setIsLoggedIn(true);
+    message.success('로그인 성공');
+    navigate('/'); // 홈 페이지로 리디렉션
+  };
+
   const onFinish = async (values) => {
     setLoading(true);
     try {
       const response = await axiosInstance.post('/user/login', values);
-      const { accessToken, refreshToken, redirectUrl } = response.data;
+      const { accessToken, refreshToken, userName, redirectUrl } =
+        response.data;
 
       if (accessToken && refreshToken) {
         localStorage.setItem('accessToken', accessToken); // 액세스 토큰 저장
@@ -166,14 +181,14 @@ const LoginPage = () => {
         name="username"
         rules={[{ required: true, message: '아이디를 입력해주세요!' }]}
       >
-        <Input placeholder="아이디" />
+        <Input placeholder="아이디" className="login-input" />
       </Form.Item>
 
       <Form.Item
         name="password"
         rules={[{ required: true, message: '비밀번호를 입력해주세요!' }]}
       >
-        <Input.Password placeholder="비밀번호" />
+        <Input.Password placeholder="비밀번호" className="login-input" />
       </Form.Item>
 
       <Form.Item>
@@ -204,6 +219,7 @@ const LoginPage = () => {
       <Form.Item>
         <Button
           onClick={handleNaverLogin}
+          className="naver-login-button"
           style={{ background: 'none', border: 'none' }}
         >
           <img

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Input, Button, message } from 'antd';
 import axios from 'axios';
+import '../css/Signup.css';
 
 const SignupPage = () => {
   const [form] = Form.useForm();
@@ -71,7 +72,12 @@ const SignupPage = () => {
   };
 
   return (
-    <Form form={form} onFinish={onFinish} onFieldsChange={onFieldsChange}>
+    <Form
+      form={form}
+      onFinish={onFinish}
+      onFieldsChange={onFieldsChange}
+      className="signup-form"
+    >
       <Form.Item
         name="userId"
         rules={[
@@ -82,6 +88,7 @@ const SignupPage = () => {
             message: '아이디는 영문과 숫자만 사용할 수 있습니다.',
           },
         ]}
+        className="signup-input"
       >
         <Input
           addonAfter={<Button onClick={checkUserId}>중복 확인</Button>}
@@ -99,6 +106,7 @@ const SignupPage = () => {
             message: '비밀번호는 영문과 숫자를 조합해야 합니다.',
           },
         ]}
+        className="signup-input"
       >
         <Input.Password placeholder="비밀번호" />
       </Form.Item>
@@ -124,6 +132,7 @@ const SignupPage = () => {
             },
           }),
         ]}
+        className="signup-input"
       >
         <Input.Password placeholder="비밀번호 확인" />
       </Form.Item>
@@ -136,6 +145,7 @@ const SignupPage = () => {
             message: '이름을 입력해주세요!',
           },
         ]}
+        className="signup-input"
       >
         <Input placeholder="이름" />
       </Form.Item>
@@ -148,6 +158,7 @@ const SignupPage = () => {
             message: '닉네임을 입력해주세요!',
           },
         ]}
+        className="signup-input"
       >
         <Input placeholder="닉네임" />
       </Form.Item>
@@ -163,6 +174,7 @@ const SignupPage = () => {
             message: '유효한 이메일 주소를 입력해주세요!',
           },
         ]}
+        className="signup-input"
       >
         <Input placeholder="이메일" />
       </Form.Item>

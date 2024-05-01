@@ -9,3 +9,8 @@ export const nicknameState = atom({
   key: 'nicknameState',
   default: '',
 });
+
+export const userNameState = atom({
+  key: 'userNameState',
+  default: '',
+});

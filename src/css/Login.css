@@ -1,47 +1,15 @@
-.container {
-  display: flex;
-  justify-content: center;
-
-  height: 50vh;
+.login-input {
+  max-width: 25%; /* 최대 너비 설정 */
+  width: 100%; /* 가로 길이를 부모 요소에 맞춤 */
+  margin: auto; /* 가운데 정렬 */
 }
 
-.form-box {
-  width: 500px;
-  padding: 20px;
-  background-color: #f4f4f4;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.header-form h4 {
-  margin: 0;
-  padding-bottom: 20px;
-  text-align: center;
-}
-
-.input-group {
-  margin-bottom: 15px;
-}
-
-.input-group-prepend .input-group-text {
-  background-color: #eeeeee;
-  border-radius: 0.25rem 0 0 0.25rem;
-}
-
-.form-control {
-  border-radius: 0.25rem;
-}
-
-.btn-block {
-  background-color: #007bff;
-  color: white;
-  border-radius: 0.25rem;
-  padding: 10px;
-  font-size: 16px;
+/* Naver 로그인 버튼 스타일 */
+.naver-login-button {
+  background: url('/public/naver login.png') no-repeat center center;
+  background-size: cover;
+  width: 200px; /* 너비 설정 */
+  height: 50px; /* 높이 설정 */
+  border: none;
   cursor: pointer;
-  border: 1px solid #007bff;
-}
-
-.btn-block:hover {
-  background-color: #0056b3;
 }

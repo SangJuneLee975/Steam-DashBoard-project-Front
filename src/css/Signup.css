@@ -1,0 +1,18 @@
+.signup-form {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f8f8f8;
+}
+
+.signup-input {
+  margin-bottom: 16px; /* 각 필드 간격 조정 */
+}
+
+.signup-button {
+  width: 100%; /* 버튼 너비 전체로 확장 */
+  height: 40px; /* 버튼 높이 */
+  font-size: 16px; /* 글자 크기 */
+}

@@ -3,13 +3,14 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { Link, useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { isLoggedInState, nicknameState } from '../recoil/atoms';
-
+import { userNameState } from '../recoil/atoms';
 import { getUserInfoFromToken } from '../components/parsejwt';
 
 const CustomHeader = () => {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);
   const [nickname, setNickname] = useRecoilState(nicknameState); // 닉네임 상태 사용
   const navigate = useNavigate();
+  const userName = useRecoilValue(userNameState);
 
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
@@ -30,6 +31,10 @@ const CustomHeader = () => {
     navigate('/'); //
   };
 
+  const handleProfile = () => {
+    navigate('/profile'); // 프로필 페이지로 이동
+  };
+
   return (
     <div
       style={{
@@ -46,7 +51,10 @@ const CustomHeader = () => {
       <div>
         {isLoggedIn ? (
           <>
-            <span>{nickname}</span>
+            <span onClick={handleProfile} style={{ cursor: 'pointer' }}>
+              {userName}
+            </span>
+            {/* 사용자 이름을 클릭하면 프로필 페이지로 이동 */}
             <button onClick={handleLogout}>로그아웃</button>
           </>
         ) : (
