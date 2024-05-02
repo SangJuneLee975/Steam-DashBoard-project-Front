@@ -1,10 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const ProfilePage = () => {
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    axios
+      .get('https://localhost:8080/api/profile', {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+      })
+      .then((response) => {
+        setUser(response.data);
+      })
+      .catch((error) => console.error('Error fetching user profile:', error));
+  }, []);
+
   return (
     <div>
-      <h1>ÇÁ·ÎÇÊ</h1>
-      <p>¿©±â¿¡ »ç¿ëÀÚ Á¤º¸¸¦ Ç¥½Ã</p>
+      <h1>í”„ë¡œí•„</h1>
+      <p>ì´ë¦„: {user.name}</p>
+      <p>ì´ë©”ì¼: {user.email}</p>
+      <p>ë‹‰ë„¤ì„: {user.nickname}</p>
     </div>
   );
 };

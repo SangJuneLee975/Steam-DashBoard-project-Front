@@ -140,7 +140,7 @@ const LoginPage = () => {
         response.data;
 
       if (accessToken && refreshToken) {
-        localStorage.setItem('accessToken', accessToken); // 액세스 토큰 저장
+        handleLoginSuccess({ accessToken, userName }); // 액세스 토큰 저장
         localStorage.setItem('refreshToken', refreshToken); // 리프레시 토큰 저장
 
         message.success('로그인 성공');

@@ -10,7 +10,7 @@ const CustomHeader = () => {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);
   const [nickname, setNickname] = useRecoilState(nicknameState); // 닉네임 상태 사용
   const navigate = useNavigate();
-  const userName = useRecoilValue(userNameState);
+  const [userName, setUserName] = useRecoilState(userNameState);
 
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
@@ -18,16 +18,16 @@ const CustomHeader = () => {
       const userInfo = getUserInfoFromToken(token);
       if (userInfo) {
         setIsLoggedIn(true);
-        setNickname(userInfo.nickname); // 닉네임 설정
+        setUserName(userInfo.name); // 사용자 이름 설정
       }
     }
-  }, [setIsLoggedIn, setNickname]);
+  }, [setIsLoggedIn, setUserName]);
 
   const handleLogout = () => {
     localStorage.removeItem('accessToken'); // 액세스 토큰 삭제
     localStorage.removeItem('refreshToken'); // 리프레시 토큰 삭제
     setIsLoggedIn(false);
-    setNickname('');
+    setUserName('');
     navigate('/'); //
   };
 
@@ -51,11 +51,15 @@ const CustomHeader = () => {
       <div>
         {isLoggedIn ? (
           <>
-            <span onClick={handleProfile} style={{ cursor: 'pointer' }}>
-              {userName}
-            </span>
-            {/* 사용자 이름을 클릭하면 프로필 페이지로 이동 */}
-            <button onClick={handleLogout}>로그아웃</button>
+            <div>
+              <span
+                style={{ marginRight: '10px', cursor: 'pointer' }}
+                onClick={() => navigate('/profile')}
+              >
+                {userName || 'Profile'} {/* 사용자 이름 표시 */}
+              </span>
+              <button onClick={handleLogout}>로그아웃</button>
+            </div>
           </>
         ) : (
           <>
