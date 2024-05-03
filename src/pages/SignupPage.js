@@ -44,7 +44,12 @@ const SignupPage = () => {
     try {
       const response = await axios.post(
         'https://localhost:8080/user/signup',
-        values
+        values,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
       );
 
       const backendMessage = response.data.message;
@@ -101,7 +106,7 @@ const SignupPage = () => {
           { required: true, message: '비밀번호를 입력해주세요!' },
           { min: 8, message: '비밀번호는 최소 8글자 이상이어야 합니다.' },
           {
-            pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+]{8,}$/,
+            //  pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+]{8,}$/,
             //  pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
             message: '비밀번호는 영문과 숫자를 조합해야 합니다.',
           },

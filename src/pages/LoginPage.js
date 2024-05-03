@@ -6,6 +6,7 @@ import { useRecoilState } from 'recoil';
 import { isLoggedInState } from '../recoil/atoms';
 import { useSetRecoilState } from 'recoil';
 import { userNameState } from '../recoil/atoms';
+import { getUserInfoFromToken } from '../components/parsejwt';
 import '../css/Login.css';
 
 const LoginPage = () => {
@@ -123,37 +124,37 @@ const LoginPage = () => {
   ]);
 
   //  로그인 처리
-  const handleLoginSuccess = (data) => {
-    const { accessToken, userName } = data;
+  const handleLoginSuccess = async (data) => {
+    const { accessToken, refreshToken } = data;
     localStorage.setItem('accessToken', accessToken);
-    setUserName(userName); // 사용자 이름 Recoil 상태 업데이트
-    setIsLoggedIn(true);
-    message.success('로그인 성공');
-    navigate('/'); // 홈 페이지로 리디렉션
-  };
+    localStorage.setItem('refreshToken', refreshToken);
 
+    // 토큰으로부터 사용자 정보를 추출하고 상태를 업데이트합니다.
+    const userInfo = getUserInfoFromToken(accessToken);
+    if (userInfo) {
+      setUserName(userInfo.name); // 사용자 이름 설정
+      setIsLoggedIn(true);
+      message.success('로그인 성공');
+      navigate('/'); // 사용자가 로그인 후 리디렉션
+    } else {
+      message.error('로그인 실패: 사용자 정보를 가져오지 못함');
+    }
+  };
   const onFinish = async (values) => {
     setLoading(true);
     try {
-      const response = await axiosInstance.post('/user/login', values);
-      const { accessToken, refreshToken, userName, redirectUrl } =
-        response.data;
-
-      if (accessToken && refreshToken) {
-        handleLoginSuccess({ accessToken, userName }); // 액세스 토큰 저장
-        localStorage.setItem('refreshToken', refreshToken); // 리프레시 토큰 저장
-
-        message.success('로그인 성공');
-
-        navigate(redirectUrl || '/');
+      const response = await axiosInstance.post('/user/login', values, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      if (response.data.accessToken) {
+        await handleLoginSuccess(response.data);
       } else {
         message.error('로그인 실패: 서버로부터 올바른 토큰을 받지 못함');
       }
     } catch (error) {
-      const errorMsg =
-        error.response?.data?.message || '로그인 중 문제가 발생했습니다.';
-      message.error(errorMsg);
-      console.error('로그인 에러:', error);
+      message.error('로그인 중 문제가 발생했습니다.');
     } finally {
       setLoading(false);
     }

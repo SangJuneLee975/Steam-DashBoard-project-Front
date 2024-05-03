@@ -5,7 +5,7 @@ import CustomHeader from './components/CustomHeader';
 import SignupPage from './pages/SignupPage';
 import LoginPage from './pages/LoginPage';
 import Home from './pages/Home';
-import ProfilePage from './pages/Profile';
+import ProfilePage from './pages/ProfilePage';
 import axiosInstance from './api/axiosInstance';
 
 const { Header, Content, Footer } = Layout;
