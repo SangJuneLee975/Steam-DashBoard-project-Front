@@ -18,7 +18,7 @@ const CustomHeader = () => {
       const userInfo = getUserInfoFromToken(token);
       if (userInfo) {
         setIsLoggedIn(true);
-        setUserName(userInfo.name); // 사용자 이름 설정
+        setUserName(decodeURIComponent(userInfo.name + '님')); // 사용자 이름 설정
       }
     }
   }, [setIsLoggedIn, setUserName]);

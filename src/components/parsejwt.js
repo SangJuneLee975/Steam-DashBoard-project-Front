@@ -128,7 +128,12 @@ export const getUserInfoFromToken = (token) => {
     const base64Url = token.split('.')[1]; // JWT의 두 번째 부분(payload) 추출
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/'); // URL-safe base64를 일반 base64로 변환
     const decodedJson = atob(base64); // Base64 디코드
-    const payload = JSON.parse(decodedJson); // 디코드된 JSON 문자열을 객체로 파싱
+    let payload = JSON.parse(decodedJson); // 디코드된 JSON 문자열을 객체로 파싱
+
+    // '+'를 공백으로
+    if (payload.name) {
+      payload.name = payload.name.replace(/\+/g, ' ');
+    }
 
     return {
       userId: payload.sub,
