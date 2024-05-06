@@ -132,7 +132,7 @@ const LoginPage = () => {
     // 토큰으로부터 사용자 정보를 추출하고 상태를 업데이트합니다.
     const userInfo = getUserInfoFromToken(accessToken);
     if (userInfo) {
-      setUserName(userInfo.name); // 사용자 이름 설정
+      setUserName(userInfo.name + '님'); // 사용자 이름 설정
       setIsLoggedIn(true);
       message.success('로그인 성공');
       navigate('/'); // 사용자가 로그인 후 리디렉션

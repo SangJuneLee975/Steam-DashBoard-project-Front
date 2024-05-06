@@ -132,7 +132,7 @@ export const getUserInfoFromToken = (token) => {
 
     // '+'를 공백으로
     if (payload.name) {
-      payload.name = payload.name.replace(/\+/g, ' ');
+      payload.name = decodeURIComponent(payload.name.replace(/\+/g, ' '));
     }
 
     return {
