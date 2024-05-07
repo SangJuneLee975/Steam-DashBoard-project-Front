@@ -6,6 +6,8 @@ import SignupPage from './pages/SignupPage';
 import LoginPage from './pages/LoginPage';
 import Home from './pages/Home';
 import ProfilePage from './pages/ProfilePage';
+import HandleSteamCallback from './pages/HandleSteamCallback';
+import SteamLoginButton from './pages/SteamLoginButton';
 import axiosInstance from './api/axiosInstance';
 
 const { Header, Content, Footer } = Layout;
@@ -65,6 +67,12 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/SteamLoginButton" element={<SteamLoginButton />} />
+            <Route
+              path="/HandleSteamCallback"
+              element={<HandleSteamCallback />}
+            />
+
             {/*  */}
           </Routes>
         </Content>
