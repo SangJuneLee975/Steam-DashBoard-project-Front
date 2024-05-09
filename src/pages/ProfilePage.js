@@ -12,7 +12,7 @@ const ProfilePage = () => {
         setUser(response.data);
       })
       .catch((error) => {
-        console.error('Error fetching user profile:', error);
+        console.error('프로필을 가져오는 중에 오류가 발생:', error);
       });
   }, []);
 
@@ -21,7 +21,7 @@ const ProfilePage = () => {
       const { data } = await axiosInstance.get('/api/steam/connect');
       window.location.href = data.url; // 스팀 로그인 페이지로 리다이렉트
     } catch (error) {
-      console.error('Steam connection error:', error);
+      console.error('스팀계정 연동 에러:', error);
     }
   };
 
