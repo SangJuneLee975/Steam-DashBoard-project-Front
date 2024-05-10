@@ -18,7 +18,7 @@ const ProfilePage = () => {
 
   const handleSteamConnect = async () => {
     try {
-      const { data } = await axiosInstance.get('/api/steam/connect');
+      const { data } = await axiosInstance.get('/oauth/steam/connect');
       window.location.href = data.url; // 스팀 로그인 페이지로 리다이렉트
     } catch (error) {
       console.error('스팀계정 연동 에러:', error);
