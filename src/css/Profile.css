@@ -1,0 +1,6 @@
+.form-item {
+  display: block; /*  */
+  width: 25%; /* 가로 길이 */
+  max-width: 400px; /* 최대 너비 설정 */
+  margin: 10px auto; /* 상하 간격  */
+}

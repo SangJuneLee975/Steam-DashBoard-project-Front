@@ -1,23 +1,29 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from '../api/axiosInstance';
+import { useSetRecoilState } from 'recoil';
+import { isLoggedInState, accessTokenState } from '../recoil/atoms';
 
 const HandleSteamCallback = () => {
   const navigate = useNavigate();
+  const setIsLoggedIn = useSetRecoilState(isLoggedInState);
+  const setAccessToken = useSetRecoilState(accessTokenState);
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const steamId = urlParams.get('steamId'); // 스팀 로그인 콜백에서 제공하는 스팀 ID
+    const params = new URLSearchParams(window.location.search);
+    const accessToken = params.get('accessToken');
+    const claimedId = params.get('claimedId');
 
-    if (steamId) {
-      axios
-        .post('/oauth/steam/callback', { steamId })
-        .then((response) => {})
-        .catch((error) => console.error('스팀 콜백 에러:', error));
+    if (accessToken) {
+      localStorage.setItem('accessToken', accessToken);
+      setIsLoggedIn(true);
+      setAccessToken(accessToken);
+      navigate('/profile'); // 사용자를 프로필 페이지로 리다이렉션
+    } else {
+      console.error('No access token in callback URL');
     }
-  }, []);
+  }, [navigate, setIsLoggedIn, setAccessToken]);
 
-  return null;
+  return <div>Loading...</div>;
 };
 
 export default HandleSteamCallback;

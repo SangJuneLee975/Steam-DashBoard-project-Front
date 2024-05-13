@@ -14,3 +14,8 @@ export const userNameState = atom({
   key: 'userNameState',
   default: '',
 });
+
+export const accessTokenState = atom({
+  key: 'accessTokenState',
+  default: localStorage.getItem('accessToken') || '',
+});

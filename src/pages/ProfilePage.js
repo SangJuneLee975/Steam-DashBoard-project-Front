@@ -1,20 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../api/axiosInstance';
 import axios from 'axios';
+import { Form, Input, Button, message } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 const ProfilePage = () => {
   const [user, setUser] = useState({});
+  const [editing, setEditing] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    axiosInstance
-      .get('/user/profile')
-      .then((response) => {
+    const fetchProfile = async () => {
+      try {
+        const response = await axiosInstance.get('/user/profile');
         setUser(response.data);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error('프로필을 가져오는 중에 오류가 발생:', error);
-      });
+      }
+    };
+    fetchProfile();
   }, []);
+
+  const handleEditClick = () => {
+    navigate('/profileupdate');
+  };
 
   const handleSteamConnect = async () => {
     try {
@@ -28,10 +37,13 @@ const ProfilePage = () => {
   return (
     <div>
       <h1>프로필</h1>
-      <p>이름: {user.name}</p>
       <p>이메일: {user.email}</p>
+      <p>이름: {user.name}</p>
+
       <p>닉네임: {user.nickname}</p>
-      <button onClick={handleSteamConnect}>Connect to Steam</button>
+      <Button onClick={handleEditClick}>회원정보 수정</Button>
+
+      <Button onClick={handleSteamConnect}>스팀계정 연동하기</Button>
     </div>
   );
 };
