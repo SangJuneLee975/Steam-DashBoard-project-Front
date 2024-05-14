@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, message } from 'antd';
 import axiosInstance from '../api/axiosInstance';
+import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
+import { socialCodeState } from '../recoil/atoms';
 import '../css/Profile.css';
 
 const ProfileUpdate = () => {
@@ -9,13 +11,18 @@ const ProfileUpdate = () => {
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
   const navigate = useNavigate();
+  const socialCode = useRecoilValue(socialCodeState);
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
         const response = await axiosInstance.get('/user/profile');
         setUser(response.data);
-        form.setFieldsValue(response.data);
+        form.setFieldsValue({
+          email: response.data.email,
+          name: response.data.name,
+          nickname: response.data.nickname,
+        });
       } catch (error) {
         console.error('프로필 불러오기 실패:', error);
         message.error('프로필 정보를 불러오는데 실패했습니다.');
@@ -24,12 +31,6 @@ const ProfileUpdate = () => {
 
     fetchProfile();
   }, [form]);
-
-  const handleEmailClick = () => {
-    if (user.isSocial) {
-      message.info('소셜 로그인 사용자는 이메일을 변경할 수 없습니다.');
-    }
-  };
 
   const onFinish = async (values) => {
     setLoading(true);
@@ -47,7 +48,7 @@ const ProfileUpdate = () => {
   };
 
   // 폼에 초기값 설정
-  form.setFieldsValue(user);
+  // form.setFieldsValue(user);
 
   return (
     <Form form={form} onFinish={onFinish} layout="vertical">
@@ -59,7 +60,13 @@ const ProfileUpdate = () => {
         rules={[{ type: 'email', message: '유효한 이메일을 입력해주세요.' }]}
         className="form-item"
       >
-        <Input disabled={user.isSocial} />
+        <Input
+          disabled={
+            user.socialLogins &&
+            user.socialLogins.some((login) => login.socialCode)
+          }
+        />
+        {/* 'socialCode'를 통해 비활성화 여부 결정 */}
       </Form.Item>
 
       <Form.Item

@@ -139,6 +139,9 @@ export const getUserInfoFromToken = (token) => {
       userId: payload.sub,
       name: payload.name,
       nickname: payload.nickname,
+      socialCode: payload.socialCode,
+      email: payload.email,
+      isSocial: payload.isSocial,
     };
   } catch (error) {
     console.error('토큰 디코드 중 오류:', error);

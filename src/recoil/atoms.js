@@ -19,3 +19,8 @@ export const accessTokenState = atom({
   key: 'accessTokenState',
   default: localStorage.getItem('accessToken') || '',
 });
+
+export const socialCodeState = atom({
+  key: 'socialCodeState',
+  default: null, // 기본값은 null로 설정
+});
