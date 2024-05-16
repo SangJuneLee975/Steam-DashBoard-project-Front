@@ -34,6 +34,7 @@ function App() {
             localStorage.setItem('accessToken', accessToken);
             message.success('로그인 성공');
             window.history.replaceState({}, document.title, '/');
+            window.location.href = '/'; // 홈으로 리다이렉트
           } else {
             message.error('로그인 실패: 서버로부터 올바른 토큰을 받지 못함');
           }
@@ -45,6 +46,7 @@ function App() {
         localStorage.setItem('accessToken', token);
         message.success('로그인 성공');
         window.history.replaceState({}, document.title, '/');
+        window.location.href = '/'; // 홈으로 리다이렉트
       }
     };
 

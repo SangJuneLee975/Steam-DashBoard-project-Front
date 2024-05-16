@@ -11,6 +11,7 @@ const CustomHeader = () => {
   const [nickname, setNickname] = useRecoilState(nicknameState); // 닉네임 상태 사용
   const navigate = useNavigate();
   const [userName, setUserName] = useRecoilState(userNameState);
+  const [steamNickname, setSteamNickname] = useState('');
 
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
@@ -19,6 +20,7 @@ const CustomHeader = () => {
       if (userInfo) {
         setIsLoggedIn(true);
         setUserName(decodeURIComponent(userInfo.name + '님')); // 사용자 이름 설정
+        setSteamNickname(localStorage.getItem('steamNickname'));
       }
     }
   }, [setIsLoggedIn, setUserName]);
@@ -26,8 +28,10 @@ const CustomHeader = () => {
   const handleLogout = () => {
     localStorage.removeItem('accessToken'); // 액세스 토큰 삭제
     localStorage.removeItem('refreshToken'); // 리프레시 토큰 삭제
+    localStorage.removeItem('steamNickname'); // 스팀 닉네임 삭제
     setIsLoggedIn(false);
     setUserName('');
+    setSteamNickname('');
     navigate('/'); //
   };
 
@@ -58,6 +62,8 @@ const CustomHeader = () => {
               >
                 {userName || 'Profile'} {/* 사용자 이름 표시 */}
               </span>
+              {steamNickname && <span> (Steam: {steamNickname})</span>}{' '}
+              {/* 스팀 닉네임 표시 */}
               <button onClick={handleLogout}>로그아웃</button>
             </div>
           </>

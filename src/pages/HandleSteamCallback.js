@@ -13,12 +13,16 @@ const HandleSteamCallback = () => {
     const accessToken = params.get('accessToken');
     //const claimedId = params.get('claimedId');
     const redirectUrl = params.get('redirectUrl');
+    const steamNickname = params.get('steamNickname');
 
     if (accessToken) {
       localStorage.setItem('accessToken', accessToken);
+      if (steamNickname) {
+        localStorage.setItem('steamNickname', steamNickname);
+      }
       setIsLoggedIn(true);
       setAccessToken(accessToken);
-      navigate(redirectUrl || '/profile'); // 사용자를 프로필 페이지로 리다이렉션
+      navigate(redirectUrl || '/'); // 홈으로 리다이렉트
     } else {
       console.error('콜백 URL에 토큰이 없습니다');
     }
