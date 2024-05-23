@@ -25,7 +25,7 @@ const HandleSteamCallback = () => {
       setIsLoggedIn(true);
       setAccessToken(accessToken);
 
-      // 스팀 ID 저장
+      // 스팀 ID저장
       if (claimedId) {
         localStorage.setItem('steamId', claimedId);
       }

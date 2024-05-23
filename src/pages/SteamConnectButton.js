@@ -6,15 +6,13 @@ const SteamConnectButton = () => {
   const handleSteamConnect = async () => {
     try {
       const response = await axiosInstance.get('/oauth/steam/connect');
-      window.location.href = response.data.url; // ½ºÆÀ ·Î±×ÀÎ ÆäÀÌÁö·Î ¸®´ÙÀÌ·ºÆ®
-    } catch (error) {
-      console.error('Steam connection error:', error);
-    }
+      window.location.href = response.data.url; // ìŠ¤íŒ€ ë¡œê·¸ì¸ í˜ì´ì§€ë¡œ ë¦¬ë‹¤ì´ë ‰íŠ¸
+    } catch (error) {}
   };
 
   return (
     <Button type="primary" htmlType="submit" onClick={handleSteamConnect}>
-      ½ºÆÀ °èÁ¤ ¿¬µ¿
+      ìŠ¤íŒ€ ê³„ì • ì—°ë™
     </Button>
   );
 };

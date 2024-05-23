@@ -22,5 +22,5 @@ export const accessTokenState = atom({
 
 export const socialCodeState = atom({
   key: 'socialCodeState',
-  default: null, // 기본값은 null로 설정
+  default: null, // 기본값은 null
 });
