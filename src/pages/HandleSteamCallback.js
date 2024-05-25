@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import { isLoggedInState, accessTokenState } from '../recoil/atoms';
+import axiosInstance from '../api/axiosInstance';
 
 const HandleSteamCallback = () => {
   const navigate = useNavigate();
@@ -11,29 +12,31 @@ const HandleSteamCallback = () => {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const accessToken = params.get('accessToken');
-    const claimedId = params.get('claimedId');
-    const redirectUrl = params.get('redirectUrl');
-    const steamNickname = params.get('steamNickname');
+    const steamId = params.get('claimedId');
+    const displayName = params.get('steamNickname');
 
-    if (accessToken) {
-      // JWT ÅäÅ«°ú ½ºÆÀ ´Ğ³×ÀÓÀ»  ÀúÀå
-      localStorage.setItem('accessToken', accessToken);
-      if (steamNickname) {
-        localStorage.setItem('steamNickname', steamNickname);
+    const linkSteamAccount = async () => {
+      try {
+        await axiosInstance.post('/steam/link', {
+          steamId,
+          displayName,
+          accessToken,
+        });
+        alert('ìŠ¤íŒ€ ê³„ì •ì´ ì—°ë™ë˜ì—ˆìŠµë‹ˆë‹¤.');
+        navigate('/profile');
+      } catch (error) {
+        console.error('ìŠ¤íŒ€ ê³„ì • ì—°ë™ ì¤‘ ì˜¤ë¥˜ ë°œìƒ:', error);
+        alert('ìŠ¤íŒ€ ê³„ì • ì—°ë™ ì¤‘ ì˜¤ë¥˜ê°€ ë°œìƒí–ˆìŠµë‹ˆë‹¤.');
       }
-      // ·Î±×ÀÎ »óÅÂ¿Í ¾×¼¼½º ÅäÅ«À» Recoil »óÅÂ·Î ¼³Á¤
+    };
+
+    if (steamId && displayName && accessToken) {
+      localStorage.setItem('accessToken', accessToken);
       setIsLoggedIn(true);
       setAccessToken(accessToken);
-
-      // ½ºÆÀ IDÀúÀå
-      if (claimedId) {
-        localStorage.setItem('steamId', claimedId);
-      }
-
-      // È¨À¸·Î ¸®´ÙÀÌ·ºÆ®
-      navigate(redirectUrl || '/');
+      linkSteamAccount();
     } else {
-      console.error('Äİ¹é URL¿¡ ÅäÅ«ÀÌ ¾ø½À´Ï´Ù');
+      console.error('ì½œë°± URLì— í•„ìš”í•œ ë§¤ê°œë³€ìˆ˜ê°€ ì—†ìŠµë‹ˆë‹¤.');
     }
   }, [navigate, setIsLoggedIn, setAccessToken]);
 
