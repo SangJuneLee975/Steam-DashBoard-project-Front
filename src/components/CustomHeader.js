@@ -12,6 +12,7 @@ const CustomHeader = () => {
   const navigate = useNavigate();
   const [userName, setUserName] = useRecoilState(userNameState);
   const [steamNickname, setSteamNickname] = useState('');
+  const [isSteamLinked, setIsSteamLinked] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
@@ -21,6 +22,7 @@ const CustomHeader = () => {
         setIsLoggedIn(true);
         setUserName(decodeURIComponent(userInfo.name + '님')); // 사용자 이름 설정
         setSteamNickname(localStorage.getItem('steamNickname'));
+        setIsSteamLinked(localStorage.getItem('isSteamLinked') === '1');
       }
     }
   }, [setIsLoggedIn, setUserName]);
@@ -29,9 +31,11 @@ const CustomHeader = () => {
     localStorage.removeItem('accessToken'); // 액세스 토큰 삭제
     localStorage.removeItem('refreshToken'); // 리프레시 토큰 삭제
     localStorage.removeItem('steamNickname'); // 스팀 닉네임 삭제
+    localStorage.removeItem('isSteamLinked'); // Steam 연동 상태 삭제
     setIsLoggedIn(false);
     setUserName('');
     setSteamNickname('');
+    setIsSteamLinked(false);
     navigate('/'); //
   };
 

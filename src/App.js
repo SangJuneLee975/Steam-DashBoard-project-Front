@@ -15,13 +15,14 @@ const { Header, Content, Footer } = Layout;
 
 function App() {
   useEffect(() => {
-    // 파라미터에서 token,code,state을 추출
     const params = new URLSearchParams(window.location.search);
     const code = params.get('code');
     const state = params.get('state');
     const token = params.get('token');
+    const accessToken = params.get('accessToken');
+    const claimedId = params.get('claimedId');
+    const redirectUrl = params.get('redirectUrl') || '/';
 
-    // 파라미터에 token,state,code가 있으면 로컬 스토리지에 저장하고 URL에서 제거함
     const handleLoginCallback = async () => {
       if (code && state) {
         try {
@@ -32,21 +33,50 @@ function App() {
 
           if (accessToken) {
             localStorage.setItem('accessToken', accessToken);
-            message.success('로그인 성공');
+            message.success('Login successful');
             window.history.replaceState({}, document.title, '/');
-            window.location.href = '/'; // 홈으로 리다이렉트
+            window.location.href = '/';
           } else {
-            message.error('로그인 실패: 서버로부터 올바른 토큰을 받지 못함');
+            message.error('Login failed: Invalid token from server');
           }
         } catch (error) {
-          message.error('로그인 중 문제가 발생했습니다.');
-          console.error('로그인 에러:', error);
+          message.error('Error during login');
+          console.error('Login error:', error);
         }
       } else if (token) {
         localStorage.setItem('accessToken', token);
-        message.success('로그인 성공');
+        message.success('Login successful');
         window.history.replaceState({}, document.title, '/');
-        window.location.href = '/'; // 홈으로 리다이렉트
+        window.location.href = '/';
+      } else if (accessToken && claimedId) {
+        const steamId = claimedId.split('/').pop();
+
+        try {
+          const response = await axiosInstance.get(
+            `/oauth/steam/profile/${steamId}`
+          );
+          const profile = response.data.response.players[0];
+          const steamNickname = profile.personaname;
+
+          console.log('Steam Profile:', profile);
+
+          localStorage.setItem('accessToken', accessToken);
+          localStorage.setItem('steamNickname', steamNickname);
+          localStorage.setItem('isSteamLinked', '1');
+
+          message.success('Steam linked successfully');
+          window.history.replaceState({}, document.title, '/');
+          window.location.href = redirectUrl;
+
+          await axiosInstance.post('/oauth/steam/link', {
+            accessToken,
+            steamId,
+            isSteamLinked: '1',
+          });
+        } catch (error) {
+          message.error('Failed to link Steam');
+          console.error('Failed to link Steam:', error);
+        }
       }
     };
 
@@ -56,7 +86,7 @@ function App() {
   return (
     <Router>
       <Layout style={{ minHeight: '100vh' }}>
-        <CustomHeader /> {/* CustomHeader 컴포넌트 */}
+        <CustomHeader /> {/* CustomHeader 컴포?��?�� */}
         <Content
           style={{
             margin: '24px 16px',
@@ -73,7 +103,7 @@ function App() {
             <Route path="/profileupdate" element={<ProfileUpdate />} />
             <Route path="/SteamLoginButton" element={<SteamLoginButton />} />
             <Route
-              path="/HandleSteamCallback"
+              path="/oauth/steam/callback"
               element={<HandleSteamCallback />}
             />
 

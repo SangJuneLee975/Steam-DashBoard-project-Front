@@ -7,7 +7,10 @@ const SteamConnectButton = () => {
     try {
       const response = await axiosInstance.get('/oauth/steam/connect');
       window.location.href = response.data.url; // 스팀 로그인 페이지로 리다이렉트
-    } catch (error) {}
+    } catch (error) {
+      message.error('스팀 계정 연동에 실패했습니다.');
+      console.error('스팀 계정 연동 에러:', error);
+    }
   };
 
   return (
