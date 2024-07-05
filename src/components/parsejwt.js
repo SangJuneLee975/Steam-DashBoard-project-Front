@@ -142,6 +142,7 @@ export const getUserInfoFromToken = (token) => {
       socialCode: payload.socialCode,
       email: payload.email,
       isSocial: payload.isSocial,
+      steamId: payload.steamId,
     };
   } catch (error) {
     console.error('토큰 디코드 중 오류:', error);

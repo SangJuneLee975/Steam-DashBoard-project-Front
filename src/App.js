@@ -9,9 +9,10 @@ import ProfilePage from './pages/ProfilePage';
 import ProfileUpdate from './pages/ProfileUpdate';
 import HandleSteamCallback from './pages/HandleSteamCallback';
 import SteamLoginButton from './pages/SteamLoginButton';
+import Dashboard from './nav page/Dashboard';
 import axiosInstance from './api/axiosInstance';
 
-const { Header, Content, Footer } = Layout;
+const { Content, Footer } = Layout;
 
 function App() {
   useEffect(() => {
@@ -106,8 +107,7 @@ function App() {
               path="/oauth/steam/callback"
               element={<HandleSteamCallback />}
             />
-
-            {/*  */}
+            <Route path="/dashboard" element={<Dashboard />} /> {/*  */}
           </Routes>
         </Content>
         <Footer

@@ -4,7 +4,16 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { isLoggedInState, nicknameState } from '../recoil/atoms';
 import { userNameState } from '../recoil/atoms';
+import { Layout, Menu } from 'antd';
 import { getUserInfoFromToken } from '../components/parsejwt';
+
+const { Header } = Layout;
+
+const items = [
+  { key: '1', label: <Link to="/dashboard">nav 1</Link> }, // Dashboard.js로 페이지 이동
+  { key: '2', label: <Link to="/">nav 2</Link> },
+  { key: '3', label: <Link to="/">nav 3</Link> },
+];
 
 const CustomHeader = () => {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);
@@ -12,7 +21,6 @@ const CustomHeader = () => {
   const navigate = useNavigate();
   const [userName, setUserName] = useRecoilState(userNameState);
   const [steamNickname, setSteamNickname] = useState('');
-  const [isSteamLinked, setIsSteamLinked] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
@@ -22,7 +30,6 @@ const CustomHeader = () => {
         setIsLoggedIn(true);
         setUserName(decodeURIComponent(userInfo.name + '님')); // 사용자 이름 설정
         setSteamNickname(localStorage.getItem('steamNickname'));
-        setIsSteamLinked(localStorage.getItem('isSteamLinked') === '1');
       }
     }
   }, [setIsLoggedIn, setUserName]);
@@ -31,12 +38,16 @@ const CustomHeader = () => {
     localStorage.removeItem('accessToken'); // 액세스 토큰 삭제
     localStorage.removeItem('refreshToken'); // 리프레시 토큰 삭제
     localStorage.removeItem('steamNickname'); // 스팀 닉네임 삭제
-    localStorage.removeItem('isSteamLinked'); // Steam 연동 상태 삭제
     setIsLoggedIn(false);
     setUserName('');
     setSteamNickname('');
-    setIsSteamLinked(false);
     navigate('/'); //
+  };
+
+  const checkSteamIdInToken = () => {
+    const token = localStorage.getItem('accessToken');
+    const userInfo = getUserInfoFromToken(token);
+    return userInfo && userInfo.steamId;
   };
 
   const handleProfile = () => {
@@ -56,6 +67,29 @@ const CustomHeader = () => {
       }}
     >
       <div style={{ fontSize: '1.5em' }}>Logo</div>
+      <Menu
+        theme="dark"
+        mode="horizontal"
+        defaultSelectedKeys={['1']}
+        style={{
+          flex: 1,
+          minWidth: 0,
+        }}
+      >
+        <Menu.Item key="1">
+          {checkSteamIdInToken() ? (
+            <Link to="/dashboard">Dashboard</Link>
+          ) : (
+            <span>Dashboard</span>
+          )}
+        </Menu.Item>
+        <Menu.Item key="2">
+          <Link to="/">nav 2</Link>
+        </Menu.Item>
+        <Menu.Item key="3">
+          <Link to="/">nav 3</Link>
+        </Menu.Item>
+      </Menu>
       <div>
         {isLoggedIn ? (
           <>
@@ -66,8 +100,7 @@ const CustomHeader = () => {
               >
                 {userName || 'Profile'} {/* 사용자 이름 표시 */}
               </span>
-              {steamNickname && <span> (Steam: {steamNickname})</span>}{' '}
-              {/* 스팀 닉네임 표시 */}
+              {steamNickname && <span> (Steam: {steamNickname})</span>}
               <button onClick={handleLogout}>로그아웃</button>
             </div>
           </>

@@ -30,6 +30,7 @@ const ProfilePage = () => {
       window.location.href = data.url; // 스팀 로그인 페이지로 리다이렉트
     } catch (error) {
       console.error('스팀 계정 연동 에러:', error);
+      message.error('스팀 계정 연동 중 오류가 발생했습니다.');
     }
   };
 
