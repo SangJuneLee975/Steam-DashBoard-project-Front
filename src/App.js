@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Layout, message } from 'antd';
 import CustomHeader from './components/CustomHeader';
 import SignupPage from './pages/SignupPage';
@@ -63,7 +63,6 @@ function App() {
 
           localStorage.setItem('accessToken', accessToken);
           localStorage.setItem('steamNickname', steamNickname);
-          localStorage.setItem('isSteamLinked', '1');
 
           message.success('Steam linked successfully');
           window.history.replaceState({}, document.title, '/');
@@ -72,7 +71,6 @@ function App() {
           await axiosInstance.post('/oauth/steam/link', {
             accessToken,
             steamId,
-            isSteamLinked: '1',
           });
         } catch (error) {
           message.error('Failed to link Steam');
