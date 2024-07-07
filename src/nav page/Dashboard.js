@@ -68,8 +68,8 @@ const Dashboard = () => {
     <div>
       <Typography.Title level={4}>많이 플레이한 게임</Typography.Title>
       <Box>
-        <ResponsiveContainer width="100%" height={400}>
-          <BarChart data={sortedGames.slice(0, 10)} layout="vertical">
+        <ResponsiveContainer width="100%" height={500}>
+          <BarChart data={sortedGames.slice(0, 12)} layout="vertical">
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis type="number" />
             <YAxis dataKey="name" type="category" />

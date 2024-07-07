@@ -78,7 +78,7 @@ const CustomHeader = () => {
       >
         <Menu.Item key="1">
           {checkSteamIdInToken() ? (
-            <Link to="/dashboard">Dashboard</Link>
+            <Link to="/dashboard">그래프</Link>
           ) : (
             <span>Dashboard</span>
           )}
@@ -100,7 +100,7 @@ const CustomHeader = () => {
               >
                 {userName || 'Profile'} {/* 사용자 이름 표시 */}
               </span>
-              {steamNickname && <span> (Steam: {steamNickname})</span>}
+
               <button onClick={handleLogout}>로그아웃</button>
             </div>
           </>
