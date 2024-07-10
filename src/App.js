@@ -9,7 +9,7 @@ import ProfilePage from './pages/ProfilePage';
 import ProfileUpdate from './pages/ProfileUpdate';
 import HandleSteamCallback from './pages/HandleSteamCallback';
 import SteamLoginButton from './pages/SteamLoginButton';
-import Dashboard from './nav page/Dashboard';
+import Dashboard from './nav page/DashBoard';
 import axiosInstance from './api/axiosInstance';
 
 const { Content, Footer } = Layout;

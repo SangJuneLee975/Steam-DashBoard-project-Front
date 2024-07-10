@@ -46,7 +46,11 @@ const Dashboard = () => {
     const fetchGames = async (steamId) => {
       try {
         const response = await axiosInstance.get(`/steam/ownedGames`);
-        setGames(response.data.response.games);
+        const gamesInMinutes = response.data.response.games.map((game) => ({
+          ...game,
+          playtime_forever: game.playtime_forever / 60,
+        }));
+        setGames(gamesInMinutes);
       } catch (error) {
         console.error('Error fetching games:', error);
         message.error('게임 데이터를 가져오는 중 오류가 발생했습니다.');
@@ -64,15 +68,26 @@ const Dashboard = () => {
     (a, b) => b.playtime_forever - a.playtime_forever
   );
 
+  const truncate = (str, n) => {
+    return str.length > n ? str.slice(0, n - 1) + '...' : str;
+  };
+
   return (
     <div>
       <Typography.Title level={4}>많이 플레이한 게임</Typography.Title>
       <Box>
         <ResponsiveContainer width="100%" height={500}>
-          <BarChart data={sortedGames.slice(0, 12)} layout="vertical">
+          <BarChart data={sortedGames.slice(0, 12)}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis type="number" />
-            <YAxis dataKey="name" type="category" />
+
+            <XAxis
+              dataKey="name"
+              type="category"
+              interval={0}
+              tick={{ fontSize: 10 }}
+            />
+
+            <YAxis type="number" tickCount={9} />
             <Tooltip />
             <Bar dataKey="playtime_forever" fill="#8884d8" />
           </BarChart>
