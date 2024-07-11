@@ -78,14 +78,20 @@ const CustomHeader = () => {
       >
         <Menu.Item key="1">
           {checkSteamIdInToken() ? (
-            <Link to="/dashboard">그래프</Link>
+            <Link to="/gamegraph">그래프</Link>
           ) : (
             <span>Dashboard</span>
           )}
         </Menu.Item>
+
         <Menu.Item key="2">
-          <Link to="/">nav 2</Link>
+          {checkSteamIdInToken() ? (
+            <Link to="/chart">차트</Link>
+          ) : (
+            <span>Chart</span>
+          )}
         </Menu.Item>
+
         <Menu.Item key="3">
           <Link to="/">nav 3</Link>
         </Menu.Item>

@@ -9,7 +9,8 @@ import ProfilePage from './pages/ProfilePage';
 import ProfileUpdate from './pages/ProfileUpdate';
 import HandleSteamCallback from './pages/HandleSteamCallback';
 import SteamLoginButton from './pages/SteamLoginButton';
-import Dashboard from './nav page/DashBoard';
+import GameGraph from './nav page/GameGraph';
+import Chart from './nav page/Chart';
 import axiosInstance from './api/axiosInstance';
 
 const { Content, Footer } = Layout;
@@ -105,7 +106,8 @@ function App() {
               path="/oauth/steam/callback"
               element={<HandleSteamCallback />}
             />
-            <Route path="/dashboard" element={<Dashboard />} /> {/*  */}
+            <Route path="/gamegraph" element={<GameGraph />} /> {/*  */}
+            <Route path="/chart" element={<Chart />} /> {/*  */}
           </Routes>
         </Content>
         <Footer
