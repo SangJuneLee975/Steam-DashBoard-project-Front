@@ -1,22 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { message, Typography } from 'antd';
+import { message, Typography, List } from 'antd';
 import axiosInstance from '../api/axiosInstance';
 import { getUserInfoFromToken } from '../components/parsejwt';
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  CartesianGrid,
-  ResponsiveContainer,
-} from 'recharts';
-import { Box } from '@mui/material';
 
-const Dashboard = () => {
+const DashBoard = () => {
   const navigate = useNavigate();
-  const [hasSteamId, setHasSteamId] = useState(false);
+  const [profile, setProfile] = useState(null);
   const [games, setGames] = useState([]);
 
   useEffect(() => {
@@ -30,8 +20,7 @@ const Dashboard = () => {
 
         const userInfo = getUserInfoFromToken(token);
         if (userInfo && userInfo.steamId) {
-          setHasSteamId(true);
-          fetchGames(userInfo.steamId);
+          fetchSteamData(userInfo.steamId);
         } else {
           message.warning('스팀 계정을 연동해 주세요.');
           navigate('/profile');
@@ -43,58 +32,61 @@ const Dashboard = () => {
       }
     };
 
-    const fetchGames = async (steamId) => {
+    const fetchSteamData = async (steamId) => {
       try {
-        const response = await axiosInstance.get(`/steam/ownedGames`);
-        const gamesInMinutes = response.data.response.games.map((game) => ({
-          ...game,
-          playtime_forever: game.playtime_forever / 60,
-        }));
-        setGames(gamesInMinutes);
+        const profileResponse = await axiosInstance.get(`/steam/profile`, {
+          params: { steamId },
+        });
+        setProfile(profileResponse.data);
+
+        const gamesResponse = await axiosInstance.get(`/steam/ownedGames`, {
+          params: { steamId },
+        });
+        setGames(gamesResponse.data.response.games);
       } catch (error) {
-        console.error('Error fetching games:', error);
-        message.error('게임 데이터를 가져오는 중 오류가 발생했습니다.');
+        console.error('Error fetching steam data:', error);
+        message.error('스팀 데이터를 가져오는 중 오류가 발생했습니다.');
       }
     };
 
     checkSteamLink();
   }, [navigate]);
 
-  if (!hasSteamId) {
+  if (!profile) {
     return <div>Loading...</div>;
   }
 
-  const sortedGames = games.sort(
-    (a, b) => b.playtime_forever - a.playtime_forever
-  );
-
-  const truncate = (str, n) => {
-    return str.length > n ? str.slice(0, n - 1) + '...' : str;
-  };
-
   return (
     <div>
-      <Typography.Title level={4}>많이 플레이한 게임</Typography.Title>
-      <Box>
-        <ResponsiveContainer width="100%" height={500}>
-          <BarChart data={sortedGames.slice(0, 12)}>
-            <CartesianGrid strokeDasharray="3 3" />
-
-            <XAxis
-              dataKey="name"
-              type="category"
-              interval={0}
-              tick={{ fontSize: 10 }}
+      <Typography.Title level={4}>Steam 프로필</Typography.Title>
+      {profile && (
+        <div>
+          <p>Steam ID: {profile.steamid}</p>
+          <p>닉네임: {profile.personaname}</p>
+          <p>
+            프로필 URL: <a href={profile.profileurl}>{profile.profileurl}</a>
+          </p>
+        </div>
+      )}
+      <Typography.Title level={4}>소유한 게임 목록</Typography.Title>
+      <List
+        itemLayout="horizontal"
+        dataSource={games}
+        renderItem={(game) => (
+          <List.Item>
+            <List.Item.Meta
+              title={
+                <a href={`https://store.steampowered.com/app/${game.appid}`}>
+                  {game.name}
+                </a>
+              }
+              description={`게임 ID: ${game.appid}`}
             />
-
-            <YAxis type="number" tickCount={9} />
-            <Tooltip />
-            <Bar dataKey="playtime_forever" fill="#8884d8" />
-          </BarChart>
-        </ResponsiveContainer>
-      </Box>
+          </List.Item>
+        )}
+      />
     </div>
   );
 };
 
-export default Dashboard;
+export default DashBoard;

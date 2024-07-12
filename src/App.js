@@ -11,6 +11,7 @@ import HandleSteamCallback from './pages/HandleSteamCallback';
 import SteamLoginButton from './pages/SteamLoginButton';
 import GameGraph from './nav page/GameGraph';
 import Chart from './nav page/Chart';
+import DashBoard from './nav page/DashBoard';
 import axiosInstance from './api/axiosInstance';
 
 const { Content, Footer } = Layout;
@@ -108,6 +109,7 @@ function App() {
             />
             <Route path="/gamegraph" element={<GameGraph />} /> {/*  */}
             <Route path="/chart" element={<Chart />} /> {/*  */}
+            <Route path="/dashboard" element={<DashBoard />} /> {/*  */}
           </Routes>
         </Content>
         <Footer

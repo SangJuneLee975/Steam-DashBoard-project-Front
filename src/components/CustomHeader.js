@@ -10,14 +10,14 @@ import { getUserInfoFromToken } from '../components/parsejwt';
 const { Header } = Layout;
 
 const items = [
-  { key: '1', label: <Link to="/dashboard">nav 1</Link> }, // Dashboard.js로 페이지 이동
-  { key: '2', label: <Link to="/">nav 2</Link> },
-  { key: '3', label: <Link to="/">nav 3</Link> },
+  { key: '1', label: <Link to="/gamegraph">nav 1</Link> }, // Dashboard.js로 페이지 이동
+  { key: '2', label: <Link to="/chart">nav 2</Link> },
+  { key: '3', label: <Link to="/dashboard">nav 3</Link> },
 ];
 
 const CustomHeader = () => {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);
-  const [nickname, setNickname] = useRecoilState(nicknameState); // 닉네임 상태 사용
+  const [nickname, setNickname] = useRecoilState(nicknameState);
   const navigate = useNavigate();
   const [userName, setUserName] = useRecoilState(userNameState);
   const [steamNickname, setSteamNickname] = useState('');
@@ -93,7 +93,11 @@ const CustomHeader = () => {
         </Menu.Item>
 
         <Menu.Item key="3">
-          <Link to="/">nav 3</Link>
+          {checkSteamIdInToken() ? (
+            <Link to="/dashboard">대시보드</Link>
+          ) : (
+            <span>DashBoard</span>
+          )}
         </Menu.Item>
       </Menu>
       <div>
