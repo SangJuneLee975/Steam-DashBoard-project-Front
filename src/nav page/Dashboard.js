@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { message, Typography, List } from 'antd';
+import { message, Typography, Card } from 'antd';
 import axiosInstance from '../api/axiosInstance';
 import { getUserInfoFromToken } from '../components/parsejwt';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 const DashBoard = () => {
   const navigate = useNavigate();
@@ -56,6 +59,42 @@ const DashBoard = () => {
     return <div>Loading...</div>;
   }
 
+  const NextArrow = (props) => {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{ ...style, display: 'block', fontSize: '30px', color: 'black' }}
+        onClick={onClick}
+      >
+        &gt;
+      </div>
+    );
+  };
+
+  const PrevArrow = (props) => {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{ ...style, display: 'block', fontSize: '30px', color: 'black' }}
+        onClick={onClick}
+      >
+        &lt;
+      </div>
+    );
+  };
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 5,
+    slidesToScroll: 5,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
+  };
+
   return (
     <div>
       <Typography.Title level={4}>Steam 프로필</Typography.Title>
@@ -69,22 +108,34 @@ const DashBoard = () => {
         </div>
       )}
       <Typography.Title level={4}>소유한 게임 목록</Typography.Title>
-      <List
-        itemLayout="horizontal"
-        dataSource={games}
-        renderItem={(game) => (
-          <List.Item>
-            <List.Item.Meta
-              title={
-                <a href={`https://store.steampowered.com/app/${game.appid}`}>
-                  {game.name}
-                </a>
+      <Slider {...settings}>
+        {games.map((game) => (
+          <div key={game.appid}>
+            <Card
+              cover={
+                <img
+                  alt={game.name}
+                  src={
+                    game.img_logo_url
+                      ? `http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_logo_url}.jpg`
+                      : `http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`
+                  }
+                  style={{
+                    width: '100%',
+                    height: '100px',
+                    objectFit: 'contain',
+                  }}
+                />
               }
-              description={`게임 ID: ${game.appid}`}
-            />
-          </List.Item>
-        )}
-      />
+            >
+              <Card.Meta
+                title={game.name}
+                description={`게임 ID: ${game.appid}`}
+              />
+            </Card>
+          </div>
+        ))}
+      </Slider>
     </div>
   );
 };
