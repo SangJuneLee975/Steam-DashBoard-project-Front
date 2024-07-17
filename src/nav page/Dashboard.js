@@ -95,6 +95,10 @@ const DashBoard = () => {
     prevArrow: <PrevArrow />,
   };
 
+  const handleGameClick = (appid) => {
+    navigate(`/wordcloud/${appid}`);
+  };
+
   return (
     <div>
       <Typography.Title level={4}>Steam 프로필</Typography.Title>
@@ -129,7 +133,9 @@ const DashBoard = () => {
               }
             >
               <Card.Meta
-                title={game.name}
+                title={
+                  <a onClick={() => handleGameClick(game.appid)}>{game.name}</a>
+                }
                 description={`게임 ID: ${game.appid}`}
               />
             </Card>

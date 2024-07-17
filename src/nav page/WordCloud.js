@@ -1,13 +1,44 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { useParams } from 'react-router-dom';
+import axiosInstance from '../api/axiosInstance';
 import * as d3 from 'd3';
 import cloud from 'd3-cloud';
 
-const WordCloud = ({ words }) => {
-  const svgRef = useRef(null);
+const WordCloud = () => {
+  const { appid } = useParams();
+  const [words, setWords] = useState([]);
+  const svgRef = useRef();
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await axiosInstance.get(`/steam/reviews`, {
+          params: { appId: appid },
+        });
+        const reviews = response.data;
+
+        const wordCounts = reviews.reduce((acc, review) => {
+          review.split(' ').forEach((word) => {
+            acc[word] = (acc[word] || 0) + 1;
+          });
+          return acc;
+        }, {});
+
+        const formattedWords = Object.entries(wordCounts).map(
+          ([text, size]) => ({ text, size })
+        );
+        setWords(formattedWords);
+      } catch (error) {
+        console.error('Error fetching reviews:', error);
+      }
+    };
+
+    fetchReviews();
+  }, [appid]);
 
   useEffect(() => {
     const svg = d3.select(svgRef.current);
-    const width = 500;
+    const width = 1000;
     const height = 500;
 
     const layout = cloud()

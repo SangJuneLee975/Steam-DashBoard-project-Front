@@ -112,6 +112,7 @@ function App() {
             <Route path="/chart" element={<Chart />} /> {/*  */}
             <Route path="/dashboard" element={<DashBoard />} /> {/*  */}
             <Route path="/wordcloud" element={<WordCloud />} /> {/*  */}
+            <Route path="/wordcloud/:appid" element={<WordCloud />} />
           </Routes>
         </Content>
         <Footer
