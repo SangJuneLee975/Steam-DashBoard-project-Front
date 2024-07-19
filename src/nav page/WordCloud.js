@@ -24,9 +24,13 @@ const WordCloud = () => {
           return acc;
         }, {});
 
-        const formattedWords = Object.entries(wordCounts).map(
-          ([text, size]) => ({ text, size })
-        );
+        let formattedWords = Object.entries(wordCounts)
+          .map(([text, size]) => ({ text, size }))
+          .filter((word) => word.size > 1) // 단어 빈도수가 1보다 큰 것만 필터링
+          .sort((a, b) => b.size - a.size); // 빈도수 기준으로 정렬
+
+        formattedWords = formattedWords.slice(0, 100); // 상위 100개의 단어만 사용
+
         setWords(formattedWords);
       } catch (error) {
         console.error('Error fetching reviews:', error);
@@ -43,11 +47,11 @@ const WordCloud = () => {
 
     const layout = cloud()
       .size([width, height])
-      .words(words.map((d) => ({ text: d.text, size: d.size })))
-      .padding(5)
-      .rotate(() => ~~(Math.random() * 2) * 90)
+      .words(words.map((d) => ({ text: d.text, size: d.size * 5 }))) // 단어 크기 조절
+      .padding(10) // 단어 간격을 넓힘
+      .rotate(() => 0) // 회전을 없애서 글자가 겹치지 않도록 함
       .font('Impact')
-      .fontSize((d) => d.size)
+      .fontSize((d) => d.size) // 글꼴 크기 설정
       .on('end', draw);
 
     layout.start();

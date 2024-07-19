@@ -104,10 +104,10 @@ const DashBoard = () => {
       <Typography.Title level={4}>Steam 프로필</Typography.Title>
       {profile && (
         <div>
-          <p>Steam ID: {profile.steamid}</p>
-          <p>닉네임: {profile.personaname}</p>
+          <p> {profile.steamid}</p>
+          <p> {profile.personaname}</p>
           <p>
-            프로필 URL: <a href={profile.profileurl}>{profile.profileurl}</a>
+            <a href={profile.profileurl}>{profile.profileurl}</a>
           </p>
         </div>
       )}
