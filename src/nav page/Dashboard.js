@@ -91,7 +91,7 @@ const DashBoard = () => {
     speed: 500,
     slidesToShow: 5,
     slidesToScroll: 5,
-    nextArrow: <NextArrow />,
+
     prevArrow: <PrevArrow />,
   };
 
@@ -101,7 +101,7 @@ const DashBoard = () => {
 
   return (
     <div>
-      <Typography.Title level={4}>Steam 프로필</Typography.Title>
+      <Typography.Title level={4}></Typography.Title>
       {profile && (
         <div>
           <p> {profile.steamid}</p>
@@ -136,7 +136,6 @@ const DashBoard = () => {
                 title={
                   <a onClick={() => handleGameClick(game.appid)}>{game.name}</a>
                 }
-                description={`게임 ID: ${game.appid}`}
               />
             </Card>
           </div>

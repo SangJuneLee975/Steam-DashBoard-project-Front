@@ -87,8 +87,14 @@ const Chart = () => {
               interval={0}
               tick={{ fontSize: 10 }}
             />
-            <YAxis type="number" tickCount={9} />
-            <Tooltip />
+            <YAxis
+              type="number"
+              tickCount={9}
+              domain={[0, 'dataMax']}
+              ticks={[0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5]}
+              label={{ value: '시간', angle: 0, position: 'insideLeft' }}
+            />
+            <Tooltip formatter={(value) => `${value} 시간`} />
             <Line type="monotone" dataKey="playtime_2weeks" stroke="#8884d8" />
           </LineChart>
         </ResponsiveContainer>

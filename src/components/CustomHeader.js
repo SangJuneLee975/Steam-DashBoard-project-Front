@@ -1,23 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { Link, useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { isLoggedInState, nicknameState } from '../recoil/atoms';
+import { isLoggedInState } from '../recoil/atoms';
 import { userNameState } from '../recoil/atoms';
-import { Layout, Menu } from 'antd';
+import { Menu, message } from 'antd';
 import { getUserInfoFromToken } from '../components/parsejwt';
 
-const { Header } = Layout;
-
 const items = [
-  { key: '1', label: <Link to="/gamegraph">nav 1</Link> }, // Dashboard.js로 페이지 이동
-  { key: '2', label: <Link to="/chart">nav 2</Link> },
-  { key: '3', label: <Link to="/dashboard">nav 3</Link> },
+  { key: '1', label: '그래프', link: '/gamegraph' },
+  { key: '2', label: '차트', link: '/chart' },
+  { key: '3', label: '게임목록', link: '/dashboard' },
 ];
 
 const CustomHeader = () => {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);
-  const [nickname, setNickname] = useRecoilState(nicknameState);
   const navigate = useNavigate();
   const [userName, setUserName] = useRecoilState(userNameState);
   const [steamNickname, setSteamNickname] = useState('');
@@ -33,6 +29,10 @@ const CustomHeader = () => {
       }
     }
   }, [setIsLoggedIn, setUserName]);
+
+  const handleProfile = () => {
+    navigate('/profile'); // 프로필 페이지로 이동
+  };
 
   const handleLogout = () => {
     localStorage.removeItem('accessToken'); // 액세스 토큰 삭제
@@ -50,8 +50,13 @@ const CustomHeader = () => {
     return userInfo && userInfo.steamId;
   };
 
-  const handleProfile = () => {
-    navigate('/profile'); // 프로필 페이지로 이동
+  const handleMenuClick = (link) => {
+    if (checkSteamIdInToken()) {
+      navigate(link);
+    } else {
+      navigate('/profile'); // 스팀계정 비연동 유저는 프로필페이지로 이동
+      message.warning('스팀 계정을 연동해 주세요.');
+    }
   };
 
   return (
@@ -76,29 +81,11 @@ const CustomHeader = () => {
           minWidth: 0,
         }}
       >
-        <Menu.Item key="1">
-          {checkSteamIdInToken() ? (
-            <Link to="/gamegraph">그래프</Link>
-          ) : (
-            <span>Dashboard</span>
-          )}
-        </Menu.Item>
-
-        <Menu.Item key="2">
-          {checkSteamIdInToken() ? (
-            <Link to="/chart">차트</Link>
-          ) : (
-            <span>Chart</span>
-          )}
-        </Menu.Item>
-
-        <Menu.Item key="3">
-          {checkSteamIdInToken() ? (
-            <Link to="/dashboard">대시보드</Link>
-          ) : (
-            <span>DashBoard</span>
-          )}
-        </Menu.Item>
+        {items.map((item) => (
+          <Menu.Item key={item.key} onClick={() => handleMenuClick(item.link)}>
+            {item.label}
+          </Menu.Item>
+        ))}
       </Menu>
       <div>
         {isLoggedIn ? (
@@ -106,11 +93,10 @@ const CustomHeader = () => {
             <div>
               <span
                 style={{ marginRight: '10px', cursor: 'pointer' }}
-                onClick={() => navigate('/profile')}
+                onClick={handleProfile}
               >
-                {userName || 'Profile'} {/* 사용자 이름 표시 */}
+                {userName || 'Profile'}
               </span>
-
               <button onClick={handleLogout}>로그아웃</button>
             </div>
           </>

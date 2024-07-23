@@ -37,7 +37,6 @@ const GameGraph = () => {
           navigate('/profile');
         }
       } catch (error) {
-        console.error('Failed to check steam link:', error);
         message.error('오류가 발생했습니다. 다시 시도해주세요.');
         navigate('/login');
       }
@@ -96,7 +95,16 @@ const GameGraph = () => {
               tickFormatter={formatXAxis}
             />
 
-            <YAxis type="number" tickCount={9} />
+            <YAxis
+              type="number"
+              tickCount={9}
+              label={{
+                value: '시간',
+                angle: 0,
+                position: 'insideLeft',
+                dx: -5,
+              }}
+            />
             <Tooltip />
             <Bar dataKey="playtime_forever" fill="#8884d8" />
           </BarChart>
