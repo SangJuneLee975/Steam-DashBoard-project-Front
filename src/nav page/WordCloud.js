@@ -9,6 +9,62 @@ const WordCloud = () => {
   const [words, setWords] = useState([]);
   const svgRef = useRef();
 
+  const stopWords = new Set([
+    'a',
+    'an',
+    'the',
+    'and',
+    'or',
+    'but',
+    'is',
+    'are',
+    'was',
+    'were',
+    'in',
+    'on',
+    'at',
+    'of',
+    'for',
+    'with',
+    'to',
+    'from',
+    'by',
+    'as',
+    'that',
+    'this',
+    'it',
+    'be',
+    'has',
+    'have',
+    'had',
+    'will',
+    'would',
+    'can',
+    'could',
+    'should',
+    'just',
+    'because',
+    'much',
+    'so',
+    'some',
+    'we',
+    'he',
+    'she',
+    'they',
+    'you',
+    'i',
+    'my',
+    'your',
+    'our',
+    'their',
+    'if',
+    'then',
+    'than',
+    'too',
+    'very',
+    'really',
+  ]);
+
   useEffect(() => {
     const fetchReviews = async () => {
       try {
@@ -19,7 +75,11 @@ const WordCloud = () => {
 
         const wordCounts = reviews.reduce((acc, review) => {
           review.split(' ').forEach((word) => {
-            acc[word] = (acc[word] || 0) + 1;
+            // 단어를 소문자로 변환하고, 불필요한 기호 제거
+            word = word.toLowerCase().replace(/[^a-zA-Z0-9]/g, '');
+            if (!stopWords.has(word.toLowerCase())) {
+              acc[word] = (acc[word] || 0) + 1;
+            }
           });
           return acc;
         }, {});
