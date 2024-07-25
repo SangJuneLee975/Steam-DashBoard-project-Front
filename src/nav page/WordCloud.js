@@ -63,6 +63,9 @@ const WordCloud = () => {
     'too',
     'very',
     'really',
+    'game',
+    'time',
+    'play',
   ]);
 
   useEffect(() => {

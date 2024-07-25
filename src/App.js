@@ -11,7 +11,7 @@ import HandleSteamCallback from './pages/HandleSteamCallback';
 import SteamLoginButton from './pages/SteamLoginButton';
 import GameGraph from './nav page/GameGraph';
 import Chart from './nav page/Chart';
-import DashBoard from './nav page/DashBoard';
+import GameList from './nav page/GameList';
 import axiosInstance from './api/axiosInstance';
 import WordCloud from './nav page/WordCloud';
 
@@ -110,7 +110,7 @@ function App() {
             />
             <Route path="/gamegraph" element={<GameGraph />} /> {/*  */}
             <Route path="/chart" element={<Chart />} /> {/*  */}
-            <Route path="/dashboard" element={<DashBoard />} /> {/*  */}
+            <Route path="/gamelist" element={<GameList />} /> {/*  */}
             <Route path="/wordcloud" element={<WordCloud />} /> {/*  */}
             <Route path="/wordcloud/:appid" element={<WordCloud />} />
           </Routes>
