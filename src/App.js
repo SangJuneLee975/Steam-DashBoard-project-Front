@@ -14,6 +14,7 @@ import Chart from './nav page/Chart';
 import GameList from './nav page/GameList';
 import axiosInstance from './api/axiosInstance';
 import WordCloud from './nav page/WordCloud';
+import Dashboard from './nav page/DashBoard';
 
 const { Content, Footer } = Layout;
 
@@ -113,6 +114,7 @@ function App() {
             <Route path="/gamelist" element={<GameList />} /> {/*  */}
             <Route path="/wordcloud" element={<WordCloud />} /> {/*  */}
             <Route path="/wordcloud/:appid" element={<WordCloud />} />
+            <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
         </Content>
         <Footer

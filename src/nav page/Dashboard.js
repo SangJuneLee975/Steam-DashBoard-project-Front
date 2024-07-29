@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { message, Typography, Card } from 'antd';
+import { Typography, message, Row, Col, Card, Statistic } from 'antd';
 import axiosInstance from '../api/axiosInstance';
 import { getUserInfoFromToken } from '../components/parsejwt';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import CurrentPlayers from './CurrentPlayers';
+import RecentlyPlayedGames from './RecentlyPlayedGames';
+import GameNews from './GameNews';
+import PlayerSummary from './PlayerSummary';
+import Chart from './Chart'; // 차트 컴포넌트 추가
 
-const DashBoard = () => {
+const Dashboard = () => {
   const navigate = useNavigate();
-  const [profile, setProfile] = useState(null);
-  const [games, setGames] = useState([]);
+  const [ownedGamesCount, setOwnedGamesCount] = useState(0);
+  const [recentlyPlayedGamesCount, setRecentlyPlayedGamesCount] = useState(0);
+  const [hasSteamId, setHasSteamId] = useState(false);
+  const [userCount, setUserCount] = useState(0);
+  const [steamId, setSteamId] = useState(null);
 
   useEffect(() => {
     const checkSteamLink = async () => {
@@ -23,7 +28,9 @@ const DashBoard = () => {
 
         const userInfo = getUserInfoFromToken(token);
         if (userInfo && userInfo.steamId) {
-          fetchSteamData(userInfo.steamId);
+          setHasSteamId(true);
+          setSteamId(userInfo.steamId);
+          fetchDashboardData(userInfo.steamId);
         } else {
           message.warning('스팀 계정을 연동해 주세요.');
           navigate('/profile');
@@ -35,17 +42,33 @@ const DashBoard = () => {
       }
     };
 
-    const fetchSteamData = async (steamId) => {
+    const fetchDashboardData = async (steamId) => {
       try {
-        const profileResponse = await axiosInstance.get(`/steam/profile`, {
-          params: { steamId },
-        });
-        setProfile(profileResponse.data);
+        const ownedGamesCountResponse = await axiosInstance.get(
+          '/steam/ownedGamesCount',
+          { params: { steamId } }
+        );
+        setOwnedGamesCount(ownedGamesCountResponse.data);
 
-        const gamesResponse = await axiosInstance.get(`/steam/ownedGames`, {
-          params: { steamId },
-        });
-        setGames(gamesResponse.data.response.games);
+        const recentlyPlayedGamesCountResponse = await axiosInstance.get(
+          '/steam/recentlyPlayedGamesCount',
+          { params: { steamId } }
+        );
+        setRecentlyPlayedGamesCount(recentlyPlayedGamesCountResponse.data);
+
+        const userCountResponse = await axiosInstance.get(
+          '/steam/getPlayerSummaries',
+          { params: { steamId } }
+        );
+
+        if (
+          userCountResponse.data.response &&
+          userCountResponse.data.response.players
+        ) {
+          setUserCount(userCountResponse.data.response.players.length);
+        } else {
+          setUserCount(0);
+        }
       } catch (error) {
         console.error('Error fetching steam data:', error);
         message.error('스팀 데이터를 가져오는 중 오류가 발생했습니다.');
@@ -55,94 +78,51 @@ const DashBoard = () => {
     checkSteamLink();
   }, [navigate]);
 
-  if (!profile) {
+  if (!hasSteamId) {
     return <div>Loading...</div>;
   }
 
-  const NextArrow = (props) => {
-    const { className, style, onClick } = props;
-    return (
-      <div
-        className={className}
-        style={{ ...style, display: 'block', fontSize: '30px', color: 'black' }}
-        onClick={onClick}
-      >
-        &gt;
-      </div>
-    );
-  };
-
-  const PrevArrow = (props) => {
-    const { className, style, onClick } = props;
-    return (
-      <div
-        className={className}
-        style={{ ...style, display: 'block', fontSize: '30px', color: 'black' }}
-        onClick={onClick}
-      >
-        &lt;
-      </div>
-    );
-  };
-
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 5,
-    slidesToScroll: 5,
-
-    prevArrow: <PrevArrow />,
-  };
-
-  const handleGameClick = (appid) => {
-    navigate(`/wordcloud/${appid}`);
-  };
-
   return (
-    <div>
-      <Typography.Title level={4}></Typography.Title>
-      {profile && (
-        <div>
-          <p> {profile.steamid}</p>
-          <p> {profile.personaname}</p>
-          <p>
-            <a href={profile.profileurl}>{profile.profileurl}</a>
-          </p>
-        </div>
-      )}
-      <Typography.Title level={4}>소유한 게임 목록</Typography.Title>
-      <Slider {...settings}>
-        {games.map((game) => (
-          <div key={game.appid}>
-            <Card
-              cover={
-                <img
-                  alt={game.name}
-                  src={
-                    game.img_logo_url
-                      ? `http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_logo_url}.jpg`
-                      : `http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`
-                  }
-                  style={{
-                    width: '100%',
-                    height: '100px',
-                    objectFit: 'contain',
-                  }}
-                />
-              }
-            >
-              <Card.Meta
-                title={
-                  <a onClick={() => handleGameClick(game.appid)}>{game.name}</a>
-                }
-              />
+    <div className="dashboard">
+      <Typography.Title level={4}>Steam Dashboard</Typography.Title>
+      <Row gutter={[16, 16]}>
+        <Col span={8}>
+          <Card>
+            <PlayerSummary steamid={steamId} />
+          </Card>
+        </Col>
+        <Col span={8}>
+          <Card>
+            <Statistic
+              title="최근 2주 동안 플레이한 게임 수"
+              value={recentlyPlayedGamesCount}
+            />
+          </Card>
+          <Row gutter={[25, 25]}>
+            <Col span={25}>
+              <Card>
+                <Chart /> {/* */}
+              </Card>
+            </Col>
+          </Row>
+        </Col>
+        <Col span={8}>
+          <Card>
+            <Statistic
+              title="가지고 있는 게임 보유수"
+              value={ownedGamesCount}
+            />
+          </Card>
+          <Col span={36}>
+            <Card>
+              <CurrentPlayers appid="1172470" />{' '}
+              {/* 현재 플레이어 수 컴포넌트 추가 */}
             </Card>
-          </div>
-        ))}
-      </Slider>
+          </Col>
+        </Col>
+      </Row>
     </div>
   );
 };
 
-export default DashBoard;
+export default Dashboard;

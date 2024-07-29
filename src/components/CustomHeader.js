@@ -10,6 +10,7 @@ const items = [
   { key: '1', label: '그래프', link: '/gamegraph' },
   { key: '2', label: '차트', link: '/chart' },
   { key: '3', label: '게임목록', link: '/gamelist' },
+  { key: '4', label: '대시보드', link: '/dashboard' },
 ];
 
 const CustomHeader = () => {
