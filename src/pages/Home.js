@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import axios from 'axios';
 import { isLoggedInState } from '../recoil/atoms';
+import Features from '../components/Features';
 import { Button } from 'antd';
 
 const Home = () => {
@@ -19,10 +20,9 @@ const Home = () => {
   return (
     <div>
       <h1>홈 화면</h1>
-
       {isLoggedIn ? (
         <div>
-          <p>환영합니다!</p>
+          <p></p>
         </div>
       ) : (
         <div>
@@ -30,6 +30,7 @@ const Home = () => {
           <Link to="/signup">회원가입</Link>
         </div>
       )}
+      <Features /> {/* Product Features 컴포넌트를 추가 */}
     </div>
   );
 };

@@ -15,6 +15,7 @@ import GameList from './nav page/GameList';
 import axiosInstance from './api/axiosInstance';
 import WordCloud from './nav page/WordCloud';
 import Dashboard from './nav page/DashBoard';
+import LandingPage from './pages/LandingPage';
 
 const { Content, Footer } = Layout;
 
@@ -115,6 +116,7 @@ function App() {
             <Route path="/wordcloud" element={<WordCloud />} /> {/*  */}
             <Route path="/wordcloud/:appid" element={<WordCloud />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/landing" element={<LandingPage />} />
           </Routes>
         </Content>
         <Footer

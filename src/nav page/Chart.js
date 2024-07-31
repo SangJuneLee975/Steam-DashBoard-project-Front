@@ -91,7 +91,10 @@ const Chart = () => {
               type="number"
               tickCount={9}
               domain={[0, 'dataMax']}
-              ticks={[0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5]}
+              ticks={[
+                0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 6.0, 7.0,
+                8.0, 9.0, 10.0,
+              ]}
               label={{ value: '시간', angle: 0, position: 'insideLeft' }}
             />
             <Tooltip formatter={(value) => `${value} 시간`} />
