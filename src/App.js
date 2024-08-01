@@ -9,12 +9,12 @@ import ProfilePage from './pages/ProfilePage';
 import ProfileUpdate from './pages/ProfileUpdate';
 import HandleSteamCallback from './pages/HandleSteamCallback';
 import SteamLoginButton from './pages/SteamLoginButton';
-import GameGraph from './nav page/GameGraph';
-import Chart from './nav page/Chart';
-import GameList from './nav page/GameList';
+import GameGraph from './nav-page/GameGraph';
+import Chart from './nav-page/Chart';
+import GameList from './nav-page/GameList';
 import axiosInstance from './api/axiosInstance';
-import WordCloud from './nav page/WordCloud';
-import Dashboard from './nav page/DashBoard';
+import WordCloud from './nav-page/WordCloud';
+import Dashboard from './nav-page/DashBoard';
 import LandingPage from './pages/LandingPage';
 
 const { Content, Footer } = Layout;
