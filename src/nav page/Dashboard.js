@@ -1,13 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Typography, message, Row, Col, Card, Statistic } from 'antd';
+import { Typography, message } from 'antd';
+import { Container, Grid, Card, CardContent, Box } from '@mui/material';
 import axiosInstance from '../api/axiosInstance';
 import { getUserInfoFromToken } from '../components/parsejwt';
-import CurrentPlayers from './CurrentPlayers';
-import RecentlyPlayedGames from './RecentlyPlayedGames';
-import GameNews from './GameNews';
-import PlayerSummary from './PlayerSummary';
 import Chart from './Chart'; // 차트 컴포넌트 추가
+import CurrentPlayers from './CurrentPlayers';
+import PlayerSummary from './PlayerSummary'; // PlayerSummary 컴포넌트 import
+import GameGraph from './GameGraph';
+
+const DashboardContainer = (props) => (
+  <Container maxWidth="lg" sx={{ paddingTop: '24px', paddingBottom: '24px' }}>
+    {props.children}
+  </Container>
+);
+
+const DashboardCard = ({ children, onClick, sx }) => (
+  <Card
+    sx={{
+      textAlign: 'center',
+      color: 'text.secondary',
+      padding: 2,
+      cursor: onClick ? 'pointer' : 'default',
+      ...sx,
+    }}
+    onClick={onClick}
+  >
+    <CardContent sx={{ padding: 0 }}>{children}</CardContent>
+  </Card>
+);
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -16,6 +37,7 @@ const Dashboard = () => {
   const [hasSteamId, setHasSteamId] = useState(false);
   const [userCount, setUserCount] = useState(0);
   const [steamId, setSteamId] = useState(null);
+  const [profile, setProfile] = useState(null);
 
   useEffect(() => {
     const checkSteamLink = async () => {
@@ -66,6 +88,7 @@ const Dashboard = () => {
           userCountResponse.data.response.players
         ) {
           setUserCount(userCountResponse.data.response.players.length);
+          setProfile(userCountResponse.data.response.players[0]);
         } else {
           setUserCount(0);
         }
@@ -83,45 +106,54 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="dashboard">
-      <Typography.Title level={4}>Steam Dashboard</Typography.Title>
-      <Row gutter={[16, 16]}>
-        <Col span={8}>
-          <Card>
-            <PlayerSummary steamid={steamId} />
-          </Card>
-        </Col>
-        <Col span={8}>
-          <Card>
-            <Statistic
-              title="최근 2주 동안 플레이한 게임 수"
-              value={recentlyPlayedGamesCount}
-            />
-          </Card>
-          <Row gutter={[25, 25]}>
-            <Col span={25}>
-              <Card>
-                <Chart /> {/* */}
-              </Card>
-            </Col>
-          </Row>
-        </Col>
-        <Col span={8}>
-          <Card>
-            <Statistic
-              title="가지고 있는 게임 보유수"
-              value={ownedGamesCount}
-            />
-          </Card>
-          <Col span={36}>
-            <Card>
-              <CurrentPlayers appid="1172470" />{' '}
-              {/* 현재 플레이어 수 컴포넌트 추가 */}
-            </Card>
-          </Col>
-        </Col>
-      </Row>
-    </div>
+    <DashboardContainer>
+      <Typography variant="h4" gutterBottom>
+        Steam Dashboard
+      </Typography>
+      <Grid container spacing={3}>
+        <Grid item xs={12} sm={6} md={4}>
+          <DashboardCard sx={{ padding: 1, width: '350px', height: '140px' }}>
+            <Box sx={{ padding: 2 }}>
+              <PlayerSummary steamid={steamId} />
+              <Typography variant="body1" sx={{ marginBottom: 1 }}></Typography>
+            </Box>
+          </DashboardCard>
+        </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <DashboardCard onClick={() => navigate('/chart')}>
+            <Typography variant="h6" gutterBottom>
+              최근 2주 동안 플레이한 게임 수
+            </Typography>
+            <Typography variant="h3" color="primary">
+              {recentlyPlayedGamesCount}
+            </Typography>
+          </DashboardCard>
+        </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <DashboardCard onClick={() => navigate('/gamelist')}>
+            <Typography variant="h6" gutterBottom>
+              가지고 있는 게임 보유수
+            </Typography>
+            <Typography variant="h3" color="primary">
+              {ownedGamesCount}
+            </Typography>
+          </DashboardCard>
+        </Grid>
+        <Grid item xs={12}>
+          <DashboardCard onClick={() => navigate('/chart')}>
+            <Typography variant="h6" gutterBottom></Typography>
+            <Chart /> {/* 차트 컴포넌트 추가 */}
+          </DashboardCard>
+        </Grid>
+        <Grid item xs={12}>
+          <DashboardCard onClick={() => navigate('/gamegraph')}>
+            <Typography variant="h6" gutterBottom></Typography>
+            <GameGraph /> {/* 많이 플레이한 게임 차트 추가 */}
+          </DashboardCard>
+        </Grid>
+        <Grid item xs={12}></Grid>
+      </Grid>
+    </DashboardContainer>
   );
 };
 

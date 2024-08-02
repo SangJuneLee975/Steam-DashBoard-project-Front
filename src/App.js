@@ -9,15 +9,27 @@ import ProfilePage from './pages/ProfilePage';
 import ProfileUpdate from './pages/ProfileUpdate';
 import HandleSteamCallback from './pages/HandleSteamCallback';
 import SteamLoginButton from './pages/SteamLoginButton';
-import GameGraph from './nav-page/GameGraph';
-import Chart from './nav-page/Chart';
-import GameList from './nav-page/GameList';
+import GameGraph from './nav page/GameGraph';
+import Chart from './nav page/Chart';
+import GameList from './nav page/GameList';
 import axiosInstance from './api/axiosInstance';
-import WordCloud from './nav-page/WordCloud';
-import Dashboard from './nav-page/DashBoard';
+import WordCloud from './nav page/WordCloud';
+import Dashboard from './nav page/DashBoard';
 import LandingPage from './pages/LandingPage';
+import { createTheme, ThemeProvider, CssBaseline } from '@mui/material';
 
 const { Content, Footer } = Layout;
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#1976d2',
+    },
+    secondary: {
+      main: '#dc004e',
+    },
+  },
+});
 
 function App() {
   useEffect(() => {
@@ -88,48 +100,51 @@ function App() {
   }, []);
 
   return (
-    <Router>
-      <Layout style={{ minHeight: '100vh' }}>
-        <CustomHeader /> {/* CustomHeader Ïª¥Ìè¨?Ñå?ä∏ */}
-        <Content
-          style={{
-            margin: '24px 16px',
-            padding: 24,
-            background: '#fff',
-            textAlign: 'center',
-          }}
-        >
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignupPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/profileupdate" element={<ProfileUpdate />} />
-            <Route path="/SteamLoginButton" element={<SteamLoginButton />} />
-            <Route
-              path="/oauth/steam/callback"
-              element={<HandleSteamCallback />}
-            />
-            <Route path="/gamegraph" element={<GameGraph />} /> {/*  */}
-            <Route path="/chart" element={<Chart />} /> {/*  */}
-            <Route path="/gamelist" element={<GameList />} /> {/*  */}
-            <Route path="/wordcloud" element={<WordCloud />} /> {/*  */}
-            <Route path="/wordcloud/:appid" element={<WordCloud />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/landing" element={<LandingPage />} />
-          </Routes>
-        </Content>
-        <Footer
-          style={{
-            backgroundColor: '#4096ff',
-            color: '#fff',
-            textAlign: 'center',
-          }}
-        >
-          Footer
-        </Footer>
-      </Layout>
-    </Router>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Router>
+        <Layout style={{ minHeight: '100vh' }}>
+          <CustomHeader />
+          <Content
+            style={{
+              margin: '24px 16px',
+              padding: 24,
+              background: '#fff',
+              textAlign: 'center',
+            }}
+          >
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/signup" element={<SignupPage />} />
+              <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/profileupdate" element={<ProfileUpdate />} />
+              <Route path="/SteamLoginButton" element={<SteamLoginButton />} />
+              <Route
+                path="/oauth/steam/callback"
+                element={<HandleSteamCallback />}
+              />
+              <Route path="/gamegraph" element={<GameGraph />} />
+              <Route path="/chart" element={<Chart />} />
+              <Route path="/gamelist" element={<GameList />} />
+              <Route path="/wordcloud" element={<WordCloud />} />
+              <Route path="/wordcloud/:appid" element={<WordCloud />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/landing" element={<LandingPage />} />
+            </Routes>
+          </Content>
+          <Footer
+            style={{
+              backgroundColor: '#4096ff',
+              color: '#fff',
+              textAlign: 'center',
+            }}
+          >
+            Footer
+          </Footer>
+        </Layout>
+      </Router>
+    </ThemeProvider>
   );
 }
 

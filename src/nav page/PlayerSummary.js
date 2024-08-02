@@ -21,27 +21,20 @@ const PlayerSummary = ({ steamid }) => {
   }, [steamid]);
 
   return (
-    <Card title="사용자 정보">
+    <div style={{ textAlign: 'center' }}>
       {player ? (
         <div>
-          <p>Name: {player.personaname}</p>
-          {/*<p>
-            Profile URL:{' '}
-            <a
-              href={player.profileurl}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {player.profileurl}
-            </a>
-          </p>
-          <p>Status: {player.personastate}</p>*/}
-          <img src={player.avatarfull} alt="Avatar" />
+          <p style={{ marginBottom: '8px' }}>Name: {player.personaname}</p>
+          <img
+            src={player.avatarfull}
+            alt="Avatar"
+            style={{ width: '80px', height: '80px', borderRadius: '50%' }} // 이미지 크기 조정 및 둥근 테두리 적용
+          />
         </div>
       ) : (
         <p>Loading...</p>
       )}
-    </Card>
+    </div>
   );
 };
 
