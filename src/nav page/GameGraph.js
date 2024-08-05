@@ -79,6 +79,10 @@ const GameGraph = () => {
     return [value, props.payload.name];
   };
 
+  const formatYAxis = (tickItem) => {
+    return new Intl.NumberFormat().format(tickItem);
+  };
+
   return (
     <div>
       <Typography.Title level={4}>많이 플레이한 게임</Typography.Title>
@@ -98,6 +102,7 @@ const GameGraph = () => {
             <YAxis
               type="number"
               tickCount={9}
+              tickFormatter={formatYAxis}
               label={{
                 value: '시간',
                 angle: 0,

@@ -77,7 +77,7 @@ const LandingPage = () => {
   return (
     <ThemeProvider theme={showCustomTheme ? LPtheme : defaultTheme}>
       <CssBaseline />
-      <AppAppBar mode={mode} toggleColorMode={toggleColorMode} />
+
       <Hero />
       <Box sx={{ bgcolor: 'background.default' }}>
         <LogoCollection />

@@ -60,6 +60,10 @@ const CustomHeader = () => {
     }
   };
 
+  const handleLogoClick = () => {
+    navigate('/'); // Home 페이지로 이동
+  };
+
   return (
     <div
       style={{
@@ -72,7 +76,12 @@ const CustomHeader = () => {
         alignItems: 'center',
       }}
     >
-      <div style={{ fontSize: '1.5em' }}>Logo</div>
+      <div
+        style={{ fontSize: '1.5em', cursor: 'pointer' }}
+        onClick={handleLogoClick}
+      >
+        Logo
+      </div>
       <Menu
         theme="dark"
         mode="horizontal"

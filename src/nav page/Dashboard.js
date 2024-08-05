@@ -108,7 +108,7 @@ const Dashboard = () => {
   return (
     <DashboardContainer>
       <Typography variant="h4" gutterBottom>
-        Steam Dashboard
+        <div>Steam Dashboard</div>
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6} md={4}>
