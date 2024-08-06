@@ -4,12 +4,11 @@ import { message, Typography } from 'antd';
 import axiosInstance from '../api/axiosInstance';
 import { getUserInfoFromToken } from '../components/parsejwt';
 import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
+  PieChart,
+  Pie,
+  Cell,
   Tooltip,
-  CartesianGrid,
+  Legend,
   ResponsiveContainer,
 } from 'recharts';
 import { Box } from '@mui/material';
@@ -74,32 +73,75 @@ const Chart = () => {
     (a, b) => b.playtime_2weeks - a.playtime_2weeks
   );
 
+  const COLORS = [
+    '#0088FE',
+    '#00C49F',
+    '#FFBB28',
+    '#FF8042',
+    '#A28EEC',
+    '#82CA9D',
+    '#8884D8',
+    '#8DD1E1',
+    '#83A6ED',
+    '#8B5CF6',
+    '#D88A4B',
+    '#A4DE6C',
+  ];
+
+  const RADIAN = Math.PI / 180;
+  const renderCustomizedLabel = ({
+    cx,
+    cy,
+    midAngle,
+    innerRadius,
+    outerRadius,
+    percent,
+    index,
+  }) => {
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+    return (
+      <text
+        x={x}
+        y={y}
+        fill="white"
+        textAnchor={x > cx ? 'start' : 'end'}
+        dominantBaseline="central"
+      >
+        {`${(percent * 100).toFixed(0)}%`}
+      </text>
+    );
+  };
+
   return (
     <div>
       <Typography.Title level={4}>최근 2주 동안 플레이한 게임</Typography.Title>
       <Box>
         <ResponsiveContainer width="100%" height={500}>
-          <LineChart data={sortedGames.slice(0, 12)}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis
-              dataKey="name"
-              type="category"
-              interval={0}
-              tick={{ fontSize: 10 }}
-            />
-            <YAxis
-              type="number"
-              tickCount={9}
-              domain={[0, 'dataMax']}
-              ticks={[
-                0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 6.0, 7.0,
-                8.0, 9.0, 10.0,
-              ]}
-              label={{ value: '시간', angle: 0, position: 'insideLeft' }}
-            />
+          <PieChart>
+            <Pie
+              data={sortedGames.slice(0, 12)}
+              dataKey="playtime_2weeks"
+              nameKey="name"
+              cx="50%"
+              cy="50%"
+              outerRadius={150}
+              fill="#8884d8"
+              labelLine={false}
+              label={renderCustomizedLabel} // 커스텀 라벨 함수
+            >
+              {sortedGames.slice(0, 12).map((entry, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                />
+              ))}
+            </Pie>
             <Tooltip formatter={(value) => `${value} 시간`} />
-            <Line type="monotone" dataKey="playtime_2weeks" stroke="#8884d8" />
-          </LineChart>
+            <Legend />
+          </PieChart>
         </ResponsiveContainer>
       </Box>
     </div>
