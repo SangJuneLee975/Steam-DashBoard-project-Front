@@ -13,6 +13,7 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import { Box } from '@mui/material';
+import CustomAxis from './CustomAxis';
 
 const GameGraph = () => {
   const navigate = useNavigate();
@@ -48,6 +49,7 @@ const GameGraph = () => {
         const gamesInMinutes = response.data.response.games.map((game) => ({
           ...game,
           playtime_forever: game.playtime_forever / 60,
+          img_icon_url: game.img_icon_url,
         }));
         setGames(gamesInMinutes);
       } catch (error) {
@@ -87,16 +89,15 @@ const GameGraph = () => {
     <div>
       <Typography.Title level={4}>많이 플레이한 게임</Typography.Title>
       <Box>
-        <ResponsiveContainer width="100%" height={500}>
+        <ResponsiveContainer width="100%" height={650}>
           <BarChart data={sortedGames.slice(0, 12)}>
             <CartesianGrid strokeDasharray="3 3" />
 
             <XAxis
-              dataKey="name"
-              type="category"
-              interval={0}
-              tick={{ fontSize: 10 }}
-              tickFormatter={formatXAxis}
+              dataKey="appid"
+              tick={({ x, y, payload }) => (
+                <CustomAxis x={x} y={y} payload={payload} games={games} />
+              )}
             />
 
             <YAxis
