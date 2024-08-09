@@ -6,6 +6,30 @@ import { getUserInfoFromToken } from '../components/parsejwt';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import styled from 'styled-components';
+
+const ProfileInfo = styled.div`
+  margin-bottom: 20px;
+`;
+
+const GameCard = styled.div`
+  text-align: center;
+
+  img {
+    width: 100%;
+    height: 100px;
+    object-fit: contain;
+  }
+
+  a {
+    color: ${(props) => props.theme.colors.main};
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+`;
 
 const GameList = () => {
   const navigate = useNavigate();

@@ -10,6 +10,7 @@ import DevicesRoundedIcon from '@mui/icons-material/DevicesRounded';
 import EdgesensorHighRoundedIcon from '@mui/icons-material/EdgesensorHighRounded';
 import ViewQuiltRoundedIcon from '@mui/icons-material/ViewQuiltRounded';
 import Stack from '@mui/material/Stack';
+import styled from 'styled-components';
 
 const items = [
   {
@@ -38,6 +39,34 @@ const items = [
     imageStyles: { width: '100%', height: '100%', backgroundSize: 'contain' },
   },
 ];
+
+const IconContainer = styled.div`
+  color: ${(props) =>
+    props.selected
+      ? props.theme.colors.secondary
+      : props.theme.colors.textSecondary};
+`;
+
+const Title = styled.h3`
+  color: ${(props) => props.theme.colors.main};
+  font-size: 1.25em;
+  margin: ${(props) => props.theme.spacing(2)}px 0 0 0;
+`;
+
+const Description = styled.p`
+  color: ${(props) => props.theme.colors.textSecondary};
+  font-size: 1em;
+`;
+
+const ImageContainer = styled.div`
+  flex: 1;
+  min-height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-size: cover;
+  background-position: center;
+`;
 
 export default function Features() {
   const [selectedItemIndex, setSelectedItemIndex] = React.useState(null); // 초기값을 null로 주어서, 이미지가 상시 나오지 않게 설정

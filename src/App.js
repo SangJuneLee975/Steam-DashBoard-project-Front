@@ -17,8 +17,9 @@ import WordCloud from './nav page/WordCloud';
 import Dashboard from './nav page/DashBoard';
 import LandingPage from './pages/LandingPage';
 import { createTheme, ThemeProvider, CssBaseline } from '@mui/material';
+import styled from 'styled-components';
 
-const { Content, Footer } = Layout;
+const { Content } = Layout;
 
 const theme = createTheme({
   palette: {
@@ -133,15 +134,6 @@ function App() {
               <Route path="/landing" element={<LandingPage />} />
             </Routes>
           </Content>
-          <Footer
-            style={{
-              backgroundColor: '#4096ff',
-              color: '#fff',
-              textAlign: 'center',
-            }}
-          >
-            Footer
-          </Footer>
         </Layout>
       </Router>
     </ThemeProvider>
