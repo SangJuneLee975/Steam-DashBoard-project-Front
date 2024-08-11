@@ -14,6 +14,17 @@ import {
 } from 'recharts';
 import { Box } from '@mui/material';
 import CustomAxis from './CustomAxis';
+import styled from 'styled-components';
+import { Container as MuiContainer } from '@mui/material';
+
+const ChartContainer = styled(MuiContainer)`
+  padding-top: ${(props) => props.theme.spacing(3)};
+  padding-bottom: ${(props) => props.theme.spacing(3)};
+  max-width: lg;
+  background-color: ${(props) => props.theme.colors.lightGray};
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+`;
 
 const GameGraph = () => {
   const navigate = useNavigate();
@@ -89,8 +100,11 @@ const GameGraph = () => {
     <div>
       <Typography.Title level={4}>많이 플레이한 게임</Typography.Title>
       <Box>
-        <ResponsiveContainer width="100%" height={650}>
-          <BarChart data={sortedGames.slice(0, 12)}>
+        <ResponsiveContainer width="100%" height={700}>
+          <BarChart
+            data={sortedGames.slice(0, 12)}
+            margin={{ top: 20, right: 30, left: 20, bottom: 40 }} // margin 설정 추가
+          >
             <CartesianGrid strokeDasharray="3 3" />
 
             <XAxis

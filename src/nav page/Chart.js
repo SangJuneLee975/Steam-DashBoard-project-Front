@@ -90,6 +90,7 @@ const Chart = () => {
 
   const RADIAN = Math.PI / 180;
   const renderCustomizedLabel = ({
+    // 퍼센트 표새해주는 함수
     cx,
     cy,
     midAngle,
@@ -130,7 +131,7 @@ const Chart = () => {
               outerRadius={150}
               fill="#8884d8"
               labelLine={false}
-              label={renderCustomizedLabel} // 커스텀 라벨 함수
+              label={renderCustomizedLabel} // 커스텀 라벨
             >
               {sortedGames.slice(0, 12).map((entry, index) => (
                 <Cell

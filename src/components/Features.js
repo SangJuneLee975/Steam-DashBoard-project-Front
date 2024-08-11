@@ -73,7 +73,7 @@ export default function Features() {
   const [hoveredItemIndex, setHoveredItemIndex] = React.useState(null);
   const navigate = useNavigate();
 
-  // 항목 클릭 시 선택된 항목 인덱스를 설정
+  // 항목 클릭 시 선택된 항목 설정
   const handleItemClick = (index) => {
     setSelectedItemIndex(index);
   };
@@ -81,12 +81,12 @@ export default function Features() {
   const handleCardClick = (link) => {
     navigate(link);
   };
-  // 마우스를 항목에 올렸을 때
+  // 마우스를 메뉴에 올렸을 때
   const handleMouseEnter = (index) => {
     setHoveredItemIndex(index);
   };
 
-  // 마우스를 항목에서 뗐을 때
+  // 마우스를 메뉴에서 뗐을 때
   const handleMouseLeave = () => {
     setHoveredItemIndex(null);
   };

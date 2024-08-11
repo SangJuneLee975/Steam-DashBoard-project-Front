@@ -7,10 +7,10 @@ const CustomAxis = ({ x, y, payload, games }) => {
     <g transform={`translate(${x},${y})`}>
       <image
         href={`http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`}
-        x={-12}
+        x={-21}
         y={9}
-        height={18}
-        width={18}
+        height={48}
+        width={48}
       />
       <text x={0} y={0} dy={7} textAnchor="middle" fill="#666">
         {game.name.length > 20 ? game.name.slice(0, 18) + '...' : game.name}{' '}

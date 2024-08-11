@@ -10,33 +10,39 @@ import {
 } from '@mui/material';
 import axiosInstance from '../api/axiosInstance';
 import { getUserInfoFromToken } from '../components/parsejwt';
-import Chart from './Chart'; // 차트 컴포넌트 추가
+import Chart from './Chart';
 import CurrentPlayers from './CurrentPlayers';
-import PlayerSummary from './PlayerSummary'; // PlayerSummary 컴포넌트 import
+import PlayerSummary from './PlayerSummary';
 import GameGraph from './GameGraph';
 import styled, { ThemeProvider } from 'styled-components';
 
 const theme = {
   colors: {
-    main: '#1E90FF', // 파란색
-    secondary: '#32CD32', // 초록색
-    gray: '#A9A9A9', // 회색
-    textPrimary: '#333', // 기본 텍스트 색상
-    textSecondary: '#777', // 부가 텍스트 색상
+    main: '#1E90FF', // 메인 색상: 파란색
+    secondary: '#32CD32', // 보조 색상: 초록색
+    gray: '#A9A9A9', // 중간 회색
+    lightGray: '#f5f5f5', // 밝은 회색
+    textPrimary: '#333', // 진한 회색
+    textSecondary: '#777', // 연한 회색
   },
   spacing: (factor) => `${factor * 8}px`,
 };
 
 const Title = styled(Typography)`
   color: ${(props) => props.theme.colors.main};
-  font-size: 1.5em;
-  margin-bottom: ${(props) => props.theme.spacing(2)};
+  font-size: 2em;
+  font-weight: bold;
+  margin-bottom: ${(props) => props.theme.spacing(3)};
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 `;
 
 const DashboardContainer = styled(MuiContainer)`
   padding-top: ${(props) => props.theme.spacing(3)};
   padding-bottom: ${(props) => props.theme.spacing(3)};
   max-width: lg;
+  background-color: ${(props) => props.theme.colors.lightGray};
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 `;
 
 const DashboardCard = styled(MuiCard)`
@@ -44,9 +50,14 @@ const DashboardCard = styled(MuiCard)`
   color: ${(props) => props.theme.colors.textSecondary};
   padding: ${(props) => props.theme.spacing(2)};
   cursor: ${(props) => (props.onClick ? 'pointer' : 'default')};
+  background-color: white;
+  border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+
   &:hover {
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   }
 `;
 
@@ -126,7 +137,7 @@ const Dashboard = () => {
         }
       } catch (error) {
         console.error('Error fetching steam data:', error);
-        message.error('스팀 데이터를 가져오는 중 오류가 발생했습니다.');
+        message.error('스팀 데이터를 가져오는 중 오류가 발생했습니다..');
       }
     };
 
