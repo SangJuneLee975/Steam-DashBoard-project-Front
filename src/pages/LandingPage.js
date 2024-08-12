@@ -81,7 +81,7 @@ const LandingPage = () => {
       <Hero />
       <Box sx={{ bgcolor: 'background.default' }}>
         <LogoCollection />
-        <Features />
+
         <Divider />
         <Testimonials />
         <Divider />

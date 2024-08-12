@@ -103,8 +103,13 @@ export default function Hero() {
               theme.palette.mode === 'light'
                 ? `0 0 12px 8px ${alpha('#9CCCFC', 0.2)}`
                 : `0 0 24px 12px ${alpha('#033363', 0.2)}`,
+            display: 'flex', // 가운데 정렬
+            justifyContent: 'center',
+            alignItems: 'center',
           })}
-        />
+        >
+          <Features /> {/* */}
+        </Box>
       </Container>
     </Box>
   );
