@@ -18,8 +18,8 @@ import styled, { ThemeProvider } from 'styled-components';
 
 const theme = {
   colors: {
-    main: '#1E90FF', // 메인 색상: 파란색
-    secondary: '#32CD32', // 보조 색상: 초록색
+    main: '#1E90FF', // 메인 색상 : 파란색
+    secondary: '#32CD32', // 보조 색상 : 초록색
     gray: '#A9A9A9', // 중간 회색
     lightGray: '#f5f5f5', // 밝은 회색
     textPrimary: '#333', // 진한 회색
