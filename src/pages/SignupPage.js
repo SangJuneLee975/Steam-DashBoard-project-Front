@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Form, Input, Button, message } from 'antd';
 import axios from 'axios';
 import '../css/Signup.css';
+import axiosInstance from '../api/axiosInstance'; // axiosInstance 사용
+
+const apiUrl = process.env.REACT_APP_API_URL || 'https://stdash.shop';
 
 const SignupPage = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const [isUserIdValid, setIsUserIdValid] = useState(false);
   const [formIsValid, setFormIsValid] = useState(false);
 
@@ -17,10 +22,10 @@ const SignupPage = () => {
       return;
     }
     try {
-      const response = await axios.get(
-        `https://localhost:8080/user/checkUserId`,
-        { params: { userId } }
-      );
+      const response = await axiosInstance.get('/user/checkUserId', {
+        params: { userId },
+      });
+      console.log('응답 데이터:', response.data); // 응답 데이터 확인npm
       if (response.data.isAvailable) {
         message.success('사용 가능한 아이디입니다.');
         setIsUserIdValid(true);
@@ -42,19 +47,16 @@ const SignupPage = () => {
     }
     setLoading(true);
     try {
-      const response = await axios.post(
-        'https://localhost:8080/user/signup',
-        values,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+      const response = await axiosInstance.post('/user/signup', values, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
       const backendMessage = response.data.message;
       message.success(backendMessage || '회원가입 성공');
-      form.resetFields(); // 폼 초기화
+      form.resetFields();
+      navigate('/login'); // 페이지 이동
     } catch (error) {
       console.error('회원가입 에러:', error);
       message.error('회원가입 중 문제가 발생했습니다.');

@@ -13,4 +13,10 @@ module.exports = {
       util: require.resolve('util/'),
     },
   },
+
+  devServer: {
+    allowedHosts: 'all', // 모든 호스트를 허용합니다.
+    https: true, // HTTPS 활성화 (만약 필요 없다면 false로 설정)
+    port: 3000, // 리액트 기본 포트
+  },
 };

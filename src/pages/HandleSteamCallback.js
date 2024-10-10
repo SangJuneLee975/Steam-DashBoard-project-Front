@@ -22,7 +22,7 @@ const HandleSteamCallback = () => {
     if (steamId) {
       // Steam Web API를 통해 사용자 정보 가져오기
       axiosInstance
-        .get(`/oauth/steam/profile/${steamId}`)
+        .get(`${process.env.REACT_APP_API_URL}/oauth/steam/profile/${steamId}`)
         .then((response) => {
           const profile = response.data.response.players[0];
           const steamNickname = profile.personaname;
@@ -38,10 +38,13 @@ const HandleSteamCallback = () => {
           setAccessToken(accessToken); // URL에서 받은 accessToken 사용
 
           // 서버에 연동 요청 보내기
-          return axiosInstance.post('/oauth/steam/link', {
-            steamId,
-            steamNickname,
-          });
+          return axiosInstance.post(
+            `${process.env.REACT_APP_API_URL}/oauth/steam/link`,
+            {
+              steamId,
+              steamNickname,
+            }
+          );
         })
         .then((response) => {
           console.log('Steam linked successfully:', response.data);

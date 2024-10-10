@@ -34,6 +34,7 @@ const GameCard = styled.div`
 const GameList = () => {
   const navigate = useNavigate();
   const [profile, setProfile] = useState(null);
+  const [hasSteamId, setHasSteamId] = useState(false);
   const [games, setGames] = useState([]);
 
   useEffect(() => {
@@ -49,8 +50,7 @@ const GameList = () => {
         if (userInfo && userInfo.steamId) {
           fetchSteamData(userInfo.steamId);
         } else {
-          message.warning('스팀 계정을 연동해 주세요.');
-          navigate('/profile');
+          setHasSteamId(true);
         }
       } catch (error) {
         console.error('Failed to check steam link:', error);
@@ -124,47 +124,68 @@ const GameList = () => {
   };
 
   return (
-    <div>
-      <Typography.Title level={4}></Typography.Title>
-      {profile && (
-        <div>
-          <p> {profile.steamid}</p>
-          <p> {profile.personaname}</p>
-          <p>
-            <a href={profile.profileurl}>{profile.profileurl}</a>
-          </p>
-        </div>
-      )}
-      <Typography.Title level={4}>소유한 게임 목록</Typography.Title>
-      <Slider {...settings}>
-        {games.map((game) => (
-          <div key={game.appid}>
-            <Card
-              cover={
-                <img
-                  alt={game.name}
-                  src={
-                    game.img_logo_url
-                      ? `http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_logo_url}.jpg`
-                      : `http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`
-                  }
-                  style={{
-                    width: '100%',
-                    height: '100px',
-                    objectFit: 'contain',
-                  }}
-                />
-              }
-            >
-              <Card.Meta
-                title={
-                  <a onClick={() => handleGameClick(game.appid)}>{game.name}</a>
-                }
-              />
-            </Card>
+    <div style={{ position: 'relative', minHeight: '100vh' }}>
+      <div
+        style={{
+          backgroundImage: "url('/images/GameList_background.PNG')",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          minHeight: '100vh',
+          filter: 'blur(5px)',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          zIndex: 0, // 배경이 뒤쪽에 배치되도록 설정
+        }}
+      ></div>
+
+      <div style={{ position: 'relative', zIndex: 1, padding: '20px' }}>
+        <Typography.Title level={4}></Typography.Title>
+        {profile && (
+          <div>
+            <p> {profile.steamid}</p>
+            <p> {profile.personaname}</p>
+            <p>
+              <a href={profile.profileurl}>{profile.profileurl}</a>
+            </p>
           </div>
-        ))}
-      </Slider>
+        )}
+        <Typography.Title level={4}>소유한 게임 목록</Typography.Title>
+        <Slider {...settings}>
+          {games.map((game) => (
+            <div key={game.appid}>
+              <Card
+                cover={
+                  <img
+                    alt={game.name}
+                    src={
+                      game.img_logo_url
+                        ? `http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_logo_url}.jpg`
+                        : `http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`
+                    }
+                    style={{
+                      width: '100%',
+                      height: '100px',
+                      objectFit: 'contain',
+                    }}
+                  />
+                }
+              >
+                <Card.Meta
+                  title={
+                    <a onClick={() => handleGameClick(game.appid)}>
+                      {game.name}
+                    </a>
+                  }
+                />
+              </Card>
+            </div>
+          ))}
+        </Slider>
+      </div>
     </div>
   );
 };

@@ -18,12 +18,12 @@ import styled, { ThemeProvider } from 'styled-components';
 
 const theme = {
   colors: {
-    main: '#1E90FF', // 메인 색상 : 파란색
-    secondary: '#32CD32', // 보조 색상 : 초록색
-    gray: '#A9A9A9', // 중간 회색
-    lightGray: '#f5f5f5', // 밝은 회색
-    textPrimary: '#333', // 진한 회색
-    textSecondary: '#777', // 연한 회색
+    main: '#1E90FF', // 硫붿씤 �깋�긽 : �뙆����깋
+    secondary: '#32CD32', // 蹂댁“ �깋�긽 : 珥덈줉�깋
+    gray: '#A9A9A9', // 以묎컙 �쉶�깋
+    lightGray: '#f5f5f5', // 諛앹�� �쉶�깋
+    textPrimary: '#333', // 吏꾪븳 �쉶�깋
+    textSecondary: '#777', // �뿰�븳 �쉶�깋
   },
   spacing: (factor) => `${factor * 8}px`,
 };
@@ -97,13 +97,9 @@ const Dashboard = () => {
           setSteamId(userInfo.steamId);
           fetchDashboardData(userInfo.steamId);
         } else {
-          message.warning('스팀 계정을 연동해 주세요.');
-          navigate('/profile');
         }
       } catch (error) {
-        console.error('Failed to check steam link:', error);
-        message.error('오류가 발생했습니다. 다시 시도해주세요.');
-        navigate('/login');
+        setHasSteamId(true);
       }
     };
 
@@ -137,7 +133,6 @@ const Dashboard = () => {
         }
       } catch (error) {
         console.error('Error fetching steam data:', error);
-        message.error('스팀 데이터를 가져오는 중 오류가 발생했습니다..');
       }
     };
 
@@ -186,13 +181,13 @@ const Dashboard = () => {
           <Grid item xs={12}>
             <DashboardCard onClick={() => navigate('/chart')}>
               <StyledTypography variant="h6" gutterBottom />
-              <Chart /> {/* 차트 컴포넌트 추가 */}
+              <Chart />
             </DashboardCard>
           </Grid>
           <Grid item xs={12}>
             <DashboardCard onClick={() => navigate('/gamegraph')}>
               <StyledTypography variant="h6" gutterBottom />
-              <GameGraph /> {/* 많이 플레이한 게임 차트 추가 */}
+              <GameGraph />
             </DashboardCard>
           </Grid>
           <Grid item xs={12}></Grid>

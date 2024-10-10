@@ -1,8 +1,14 @@
 import axios from 'axios';
 
+const apiUrl = process.env.REACT_APP_API_URL || 'https://localhost:8080';
+//const apiUrl = process.env.REACT_APP_API_URL || 'https://stdash.shop';
+
 // Axios 인스턴스 생성
 const axiosInstance = axios.create({
-  baseURL: 'https://localhost:8080',
+  baseURL: apiUrl,
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
 // 요청 인터셉터 추가

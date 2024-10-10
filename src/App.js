@@ -18,6 +18,11 @@ import Dashboard from './nav page/DashBoard';
 import LandingPage from './pages/LandingPage';
 import { createTheme, ThemeProvider, CssBaseline } from '@mui/material';
 import styled from 'styled-components';
+import HandleSteamLoginCallback from './pages/HandleSteamLoginCallback';
+import HandleSteamLinkCallback from './pages/HandleSteamLinkCallback';
+import SteamConnectButton from './pages/SteamConnectButton';
+import TodoListPage from './pages/TodoListPage';
+import Piano from './pages/Piano';
 
 const { Content } = Layout;
 
@@ -121,6 +126,7 @@ function App() {
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/profileupdate" element={<ProfileUpdate />} />
               <Route path="/SteamLoginButton" element={<SteamLoginButton />} />
+              <Route path="/steam-connect" element={<SteamConnectButton />} />
               <Route
                 path="/oauth/steam/callback"
                 element={<HandleSteamCallback />}
@@ -132,6 +138,16 @@ function App() {
               <Route path="/wordcloud/:appid" element={<WordCloud />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/landing" element={<LandingPage />} />
+              <Route
+                path="/oauth/steam/login/callback"
+                element={<HandleSteamLoginCallback />}
+              />
+              <Route
+                path="/oauth/steam/link/callback"
+                element={<HandleSteamLinkCallback />}
+              />
+              <Route path="/todolist" element={<TodoListPage />} />
+              <Route path="/piano" element={<Piano />} />
             </Routes>
           </Content>
         </Layout>

@@ -11,6 +11,8 @@ const items = [
   { key: '2', label: '차트', link: '/chart' },
   { key: '3', label: '게임목록', link: '/gamelist' },
   { key: '4', label: '대시보드', link: '/dashboard' },
+  { key: '5', label: 'TodoList', link: '/todolist' },
+  { key: '6', label: 'piano', link: '/piano' },
 ];
 
 const CustomHeader = () => {
@@ -32,7 +34,7 @@ const CustomHeader = () => {
   }, [setIsLoggedIn, setUserName]);
 
   const handleProfile = () => {
-    navigate('/profile'); // 프로필 페이지로 이동
+    navigate('/profile');
   };
 
   const handleLogout = () => {
@@ -52,13 +54,39 @@ const CustomHeader = () => {
   };
 
   const handleMenuClick = (link) => {
-    if (checkSteamIdInToken()) {
+    // 그래프, 차트, 게임목록, 대시보드 메뉴일 경우 스팀 계정 연동 확인하지 않음
+    if (
+      link === '/todolist' ||
+      link === '/piano' ||
+      link === '/gamegraph' ||
+      link === '/chart' ||
+      link === '/gamelist' ||
+      link === '/dashboard'
+    ) {
       navigate(link);
     } else {
-      navigate('/profile'); // 스팀계정 비연동 유저는 프로필페이지로 이동
-      message.warning('스팀 계정을 연동해 주세요.');
+      if (checkSteamIdInToken()) {
+        navigate(link);
+      } else {
+        navigate('/profile'); // 스팀 계정 비연동 유저는 프로필페이지로 이동
+        message.warning('스팀 계정을 연동해 주세요.');
+      }
     }
   };
+
+  // const handleMenuClick = (link) => {
+  //   // TodoList 메뉴일 경우에는 스팀 계정 연동 확인하지 않음
+  //   if (link === '/todolist' || link === '/piano') {
+  //     navigate(link);
+  //   } else {
+  //     if (checkSteamIdInToken()) {
+  //       navigate(link);
+  //     } else {
+  //       navigate('/profile'); // 스팀 계정 비연동 유저는 프로필페이지로 이동
+  //       message.warning('스팀 계정을 연동해 주세요.');
+  //     }
+  //   }
+  // };
 
   const handleLogoClick = () => {
     navigate('/'); // Home 페이지로 이동

@@ -150,6 +150,7 @@ const LoginPage = () => {
       });
       if (response.data.accessToken) {
         await handleLoginSuccess(response.data);
+        navigate('/');
       } else {
         message.error('로그인 실패: 서버로부터 올바른 토큰을 받지 못함');
       }

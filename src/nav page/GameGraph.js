@@ -45,8 +45,9 @@ const GameGraph = () => {
           setHasSteamId(true);
           fetchGames(userInfo.steamId);
         } else {
-          message.warning('스팀 계정을 연동해 주세요.');
-          navigate('/profile');
+          setHasSteamId(true);
+          //    message.warning('스팀 계정을 연동해 주세요.');
+          //   navigate('/profile');
         }
       } catch (error) {
         message.error('오류가 발생했습니다. 다시 시도해주세요.');
@@ -56,7 +57,8 @@ const GameGraph = () => {
 
     const fetchGames = async (steamId) => {
       try {
-        const response = await axiosInstance.get(`/steam/ownedGames`);
+        const response = await axiosInstance.get(`/steam/ownedGames`, {});
+        //const response = await axiosInstance.get(`/steam/ownedGames`);
         const gamesInMinutes = response.data.response.games.map((game) => ({
           ...game,
           playtime_forever: game.playtime_forever / 60,
@@ -97,39 +99,58 @@ const GameGraph = () => {
   };
 
   return (
-    <div>
-      <Typography.Title level={4}>많이 플레이한 게임</Typography.Title>
-      <Box>
-        <ResponsiveContainer width="100%" height={700}>
-          <BarChart
-            data={sortedGames.slice(0, 12)}
-            margin={{ top: 20, right: 30, left: 20, bottom: 40 }} // margin 설정 추가
-          >
-            <CartesianGrid strokeDasharray="3 3" />
+    <div style={{ position: 'relative', minHeight: '100vh' }}>
+      <div
+        style={{
+          backgroundImage: "url('../images/GameGraph_background.PNG')",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          minHeight: '100vh',
+          filter: 'blur(7px)', // 블러 효과
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          zIndex: 0, // 배경 순서 위치
+        }}
+      ></div>
 
-            <XAxis
-              dataKey="appid"
-              tick={({ x, y, payload }) => (
-                <CustomAxis x={x} y={y} payload={payload} games={games} />
-              )}
-            />
+      <div style={{ position: 'relative', zIndex: 1, padding: '20px' }}>
+        <Typography.Title level={4}>많이 플레이한 게임</Typography.Title>
+        <Box>
+          <ResponsiveContainer width="100%" height={700}>
+            <BarChart
+              data={sortedGames.slice(0, 12)}
+              margin={{ top: 20, right: 30, left: 20, bottom: 40 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
 
-            <YAxis
-              type="number"
-              tickCount={9}
-              tickFormatter={formatYAxis}
-              label={{
-                value: '시간',
-                angle: 0,
-                position: 'insideLeft',
-                dx: -5,
-              }}
-            />
-            <Tooltip />
-            <Bar dataKey="playtime_forever" fill="#8884d8" />
-          </BarChart>
-        </ResponsiveContainer>
-      </Box>
+              <XAxis
+                dataKey="appid"
+                tick={({ x, y, payload }) => (
+                  <CustomAxis x={x} y={y} payload={payload} games={games} />
+                )}
+              />
+
+              <YAxis
+                type="number"
+                tickCount={9}
+                tickFormatter={formatYAxis}
+                label={{
+                  value: '시간',
+                  angle: 0,
+                  position: 'insideLeft',
+                  dx: -5,
+                }}
+              />
+              <Tooltip />
+              <Bar dataKey="playtime_forever" fill="#8884d8" />
+            </BarChart>
+          </ResponsiveContainer>
+        </Box>
+      </div>
     </div>
   );
 };

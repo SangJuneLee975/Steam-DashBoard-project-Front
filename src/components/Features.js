@@ -12,12 +12,15 @@ import ViewQuiltRoundedIcon from '@mui/icons-material/ViewQuiltRounded';
 import Stack from '@mui/material/Stack';
 import styled from 'styled-components';
 
+// 환경 변수에서 이미지 경로 가져오기
+const IMAGE_PATH = process.env.REACT_APP_IMAGE_PATH || '/images/'; // 환경 변수 경로를 올바르게 참조
+
 const items = [
   {
     icon: <ViewQuiltRoundedIcon />,
     title: '대시보드',
     description: '스팀 계정과 연동하여 개인 맞춤형 게임 정보를 제공합니다.',
-    image: 'DashBoardimage.PNG',
+    image: `${IMAGE_PATH}DashBoardimage.PNG`, // IMAGE_PATH 사용
     link: '/dashboard',
     imageStyles: { width: '100%', height: '100%', backgroundSize: 'cover' },
   },
@@ -26,7 +29,7 @@ const items = [
     title: '게임 플레이 통계',
     description:
       '스팀 계정의 게임 플레이 시간을 그래프로 시각화하여 제공합니다.',
-    image: 'GameViewimage.PNG',
+    image: `${IMAGE_PATH}GameViewimage.PNG`, // IMAGE_PATH 사용
     link: '/chart',
     imageStyles: { width: '80%', height: '80%', backgroundSize: 'contain' },
   },
@@ -34,7 +37,7 @@ const items = [
     icon: <DevicesRoundedIcon />,
     title: '게임목록',
     description: '스팀 계정에 등록된 모든 게임 목록을 확인할 수 있습니다.',
-    image: 'GameListimage.PNG',
+    image: `${IMAGE_PATH}GameListimage.PNG`, // IMAGE_PATH 사용
     link: '/gamelist',
     imageStyles: { width: '100%', height: '100%', backgroundSize: 'contain' },
   },
@@ -69,7 +72,7 @@ const ImageContainer = styled.div`
 `;
 
 export default function Features() {
-  const [selectedItemIndex, setSelectedItemIndex] = React.useState(null); // 초기값을 null로 주어서, 이미지가 상시 나오지 않게 설정
+  const [selectedItemIndex, setSelectedItemIndex] = React.useState(null); // 초기값을 null로 설정
   const [hoveredItemIndex, setHoveredItemIndex] = React.useState(null);
   const navigate = useNavigate();
 
@@ -81,6 +84,7 @@ export default function Features() {
   const handleCardClick = (link) => {
     navigate(link);
   };
+
   // 마우스를 메뉴에 올렸을 때
   const handleMouseEnter = (index) => {
     setHoveredItemIndex(index);
@@ -91,16 +95,18 @@ export default function Features() {
     setHoveredItemIndex(null);
   };
 
+  // 마우스 오버 또는 선택된 항목에 따라 배경 이미지 설정
   const getBackgroundImage = () => {
     if (hoveredItemIndex !== null) {
-      return `url(${process.env.PUBLIC_URL}/${items[hoveredItemIndex].image})`;
+      return `url(${items[hoveredItemIndex].image})`;
     } else if (selectedItemIndex !== null) {
-      return `url(${process.env.PUBLIC_URL}/${items[selectedItemIndex].image})`;
+      return `url(${items[selectedItemIndex].image})`;
     } else {
       return 'none';
     }
   };
 
+  // 마우스 오버 또는 선택된 항목에 따라 이미지 스타일 설정
   const getImageStyles = () => {
     if (hoveredItemIndex !== null) {
       return items[hoveredItemIndex].imageStyles;

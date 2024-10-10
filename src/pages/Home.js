@@ -25,10 +25,7 @@ const Home = () => {
           <p></p>
         </div>
       ) : (
-        <div>
-          <Link to="/login">로그인</Link>
-          <Link to="/signup">회원가입</Link>
-        </div>
+        <div></div>
       )}
       <LandingPage /> {/* LandingPage 컴포넌트를 추가 */}
     </div>
