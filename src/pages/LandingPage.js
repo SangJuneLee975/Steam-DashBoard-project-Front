@@ -83,15 +83,15 @@ const LandingPage = () => {
         <LogoCollection />
 
         <Divider />
-        <Testimonials />
+        {/* <Testimonials />
         <Divider />
         <Highlights />
         <Divider />
         <Pricing />
         <Divider />
-        <FAQ />
+      
         <Divider />
-        <Footer />
+        <Footer /> */}
       </Box>
       <ToggleCustomTheme
         showCustomTheme={showCustomTheme}

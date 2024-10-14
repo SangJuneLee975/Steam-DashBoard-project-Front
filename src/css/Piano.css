@@ -1,5 +1,6 @@
 .piano-background {
-  background-image: url('../images/Piano_background.PNG');
+  background-image: url('/public/images/Piano_background.png');
+
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

@@ -108,7 +108,7 @@ const CustomHeader = () => {
         style={{ fontSize: '1.5em', cursor: 'pointer' }}
         onClick={handleLogoClick}
       >
-        Logo
+        HOME
       </div>
       <Menu
         theme="dark"

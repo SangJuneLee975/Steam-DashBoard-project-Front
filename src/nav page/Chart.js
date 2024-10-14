@@ -129,7 +129,7 @@ const Chart = () => {
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
           minHeight: '100vh',
-          filter: 'blur(5px)', // 블러 효과
+          //  filter: 'blur(5px)', // 블러 효과
           position: 'absolute',
           top: 0,
           left: 0,
@@ -140,11 +140,19 @@ const Chart = () => {
       ></div>
 
       <div style={{ position: 'relative', zIndex: 1, padding: '20px' }}>
-        <Typography.Title level={4}>
+        <Typography.Title
+          level={4}
+          style={{
+            color: 'white',
+            fontSize: '28px',
+            fontWeight: 'bold',
+            textShadow: '2px 2px 4px rgba(0, 0, 0, 0.6)',
+          }}
+        >
           최근 2주 동안 플레이한 게임
         </Typography.Title>
         <Box>
-          <ResponsiveContainer width="100%" height={500}>
+          <ResponsiveContainer width="100%" height={1000}>
             <PieChart>
               <Pie
                 data={sortedGames.slice(0, 12)}
@@ -152,7 +160,7 @@ const Chart = () => {
                 nameKey="name"
                 cx="50%"
                 cy="50%"
-                outerRadius={150}
+                outerRadius={400} // 파이 차트 크기 조절
                 fill="#8884d8"
                 labelLine={false}
                 label={renderCustomizedLabel} // 커스텀 라벨

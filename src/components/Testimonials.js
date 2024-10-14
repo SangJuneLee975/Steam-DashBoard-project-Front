@@ -10,48 +10,48 @@ import Grid from '@mui/material/Grid';
 import { useTheme } from '@mui/system';
 
 const userTestimonials = [
-  {
-    avatar: <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />,
-    name: 'Remy Sharp',
-    occupation: 'Senior Engineer',
-    testimonial:
-      '우리의 서비스를 이용한 사용자들의 만족도를 확인해보세요. 게임 통계와 맞춤형 대시보드를 통해 사용자 경험을 극대화합니다.',
-  },
-  {
-    avatar: <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />,
-    name: 'Travis Howard',
-    occupation: 'Lead Product Designer',
-    testimonial:
-      "One of the standout features of this product is the exceptional customer support. In my experience, the team behind this product has been quick to respond and incredibly helpful. It's reassuring to know that they stand firmly behind their product.",
-  },
-  {
-    avatar: <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />,
-    name: 'Cindy Baker',
-    occupation: 'CTO',
-    testimonial:
-      'The level of simplicity and user-friendliness in this product has significantly simplified my life. I appreciate the creators for delivering a solution that not only meets but exceeds user expectations.',
-  },
-  {
-    avatar: <Avatar alt="Remy Sharp" src="/static/images/avatar/4.jpg" />,
-    name: 'Julia Stewart',
-    occupation: 'Senior Engineer',
-    testimonial:
-      "I appreciate the attention to detail in the design of this product. The small touches make a big difference, and it's evident that the creators focused on delivering a premium experience.",
-  },
-  {
-    avatar: <Avatar alt="Travis Howard" src="/static/images/avatar/5.jpg" />,
-    name: 'John Smith',
-    occupation: 'Product Designer',
-    testimonial:
-      "I've tried other similar products, but this one stands out for its innovative features. It's clear that the makers put a lot of thought into creating a solution that truly addresses user needs.",
-  },
-  {
-    avatar: <Avatar alt="Cindy Baker" src="/static/images/avatar/6.jpg" />,
-    name: 'Daniel Wolf',
-    occupation: 'CDO',
-    testimonial:
-      "The quality of this product exceeded my expectations. It's durable, well-designed, and built to last. Definitely worth the investment!",
-  },
+  // {
+  //   avatar: <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />,
+  //   name: 'Remy Sharp',
+  //   occupation: 'Senior Engineer',
+  //   testimonial:
+  //     '우리의 서비스를 이용한 사용자들의 만족도를 확인해보세요. 게임 통계와 맞춤형 대시보드를 통해 사용자 경험을 극대화합니다.',
+  // },
+  // {
+  //   avatar: <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />,
+  //   name: 'Travis Howard',
+  //   occupation: 'Lead Product Designer',
+  //   testimonial:
+  //     "One of the standout features of this product is the exceptional customer support. In my experience, the team behind this product has been quick to respond and incredibly helpful. It's reassuring to know that they stand firmly behind their product.",
+  // },
+  // {
+  //   avatar: <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />,
+  //   name: 'Cindy Baker',
+  //   occupation: 'CTO',
+  //   testimonial:
+  //     'The level of simplicity and user-friendliness in this product has significantly simplified my life. I appreciate the creators for delivering a solution that not only meets but exceeds user expectations.',
+  // },
+  // {
+  //   avatar: <Avatar alt="Remy Sharp" src="/static/images/avatar/4.jpg" />,
+  //   name: 'Julia Stewart',
+  //   occupation: 'Senior Engineer',
+  //   testimonial:
+  //     "I appreciate the attention to detail in the design of this product. The small touches make a big difference, and it's evident that the creators focused on delivering a premium experience.",
+  // },
+  // {
+  //   avatar: <Avatar alt="Travis Howard" src="/static/images/avatar/5.jpg" />,
+  //   name: 'John Smith',
+  //   occupation: 'Product Designer',
+  //   testimonial:
+  //     "I've tried other similar products, but this one stands out for its innovative features. It's clear that the makers put a lot of thought into creating a solution that truly addresses user needs.",
+  // },
+  // {
+  //   avatar: <Avatar alt="Cindy Baker" src="/static/images/avatar/6.jpg" />,
+  //   name: 'Daniel Wolf',
+  //   occupation: 'CDO',
+  //   testimonial:
+  //     "The quality of this product exceeded my expectations. It's durable, well-designed, and built to last. Definitely worth the investment!",
+  // },
 ];
 
 const whiteLogos = [
@@ -100,9 +100,11 @@ export default function Testimonials() {
           textAlign: { sm: 'left', md: 'center' },
         }}
       >
-        <Typography component="h2" variant="h4" color="text.primary">
-          사용후기
-        </Typography>
+        <Typography
+          component="h2"
+          variant="h4"
+          color="text.primary"
+        ></Typography>
         <Typography variant="body1" color="text.secondary">
           .
         </Typography>

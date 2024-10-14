@@ -200,9 +200,9 @@ function AppAppBar({ mode, toggleColorMode }) {
                   <MenuItem onClick={() => scrollToSection('testimonials')}>
                     Testimonials
                   </MenuItem>
-                  <MenuItem onClick={() => scrollToSection('highlights')}>
-                    Highlights
-                  </MenuItem>
+                  <MenuItem
+                    onClick={() => scrollToSection('highlights')}
+                  ></MenuItem>
                   <MenuItem onClick={() => scrollToSection('pricing')}>
                     Pricing
                   </MenuItem>

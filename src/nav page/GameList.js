@@ -111,11 +111,11 @@ const GameList = () => {
 
   const settings = {
     dots: true,
+    dotsClass: 'slick-dots custom-dots',
     infinite: true,
     speed: 500,
     slidesToShow: 5,
     slidesToScroll: 5,
-
     prevArrow: <PrevArrow />,
   };
 
@@ -132,7 +132,7 @@ const GameList = () => {
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
           minHeight: '100vh',
-          filter: 'blur(5px)',
+          filter: 'blur(2px)',
           position: 'absolute',
           top: 0,
           left: 0,
@@ -142,7 +142,7 @@ const GameList = () => {
         }}
       ></div>
 
-      <div style={{ position: 'relative', zIndex: 1, padding: '20px' }}>
+      <div style={{ position: 'relative', zIndex: 1, padding: '1px' }}>
         <Typography.Title level={4}></Typography.Title>
         {profile && (
           <div>
@@ -153,10 +153,22 @@ const GameList = () => {
             </p>
           </div>
         )}
-        <Typography.Title level={4}>소유한 게임 목록</Typography.Title>
+        <Typography.Title
+          level={4}
+          style={{
+            color: 'white',
+            fontSize: '28px',
+            fontWeight: 'bold',
+            textShadow: '2px 2px 4px rgba(0, 0, 0, 0.6)',
+          }}
+        >
+          소유한 게임 목록
+        </Typography.Title>
         <Slider {...settings}>
           {games.map((game) => (
-            <div key={game.appid}>
+            <div key={game.appid} style={{ padding: '20px' }}>
+              {' '}
+              {/* 카드 사이 간격 */}
               <Card
                 cover={
                   <img
@@ -168,8 +180,9 @@ const GameList = () => {
                     }
                     style={{
                       width: '100%',
-                      height: '100px',
+                      height: '120px',
                       objectFit: 'contain',
+                      marginTop: '3px',
                     }}
                   />
                 }
@@ -185,6 +198,22 @@ const GameList = () => {
             </div>
           ))}
         </Slider>
+
+        {/* dots 색상 Custom */}
+        <style>
+          {`
+    .slick-dots.custom-dots li button:before {
+      color: white; /* dots 색상 */
+      font-size: 14px; /* dots 크기 조절 */
+      font-weight: bold; /* dots를 굵게 설정 */
+    }
+    .slick-dots.custom-dots li.slick-active button:before {
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+    }
+  `}
+        </style>
       </div>
     </div>
   );

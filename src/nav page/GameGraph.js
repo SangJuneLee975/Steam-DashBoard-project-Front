@@ -107,7 +107,7 @@ const GameGraph = () => {
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
           minHeight: '100vh',
-          filter: 'blur(7px)', // 블러 효과
+          filter: 'blur(3px)', // 블러 효과
           position: 'absolute',
           top: 0,
           left: 0,
@@ -117,23 +117,31 @@ const GameGraph = () => {
         }}
       ></div>
 
-      <div style={{ position: 'relative', zIndex: 1, padding: '20px' }}>
-        <Typography.Title level={4}>많이 플레이한 게임</Typography.Title>
+      <div style={{ position: 'relative', zIndex: 1, padding: '1px' }}>
+        <Typography.Title
+          level={4}
+          style={{
+            color: 'white',
+            fontSize: '28px',
+            fontWeight: 'bold',
+            textShadow: '2px 2px 4px rgba(0, 0, 0, 0.6)',
+          }}
+        >
+          많이 플레이한 게임
+        </Typography.Title>
         <Box>
-          <ResponsiveContainer width="100%" height={700}>
+          <ResponsiveContainer width="100%" height={1000}>
             <BarChart
               data={sortedGames.slice(0, 12)}
               margin={{ top: 20, right: 30, left: 20, bottom: 40 }}
             >
               <CartesianGrid strokeDasharray="3 3" />
-
               <XAxis
                 dataKey="appid"
                 tick={({ x, y, payload }) => (
                   <CustomAxis x={x} y={y} payload={payload} games={games} />
                 )}
               />
-
               <YAxis
                 type="number"
                 tickCount={9}
@@ -142,11 +150,19 @@ const GameGraph = () => {
                   value: '시간',
                   angle: 0,
                   position: 'insideLeft',
-                  dx: -5,
+                  dx: -26,
+                  dy: -20,
+                  style: { fontSize: '21px', fontWeight: 'bold', fill: '#333' }, // 레이블 스타일
+                }}
+                tick={{
+                  fontSize: 16, // 숫자 글씨 크기
+                  fontWeight: 'bold', // 숫자 글씨 굵게
+                  fill: '#333', // 숫자 글씨 색상
                 }}
               />
               <Tooltip />
-              <Bar dataKey="playtime_forever" fill="#8884d8" />
+              <Bar dataKey="playtime_forever" fill="#8CB6E1" /> // 그래프 색깔
+              변경
             </BarChart>
           </ResponsiveContainer>
         </Box>
