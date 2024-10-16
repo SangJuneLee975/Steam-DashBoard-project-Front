@@ -28,14 +28,12 @@ const Chart = () => {
         }
 
         const userInfo = getUserInfoFromToken(token);
-        console.log('User Info fetched from token: ', userInfo);
         if (userInfo && userInfo.steamId) {
           setHasSteamId(true);
           fetchRecentlyPlayedGames(userInfo.steamId);
         } else {
           setHasSteamId(true);
           message.warning('스팀 계정을 연동해 주세요.');
-          //  navigate('/profile');
         }
       } catch (error) {
         console.error('Failed to check steam link:', error);
@@ -46,14 +44,12 @@ const Chart = () => {
 
     const fetchRecentlyPlayedGames = async (steamId) => {
       try {
-        console.log(`Fetching recently played games for SteamId: ${steamId}`);
         const response = await axiosInstance.get(`/steam/recentlyPlayedGames`, {
           params: { steamId },
         });
-        console.log('Recently played games response: ', response); // 응답 로그 추가
         const gamesInMinutes = response.data.response.games.map((game) => ({
           ...game,
-          playtime_2weeks: game.playtime_2weeks / 60, // 시간을 분으로 변환
+          playtime_2weeks: game.playtime_2weeks / 60,
         }));
         setRecentlyPlayedGames(gamesInMinutes);
       } catch (error) {
@@ -94,7 +90,6 @@ const Chart = () => {
 
   const RADIAN = Math.PI / 180;
   const renderCustomizedLabel = ({
-    // 퍼센트 표새해주는 함수
     cx,
     cy,
     midAngle,
@@ -121,24 +116,17 @@ const Chart = () => {
   };
 
   return (
-    <div style={{ position: 'relative', minHeight: '100vh' }}>
-      <div
-        style={{
-          backgroundImage: "url('../images/Chart_background.PNG')",
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          minHeight: '100vh',
-          //  filter: 'blur(5px)', // 블러 효과
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          zIndex: 0, // 배경 순서 위치
-        }}
-      ></div>
-
+    <main
+      style={{
+        position: 'relative',
+        minHeight: '100vh',
+        backgroundImage: "url('../images/Chart_background.PNG')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        padding: '20px',
+      }}
+    >
       <div style={{ position: 'relative', zIndex: 1, padding: '20px' }}>
         <Typography.Title
           level={4}
@@ -160,10 +148,10 @@ const Chart = () => {
                 nameKey="name"
                 cx="50%"
                 cy="50%"
-                outerRadius={400} // 파이 차트 크기 조절
+                outerRadius={400}
                 fill="#8884d8"
                 labelLine={false}
-                label={renderCustomizedLabel} // 커스텀 라벨
+                label={renderCustomizedLabel}
               >
                 {sortedGames.slice(0, 12).map((entry, index) => (
                   <Cell
@@ -173,12 +161,12 @@ const Chart = () => {
                 ))}
               </Pie>
               <Tooltip formatter={(value) => `${value} 시간`} />
-              <Legend />
+              <Legend wrapperStyle={{ fontSize: '30px' }} />
             </PieChart>
           </ResponsiveContainer>
         </Box>
       </div>
-    </div>
+    </main>
   );
 };
 

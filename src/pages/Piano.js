@@ -112,6 +112,14 @@ const Piano = () => {
     };
   }, [waveform, gain]);
 
+  const handleScoreSelect = (score) => {
+    if (selectedScore === score) {
+      setSelectedScore(null);
+    } else {
+      setSelectedScore(score);
+    }
+  };
+
   return (
     <div className="piano-background">
       <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
@@ -169,25 +177,28 @@ const Piano = () => {
           </div>
         </div>
 
-        <div
-          className="score-list"
-          style={{ marginLeft: '40px', width: '200px' }}
-        >
+        <div className="score-list">
           <h3>악보 리스트</h3>
           <ul>
             {scores.map((score, index) => (
-              <li key={index} onClick={() => setSelectedScore(score)}>
+              <li
+                key={index}
+                className={selectedScore === score ? 'selected' : ''}
+                onClick={() => handleScoreSelect(score)}
+              >
+                <input
+                  type="checkbox"
+                  checked={selectedScore === score}
+                  readOnly
+                  style={{ marginRight: '10px' }}
+                />
                 악보 {index + 1}
               </li>
             ))}
           </ul>
           {selectedScore && (
             <div className="score-image">
-              <img
-                src={selectedScore}
-                alt="Selected Score"
-                style={{ width: '100%' }}
-              />
+              <img src={selectedScore} alt="Selected Score" />
             </div>
           )}
         </div>

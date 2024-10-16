@@ -12,7 +12,7 @@ const items = [
   { key: '3', label: '게임목록', link: '/gamelist' },
   { key: '4', label: '대시보드', link: '/dashboard' },
   { key: '5', label: 'TodoList', link: '/todolist' },
-  { key: '6', label: 'piano', link: '/piano' },
+  { key: '6', label: 'Piano', link: '/piano' },
 ];
 
 const CustomHeader = () => {
@@ -95,7 +95,7 @@ const CustomHeader = () => {
   return (
     <div
       style={{
-        backgroundColor: '#4096ff',
+        background: `linear-gradient(90deg, #00c6ff, #0072ff)`, //'#4096ff' HOME버튼 색깔
         color: '#fff',
         textAlign: 'center',
         padding: 0,

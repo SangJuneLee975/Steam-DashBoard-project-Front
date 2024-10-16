@@ -5,6 +5,8 @@ import {
   startAudioVisualization,
   stopAudioVisualization,
 } from './audioVisualizer';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMicrophone } from '@fortawesome/free-solid-svg-icons';
 
 const TodoModal = ({ todo = {}, onSave, onClose }) => {
   const [title, setTitle] = useState(todo.title || '');
@@ -43,22 +45,21 @@ const TodoModal = ({ todo = {}, onSave, onClose }) => {
     }
   };
 
-  // 음성 인식으로 제목을 입력받는 함수
   const handleSpeechToTitle = async () => {
     if (isListening) return;
     setIsListening(true);
 
-    const stream = await startAudio(); // 오디오 비주얼라이저 시작
+    const stream = await startAudio();
 
     startSpeechRecognition(
       (transcript) => {
         setTitle(transcript);
-        stopAudio(); // 음성 인식이 끝나면 오디오 스트림 종료
+        stopAudio();
         setIsListening(false);
       },
       (error) => {
         console.error('Speech recognition error:', error);
-        stopAudio(); // 에러 발생 시에도 오디오 스트림 종료
+        stopAudio();
         setIsListening(false);
       }
     );
@@ -68,17 +69,17 @@ const TodoModal = ({ todo = {}, onSave, onClose }) => {
     if (isListening) return;
     setIsListening(true);
 
-    const stream = await startAudio(); // 오디오 비주얼라이저 시작
+    const stream = await startAudio();
 
     startSpeechRecognition(
       (transcript) => {
         setDescription(transcript);
-        stopAudio(); // 음성 인식이 끝나면 오디오 스트림 종료
+        stopAudio();
         setIsListening(false);
       },
       (error) => {
         console.error('Speech recognition error:', error);
-        stopAudio(); // 에러 발생 시에도 오디오 스트림 종료
+        stopAudio();
         setIsListening(false);
       }
     );
@@ -86,7 +87,7 @@ const TodoModal = ({ todo = {}, onSave, onClose }) => {
 
   useEffect(() => {
     return () => {
-      stopAudio(); // 컴포넌트 언마운트 시 오디오 스트림 종료
+      stopAudio();
     };
   }, [audioStream]);
 
@@ -104,11 +105,8 @@ const TodoModal = ({ todo = {}, onSave, onClose }) => {
               placeholder="제목을 입력하세요"
               style={{ width: '100%', marginBottom: '10px' }}
             />
-            <button
-              onClick={handleSpeechToTitle}
-              style={{ marginLeft: '10px' }}
-            >
-              🎤
+            <button onClick={handleSpeechToTitle} className="mic-button">
+              <FontAwesomeIcon icon={faMicrophone} />
             </button>
           </div>
         </div>
@@ -121,11 +119,8 @@ const TodoModal = ({ todo = {}, onSave, onClose }) => {
               placeholder="내용을 입력하세요"
               style={{ width: '100%', height: '80px', marginBottom: '10px' }}
             />
-            <button
-              onClick={handleSpeechToDescription}
-              style={{ marginLeft: '10px' }}
-            >
-              🎤
+            <button onClick={handleSpeechToDescription} className="mic-button">
+              <FontAwesomeIcon icon={faMicrophone} />
             </button>
           </div>
         </div>
@@ -139,11 +134,13 @@ const TodoModal = ({ todo = {}, onSave, onClose }) => {
             ></canvas>
           </div>
         )}
-        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <button onClick={onClose} style={{ marginRight: '10px' }}>
+        <div className="button-group">
+          <button onClick={onClose} className="cancel-button">
             취소
           </button>
-          <button onClick={handleSave}>저장</button>
+          <button onClick={handleSave} className="save-button">
+            저장
+          </button>
         </div>
       </div>
     </div>

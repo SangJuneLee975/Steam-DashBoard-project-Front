@@ -113,8 +113,9 @@ function App() {
           <CustomHeader />
           <Content
             style={{
+              // ???? ??,?? ???
               margin: '24px 16px',
-              padding: 24,
+              padding: 0,
               background: '#fff',
               textAlign: 'center',
             }}

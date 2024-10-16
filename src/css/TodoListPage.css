@@ -62,7 +62,9 @@ button:hover {
 }
 
 .add-todo-button {
-  background-color: #007bff;
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  /* background-color: #ff6b6b; */
+
   color: white;
   border: none;
   padding: 10px 15px;
@@ -76,22 +78,21 @@ button:hover {
   padding: 0;
 }
 
+.todo-item,
+.completed-todo-item {
+  border-radius: 10px; /* µÕ±Ù ¸ð¼­¸® Ãß°¡ */
+  padding: 15px; /* Å©±â Á¶Àý */
+  margin-bottom: 10px;
+}
+
 .todo-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  border-bottom: 1px solid #eee;
   background-color: #e0e0e0; /* ¿¯Àº È¸»ö */
 }
 
 .completed-todo-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  border-bottom: 1px solid #eee;
-  background-color: #ffffff; /* Èò»ö */
+  background-color: #d1e7dd; /* ÆÄ½ºÅÚÅæ ³ì»ö */
+  font-size: 14px;
+  padding: 15px;
 }
 
 .todo-row {
@@ -101,21 +102,16 @@ button:hover {
 }
 
 .checkbox {
-  margin-right: 10px;
+  margin-right: 12px;
 }
 
 .todo-title {
-  flex: 1;
-  cursor: pointer;
-  margin-left: 10px;
-  width: 200px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .todo-description {
-  padding-left: 10px;
+  padding-left: 0px;
   font-size: 12px;
   color: #999;
 }
@@ -146,8 +142,8 @@ button:hover {
 }
 
 .completed-todos-section {
-  margin-top: 20px;
-  padding: 10px;
+  margin-top: 10px;
+  padding: 1px;
   border-top: 1px solid #eee;
 }
 

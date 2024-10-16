@@ -42,7 +42,9 @@
 .piano-key.white {
   width: 50px;
   height: 200px;
-  background-color: #f6f5f3;
+  background-color: #ffffff;
+  color: #000;
+  font-size: 22px;
   border: 1px solid #888;
   z-index: 0;
   margin-right: 1px;
@@ -52,7 +54,9 @@
 .piano-key.black {
   width: 35px;
   height: 125px;
-  background-color: #555;
+  background-color: #000000;
+  color: #fff;
+  font-size: 20px;
   position: absolute;
   top: 0;
   z-index: 3;
@@ -99,4 +103,19 @@
 
 .waveform label {
   margin-right: 20px;
+}
+
+.score-list li {
+  list-style: none;
+  margin: 10px 0;
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.score-list li.selected {
+  border-color: #0072ff;
+  color: white;
 }
