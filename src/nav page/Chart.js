@@ -121,6 +121,7 @@ const Chart = () => {
         position: 'relative',
         minHeight: '100vh',
         backgroundImage: "url('../images/Chart_background.PNG')",
+
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',

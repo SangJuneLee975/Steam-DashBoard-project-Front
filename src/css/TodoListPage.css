@@ -62,15 +62,26 @@ button:hover {
 }
 
 .add-todo-button {
-  background: linear-gradient(90deg, #00c6ff, #0072ff);
-  /* background-color: #ff6b6b; */
-
+  background: linear-gradient(90deg, #28a745, #218838);
   color: white;
   border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
+  padding: 12px 18px;
+  margin-bottom: 10px;
+  border-radius: 30px;
   cursor: pointer;
-  margin-bottom: 15px;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.add-todo-button::before {
+  content: '\f055';
+  font-family: 'FontAwesome';
+  margin-right: 8px;
+}
+
+.add-todo-button:hover {
+  background: linear-gradient(90deg, #218838, #28a745);
 }
 
 .todo-list {
@@ -80,17 +91,17 @@ button:hover {
 
 .todo-item,
 .completed-todo-item {
-  border-radius: 10px; /* µÕ±Ù ¸ð¼­¸® Ãß°¡ */
-  padding: 15px; /* Å©±â Á¶Àý */
+  border-radius: 10px;
+  padding: 15px;
   margin-bottom: 10px;
 }
 
 .todo-item {
-  background-color: #e0e0e0; /* ¿¯Àº È¸»ö */
+  background-color: #e0e0e0;
 }
 
 .completed-todo-item {
-  background-color: #d1e7dd; /* ÆÄ½ºÅÚÅæ ³ì»ö */
+  background-color: #d1e7dd;
   font-size: 14px;
   padding: 15px;
 }
@@ -154,4 +165,21 @@ button:hover {
 .todo-completed {
   text-decoration: line-through;
   color: #888;
+}
+
+h1 {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  background: linear-gradient(90deg, #ff7f50, #ff1493);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  align-items: center;
+}
+
+h1::before {
+  font-family: 'FontAwesome';
+  margin-right: 10px;
+  color: #ff7f50;
 }

@@ -107,7 +107,7 @@ const GameGraph = () => {
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
           minHeight: '100vh',
-          filter: 'blur(3px)', // 블러 효과
+          filter: 'blur(6px)', // 블러 효과
           position: 'absolute',
           top: 0,
           left: 0,
@@ -122,7 +122,7 @@ const GameGraph = () => {
           level={4}
           style={{
             color: 'white',
-            fontSize: '28px',
+            fontSize: '38px',
             fontWeight: 'bold',
             textShadow: '2px 2px 4px rgba(0, 0, 0, 0.6)',
           }}
@@ -151,13 +151,17 @@ const GameGraph = () => {
                   angle: 0,
                   position: 'insideLeft',
                   dx: -26,
-                  dy: -20,
-                  style: { fontSize: '21px', fontWeight: 'bold', fill: '#333' }, // 레이블 스타일
+                  dy: -50,
+                  style: {
+                    fontSize: '25px',
+                    fontWeight: 'bold',
+                    fill: '#FFFFFF',
+                  }, // 레이블 스타일
                 }}
                 tick={{
-                  fontSize: 16, // 숫자 글씨 크기
+                  fontSize: 24, // 숫자 글씨 크기
                   fontWeight: 'bold', // 숫자 글씨 굵게
-                  fill: '#333', // 숫자 글씨 색상
+                  fill: '#FFFFFF', // 숫자 글씨 색상
                 }}
               />
               <Tooltip />

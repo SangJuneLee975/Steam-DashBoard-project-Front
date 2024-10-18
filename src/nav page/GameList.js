@@ -75,12 +75,7 @@ const GameList = () => {
       <div className="content">
         <Typography.Title
           level={4}
-          style={{
-            color: 'white',
-            fontSize: '28px',
-            fontWeight: 'bold',
-            textShadow: '2px 2px 4px rgba(0, 0, 0, 0.6)',
-          }}
+          className="gradient-text" // 여기서 적용
         >
           소유한 게임 목록
         </Typography.Title>
@@ -91,12 +86,12 @@ const GameList = () => {
                 key={game.appid}
                 className="item"
                 style={{
-                  backgroundImage: `url(http://media.steampowered.com/steamcommunity/public/images/apps/${
-                    game.appid
-                  }/${game.img_logo_url || game.img_icon_url}.jpg)`,
+                  backgroundImage: `url(http://cdn.akamai.steamstatic.com/steam/apps/${game.appid}/library_600x900.jpg)`,
                   transform: `rotateY(${
                     index * (360 / itemsPerPage)
-                  }deg) translateZ(300px)`,
+                  }deg) translateZ(565px)`, // 캐러셀 크기
+                  width: '300px',
+                  height: '450px',
                 }}
                 onClick={() => handleGameClick(game.appid)}
               >

@@ -3,6 +3,7 @@ import axiosInstance from '../api/axiosInstance';
 import axios from 'axios';
 import { Form, Input, Button, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import '../css/ProfilePage.css';
 
 const ProfilePage = () => {
   const [user, setUser] = useState({});

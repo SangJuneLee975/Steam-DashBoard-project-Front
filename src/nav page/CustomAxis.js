@@ -26,10 +26,10 @@ const CustomAxis = ({ x, y, payload, games }) => {
         dy={7}
         textAnchor="middle"
         fill="white"
-        fontSize={18}
+        fontSize={24}
         fontWeight="bold"
       >
-        {game.name.length > 20 ? game.name.slice(0, 18) + '...' : game.name}{' '}
+        {game.name.length > 13 ? game.name.slice(0, 13) + '...' : game.name}{' '}
         {/* x축 텍스트 길이를 제한 */}
       </text>
     </g>

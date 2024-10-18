@@ -4,7 +4,7 @@ import axiosInstance from '../api/axiosInstance';
 import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import { socialCodeState } from '../recoil/atoms';
-import '../css/Profile.css';
+import '../css/ProfilePage.css';
 
 const ProfileUpdate = () => {
   const [user, setUser] = useState({});

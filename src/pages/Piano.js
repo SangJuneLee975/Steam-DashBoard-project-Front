@@ -104,13 +104,14 @@ const Piano = () => {
   };
 
   useEffect(() => {
+    setSelectedScore(scores[0]); // 페이지 진입시 악보1 표시
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('keyup', handleKeyUp);
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
     };
-  }, [waveform, gain]);
+  }, []);
 
   const handleScoreSelect = (score) => {
     if (selectedScore === score) {
