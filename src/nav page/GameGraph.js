@@ -161,7 +161,8 @@ const GameGraph = () => {
                 tick={{
                   fontSize: 24, // 숫자 글씨 크기
                   fontWeight: 'bold', // 숫자 글씨 굵게
-                  fill: '#FFFFFF', // 숫자 글씨 색상
+                  fill: '#FFFFFF',
+                  // 숫자 글씨 색상
                 }}
               />
               <Tooltip />

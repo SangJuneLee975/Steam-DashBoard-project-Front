@@ -96,33 +96,40 @@ const TodoModal = ({ todo = {}, onSave, onClose }) => {
       <div className="modal-content">
         <h2>{todo.id ? '할 일 수정' : '할 일 추가'}</h2>
         <div>
-          <label>할 일 제목</label>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <input
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="제목을 입력하세요"
-              style={{ width: '100%', marginBottom: '10px' }}
-            />
-            <button onClick={handleSpeechToTitle} className="mic-button">
-              <FontAwesomeIcon icon={faMicrophone} />
-            </button>
+          <div class="input-container">
+            <label>할 일 제목</label>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <input
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="제목을 입력하세요"
+                style={{ width: '100%', marginBottom: '10px' }}
+              />
+              <button onClick={handleSpeechToTitle} className="mic-button">
+                <FontAwesomeIcon icon={faMicrophone} />
+              </button>
+            </div>
           </div>
         </div>
         <div>
           <label>할 일 내용</label>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <input
-              type="text"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder="내용을 입력하세요"
-              style={{ width: '100%', marginBottom: '10px' }}
-            />
-            <button onClick={handleSpeechToDescription} className="mic-button">
-              <FontAwesomeIcon icon={faMicrophone} />
-            </button>
+          <div class="input-container">
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <input
+                type="text"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="내용을 입력하세요"
+                style={{ width: '100%', marginBottom: '10px' }}
+              />
+              <button
+                onClick={handleSpeechToDescription}
+                className="mic-button"
+              >
+                <FontAwesomeIcon icon={faMicrophone} />
+              </button>
+            </div>
           </div>
         </div>
         {isListening && (

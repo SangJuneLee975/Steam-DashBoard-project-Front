@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Card } from 'antd';
 import axiosInstance from '../api/axiosInstance';
 
 const PlayerSummary = ({ steamid }) => {
@@ -21,21 +20,42 @@ const PlayerSummary = ({ steamid }) => {
   }, [steamid]);
 
   return (
-    <div style={{ textAlign: 'center' }}>
+    <div style={styles.container}>
       {player ? (
-        <div>
-          <p style={{ marginBottom: '8px' }}>Name: {player.personaname}</p>
-          <img
-            src={player.avatarfull}
-            alt="Avatar"
-            style={{ width: '80px', height: '80px', borderRadius: '50%' }} // 이미지 크기 조정 및 둥근 테두리 적용
-          />
+        <div style={styles.profileWrapper}>
+          <p style={styles.playerName}>Name: {player.personaname}</p>
+          <img src={player.avatarfull} alt="Avatar" style={styles.avatar} />
         </div>
       ) : (
-        <p>Loading...</p>
+        <p style={styles.loadingText}>Loading...</p>
       )}
     </div>
   );
+};
+
+const styles = {
+  profileWrapper: {
+    display: 'inline-block',
+    textAlign: 'center',
+  },
+  playerName: {
+    fontSize: '1.6em',
+    fontWeight: 'bold',
+    marginBottom: '1px',
+    color: '#333',
+  },
+  avatar: {
+    width: '70px',
+    height: '70px',
+    borderRadius: '50%',
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+    objectFit: 'cover',
+    margin: '0 auto',
+  },
+  loadingText: {
+    fontSize: '1em',
+    color: '#777',
+  },
 };
 
 export default PlayerSummary;

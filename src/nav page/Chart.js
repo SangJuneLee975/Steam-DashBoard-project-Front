@@ -3,15 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { message, Typography } from 'antd';
 import axiosInstance from '../api/axiosInstance';
 import { getUserInfoFromToken } from '../components/parsejwt';
-import {
-  PieChart,
-  Pie,
-  Cell,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from 'recharts';
+import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
+import Highcharts3d from 'highcharts/highcharts-3d';
 import { Box } from '@mui/material';
+
+// 3D 모듈 로드
+Highcharts3d(Highcharts);
 
 const Chart = () => {
   const navigate = useNavigate();
@@ -65,54 +63,71 @@ const Chart = () => {
     return <div>Loading...</div>;
   }
 
-  const truncate = (str, n) => {
-    return str.length > n ? str.slice(0, n - 1) + '...' : str;
-  };
-
   const sortedGames = recentlyPlayedGames.sort(
     (a, b) => b.playtime_2weeks - a.playtime_2weeks
   );
 
-  const COLORS = [
-    '#0088FE',
-    '#00C49F',
-    '#FFBB28',
-    '#FF8042',
-    '#A28EEC',
-    '#82CA9D',
-    '#8884D8',
-    '#8DD1E1',
-    '#83A6ED',
-    '#8B5CF6',
-    '#D88A4B',
-    '#A4DE6C',
-  ];
-
-  const RADIAN = Math.PI / 180;
-  const renderCustomizedLabel = ({
-    cx,
-    cy,
-    midAngle,
-    innerRadius,
-    outerRadius,
-    percent,
-    index,
-  }) => {
-    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-    const x = cx + radius * Math.cos(-midAngle * RADIAN);
-    const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
-    return (
-      <text
-        x={x}
-        y={y}
-        fill="white"
-        textAnchor={x > cx ? 'start' : 'end'}
-        dominantBaseline="central"
-      >
-        {`${(percent * 100).toFixed(0)}%`}
-      </text>
-    );
+  // Highcharts 3D PieChart 옵션 설정
+  const options = {
+    chart: {
+      type: 'pie',
+      options3d: {
+        enabled: true,
+        alpha: 55,
+        beta: 0,
+      },
+      backgroundColor: 'transparent', // 배경색 투명으로 설정
+      width: 1600, // 차트 너비를 고정 크기로 설정
+      height: 900, // 차트 높이를 고정 크기로 설정
+    },
+    title: {
+      text: '',
+      style: {
+        color: 'white',
+        fontSize: '28px',
+        fontWeight: 'bold',
+        textShadow: '2px 2px 4px rgba(0, 0, 0, 0.6)',
+      },
+    },
+    accessibility: {
+      point: {
+        valueSuffix: '시간',
+      },
+    },
+    tooltip: {
+      pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>',
+    },
+    plotOptions: {
+      pie: {
+        allowPointSelect: true,
+        cursor: 'pointer',
+        depth: 35,
+        center: ['50%', '50%'], // 차트를 화면의 가로, 세로 중앙에 배치
+        dataLabels: {
+          enabled: true,
+          format: '{point.name}: {point.y:.1f} 시간',
+        },
+      },
+    },
+    series: [
+      {
+        type: 'pie',
+        name: '플레이 시간',
+        data: sortedGames.slice(0, 12).map((game, index) => ({
+          name: game.name,
+          y: game.playtime_2weeks,
+        })),
+      },
+    ],
+    legend: {
+      align: 'center', // 범례를 중앙에 정렬
+      verticalAlign: 'bottom', // 범례를 하단에 위치
+      layout: 'horizontal', // 범례를 가로로 배열
+      itemStyle: {
+        color: 'white', // 범례 텍스트 색상
+        fontSize: '18px',
+      },
+    },
   };
 
   return (
@@ -121,11 +136,13 @@ const Chart = () => {
         position: 'relative',
         minHeight: '100vh',
         backgroundImage: "url('../images/Chart_background.PNG')",
-
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         padding: '20px',
+        display: 'flex',
+        justifyContent: 'center', // 부모 컨테이너에서 중앙 정렬
+        alignItems: 'center',
       }}
     >
       <div style={{ position: 'relative', zIndex: 1, padding: '20px' }}>
@@ -133,38 +150,18 @@ const Chart = () => {
           level={4}
           style={{
             color: 'white',
-            fontSize: '28px',
+            padding: '20px',
+            fontSize: '39px',
             fontWeight: 'bold',
             textShadow: '2px 2px 4px rgba(0, 0, 0, 0.6)',
+            textAlign: 'center',
+            marginTop: '-320px', // 텍스트를 위로 20px 이동
           }}
         >
           최근 2주 동안 플레이한 게임
         </Typography.Title>
         <Box>
-          <ResponsiveContainer width="100%" height={1000}>
-            <PieChart>
-              <Pie
-                data={sortedGames.slice(0, 12)}
-                dataKey="playtime_2weeks"
-                nameKey="name"
-                cx="50%"
-                cy="50%"
-                outerRadius={400}
-                fill="#8884d8"
-                labelLine={false}
-                label={renderCustomizedLabel}
-              >
-                {sortedGames.slice(0, 12).map((entry, index) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={COLORS[index % COLORS.length]}
-                  />
-                ))}
-              </Pie>
-              <Tooltip formatter={(value) => `${value} 시간`} />
-              <Legend wrapperStyle={{ fontSize: '30px' }} />
-            </PieChart>
-          </ResponsiveContainer>
+          <HighchartsReact highcharts={Highcharts} options={options} />
         </Box>
       </div>
     </main>

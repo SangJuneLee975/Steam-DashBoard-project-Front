@@ -73,10 +73,7 @@ const GameList = () => {
     <div style={{ position: 'relative', minHeight: '100vh' }}>
       <div className="background"></div>
       <div className="content">
-        <Typography.Title
-          level={4}
-          className="gradient-text" // 여기서 적용
-        >
+        <Typography.Title level={4} className="gradient-text">
           소유한 게임 목록
         </Typography.Title>
         <div className="scene">

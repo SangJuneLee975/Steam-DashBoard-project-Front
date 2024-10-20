@@ -113,6 +113,7 @@ const CustomHeader = () => {
   return (
     <div
       style={{
+        zIndex: 1,
         background: `linear-gradient(90deg, #3A3D40, #2C5364)`, // 어두운 배경 그라데이션
         color: '#FFF',
         textAlign: 'center',
@@ -175,7 +176,7 @@ const CustomHeader = () => {
             <button
               onClick={handleLogout}
               style={{
-                backgroundColor: 'transparent', // 로그아웃 버튼 배경 투명
+                backgroundColor: 'transparent',
                 border: 'none',
                 color: '#FFF',
                 cursor: 'pointer',

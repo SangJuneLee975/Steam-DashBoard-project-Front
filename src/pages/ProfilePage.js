@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { Button } from 'antd';
+import { FaUser, FaEnvelope, FaSteam, FaIdBadge } from 'react-icons/fa'; // 아이콘 추가
 import axiosInstance from '../api/axiosInstance';
-import axios from 'axios';
-import { Form, Input, Button, message } from 'antd';
+import { message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import '../css/ProfilePage.css';
 
@@ -36,14 +37,49 @@ const ProfilePage = () => {
   };
 
   return (
-    <div>
-      <h1>프로필</h1>
-      <p>이메일: {user.email}</p>
-      <p>이름: {user.name}</p>
-      <p>닉네임: {user.nickname}</p>
-      <Button onClick={handleEditClick}>회원정보 수정</Button>
-      <Button onClick={handleSteamConnect}>스팀 계정 연동하기</Button>
-      {user.isSteamLinked && <p>스팀 계정이 연동되었습니다.</p>}
+    <div className="profile-page">
+      <div className="profile-card">
+        <div className="profile-header">
+          <img
+            src={user.avatar || '/default-avatar.png'}
+            alt="프로필 아바타"
+            className="profile-avatar"
+          />
+          <div className="profile-info">
+            <h2>
+              <FaUser className="name-icon" />
+              {user.name || '사용자 이름'}
+            </h2>
+            <p>
+              <FaIdBadge className="name-icon" />
+              {user.nickname || '사용자 닉네임'}
+            </p>
+          </div>
+        </div>
+
+        <div className="profile-icons">
+          <div className="profile-icon">
+            <FaUser />
+            <span>{user.name || '이름: 사용자 이름'}</span>
+          </div>
+          <div className="profile-icon">
+            <FaEnvelope />
+            <span>{user.email || '이메일: user@email.com'}</span>
+          </div>
+        </div>
+
+        <div className="profile-buttons">
+          <button className="profile-button" onClick={handleEditClick}>
+            <FaUser />
+            회원정보 수정
+          </button>
+          <button className="profile-button" onClick={handleSteamConnect}>
+            <FaSteam />
+            스팀 연동
+          </button>
+        </div>
+        {user.isSteamLinked && <p>스팀 계정이 연동되었습니다.</p>}
+      </div>
     </div>
   );
 };
