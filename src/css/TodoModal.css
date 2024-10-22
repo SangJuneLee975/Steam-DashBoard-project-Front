@@ -74,8 +74,8 @@
   background-color: #0056b3;
 }
 
-input[type='text'],
-textarea {
+/* 제목 입력 필드 스타일 */
+input[type='text'] {
   width: 100%;
   padding: 12px 60px 12px 12px;
   border: 1px solid #ddd;
@@ -83,9 +83,28 @@ textarea {
   margin-bottom: 15px;
   font-size: 18px;
   transition: border-color 0.3s ease;
+  height: auto;
 }
 
-input[type='text']:focus,
+input[type='text']:focus {
+  border-color: #007bff;
+}
+
+/* 내용 입력 필드 스타일 */
+textarea {
+  width: 100%;
+  padding: 12px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  font-size: 18px;
+  transition: border-color 0.3s ease;
+  height: auto; /* 높이를 auto로 설정 */
+  min-height: 120px; /* 내용 입력칸 크기를 크게 설정 */
+  resize: none; /* 사용자가 입력칸 크기를 조정하지 못하게 설정 */
+  line-height: 1.5; /* 줄 간격을 설정해 텍스트가 자연스럽게 보이게 설정 */
+}
+
 textarea:focus {
   border-color: #007bff;
 }

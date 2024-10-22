@@ -116,12 +116,11 @@ const TodoModal = ({ todo = {}, onSave, onClose }) => {
           <label>할 일 내용</label>
           <div class="input-container">
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <input
-                type="text"
+              <textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="내용을 입력하세요"
-                style={{ width: '100%', marginBottom: '10px' }}
+                style={{ width: '100%', marginBottom: '15px' }}
               />
               <button
                 onClick={handleSpeechToDescription}

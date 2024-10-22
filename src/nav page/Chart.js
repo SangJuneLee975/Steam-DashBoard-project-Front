@@ -7,8 +7,9 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import Highcharts3d from 'highcharts/highcharts-3d';
 import { Box } from '@mui/material';
+import { faGamepad } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-// 3D 모듈 로드
 Highcharts3d(Highcharts);
 
 const Chart = () => {
@@ -73,13 +74,25 @@ const Chart = () => {
       type: 'pie',
       options3d: {
         enabled: true,
-        alpha: 55,
+        alpha: 65,
         beta: 0,
       },
-      backgroundColor: 'transparent', // 배경색 투명으로 설정
-      width: 1600, // 차트 너비를 고정 크기로 설정
-      height: 900, // 차트 높이를 고정 크기로 설정
+      backgroundColor: 'transparent',
+      width: 1600,
+      height: 900,
     },
+    colors: [
+      '#FFD1DC',
+      '#FFB6C1',
+      '#FF9AA2',
+      '#FFCC99',
+      '#FFD700',
+      '#C5E384',
+      '#B5EAD7',
+      '#9DD9D2',
+      '#AFCBFF',
+      '#B39CD0',
+    ],
     title: {
       text: '',
       style: {
@@ -101,11 +114,17 @@ const Chart = () => {
       pie: {
         allowPointSelect: true,
         cursor: 'pointer',
-        depth: 35,
-        center: ['50%', '50%'], // 차트를 화면의 가로, 세로 중앙에 배치
+        depth: 65,
+        center: ['50%', '50%'],
         dataLabels: {
           enabled: true,
           format: '{point.name}: {point.y:.1f} 시간',
+          style: {
+            color: '#ffffff',
+            fontWeight: 'bold',
+            fontSize: '24px',
+            textOutline: 'none',
+          },
         },
       },
     },
@@ -116,15 +135,16 @@ const Chart = () => {
         data: sortedGames.slice(0, 12).map((game, index) => ({
           name: game.name,
           y: game.playtime_2weeks,
+          color: ['#ff9999', '#66b3ff', '#99ff99', '#ffcc99'][index % 4],
         })),
       },
     ],
     legend: {
-      align: 'center', // 범례를 중앙에 정렬
-      verticalAlign: 'bottom', // 범례를 하단에 위치
-      layout: 'horizontal', // 범례를 가로로 배열
+      align: 'center',
+      verticalAlign: 'bottom',
+      layout: 'horizontal',
       itemStyle: {
-        color: 'white', // 범례 텍스트 색상
+        color: 'white',
         fontSize: '18px',
       },
     },
@@ -141,7 +161,7 @@ const Chart = () => {
         backgroundRepeat: 'no-repeat',
         padding: '20px',
         display: 'flex',
-        justifyContent: 'center', // 부모 컨테이너에서 중앙 정렬
+        justifyContent: 'center',
         alignItems: 'center',
       }}
     >
@@ -149,15 +169,23 @@ const Chart = () => {
         <Typography.Title
           level={4}
           style={{
-            color: 'white',
+            color: '#0ff', // 네온 스타일 파란색 텍스트
             padding: '20px',
             fontSize: '39px',
             fontWeight: 'bold',
-            textShadow: '2px 2px 4px rgba(0, 0, 0, 0.6)',
+            textShadow: `
+              0 0 5px #0ff,
+              0 0 10px #0ff,
+              0 0 20px #00f,
+              0 0 30px #00f,
+              0 0 40px #00f,
+              0 0 50px #00f,
+              0 0 75px #00f`, // 네온 효과를 위한 그림자 추가
             textAlign: 'center',
-            marginTop: '-320px', // 텍스트를 위로 20px 이동
+            marginTop: '-320px',
           }}
         >
+          <FontAwesomeIcon icon={faGamepad} style={{ marginRight: '8px' }} />
           최근 2주 동안 플레이한 게임
         </Typography.Title>
         <Box>
