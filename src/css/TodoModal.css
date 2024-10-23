@@ -5,7 +5,7 @@
   transform: translate(-50%, -50%);
   background-color: white;
   padding: 25px;
-  width: 600px;
+  width: 700px;
   border-radius: 12px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
   z-index: 1000;
@@ -15,20 +15,21 @@
 .modal-content {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 40px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .modal-content h2 {
   font-size: 32px;
-  font-weight: 600;
+  font-weight: 8900;
   color: #333;
 }
 
 .modal-content label {
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 500;
   color: #555;
+  margin-bottom: 5px;
 }
 
 .button-group {
@@ -38,14 +39,18 @@
 }
 
 .input-container {
+  display: flex;
+  align-items: center;
   position: relative;
   width: 100%;
+  margin-bottom: 20px;
 }
 
 .mic-button {
-  top: 60px;
+  position: absolute;
   right: 15px;
-  transform: translate(-50%);
+  top: 50%;
+  transform: translateY(-50%);
   background-color: #007bff;
   color: white;
   border: none;
@@ -74,35 +79,30 @@
   background-color: #0056b3;
 }
 
-/* 제목 입력 필드 스타일 */
 input[type='text'] {
-  width: 100%;
-  padding: 12px 60px 12px 12px;
+  flex-grow: 1;
+  padding: 12px;
   border: 1px solid #ddd;
   border-radius: 8px;
-  margin-bottom: 15px;
-  font-size: 18px;
+  font-size: 22px;
   transition: border-color 0.3s ease;
-  height: auto;
 }
 
+textarea:focus,
 input[type='text']:focus {
   border-color: #007bff;
 }
 
-/* 내용 입력 필드 스타일 */
 textarea {
-  width: 100%;
-  padding: 12px 12px;
+  flex-grow: 1;
+  padding: 12px;
   border: 1px solid #ddd;
   border-radius: 8px;
-  margin-bottom: 15px;
   font-size: 18px;
   transition: border-color 0.3s ease;
-  height: auto; /* 높이를 auto로 설정 */
-  min-height: 120px; /* 내용 입력칸 크기를 크게 설정 */
-  resize: none; /* 사용자가 입력칸 크기를 조정하지 못하게 설정 */
-  line-height: 1.5; /* 줄 간격을 설정해 텍스트가 자연스럽게 보이게 설정 */
+  min-height: 120px;
+  resize: none;
+  line-height: 1.5;
 }
 
 textarea:focus {

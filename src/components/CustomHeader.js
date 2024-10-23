@@ -117,24 +117,28 @@ const CustomHeader = () => {
         background: `linear-gradient(90deg, #3A3D40, #2C5364)`, // 어두운 배경 그라데이션
         color: '#FFF',
         textAlign: 'center',
-        padding: '10px 20px', // 패딩 여유 있게
+        padding: '10px 20px',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)', // 그림자 효과
+        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)',
       }}
     >
       <div
         style={{
-          fontSize: '1.8em',
+          fontSize: '1.9em',
           cursor: 'pointer',
           padding: '10px 15px',
-          color: '#FFD700', // HOME 텍스트 색상 변경
-          fontFamily: 'Roboto, sans-serif', // 세련된 폰트
+          color: '#FFD700',
+          fontFamily: 'Roboto, sans-serif',
         }}
         onClick={handleLogoClick}
       >
-        HOME
+        <img
+          src={require('../images/Home_Icon.png')}
+          alt="Home Icon"
+          style={{ width: '70px', height: '70px' }}
+        />
       </div>
       <Menu
         theme="dark"
@@ -151,7 +155,7 @@ const CustomHeader = () => {
           <Menu.Item
             key={item.key}
             onClick={() => navigate(item.link)}
-            style={{ color: '#FFF', fontSize: '1.2em', padding: '0 15px' }}
+            style={{ color: '#FFF', fontSize: '1.9em', padding: '0 15px' }}
           >
             {item.label}
           </Menu.Item>
@@ -165,8 +169,8 @@ const CustomHeader = () => {
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
-                fontSize: '1.2em',
-                color: '#FFD700', // 유저 이름 강조
+                fontSize: '1.8em',
+                color: '#FFF',
               }}
               onClick={handleProfile}
             >
@@ -181,7 +185,7 @@ const CustomHeader = () => {
                 color: '#FFF',
                 cursor: 'pointer',
                 padding: '10px 15px',
-                fontSize: '1.1em',
+                fontSize: '1.8em',
                 display: 'flex',
                 alignItems: 'center',
                 transition: 'color 0.3s ease',

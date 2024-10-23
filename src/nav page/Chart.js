@@ -68,7 +68,6 @@ const Chart = () => {
     (a, b) => b.playtime_2weeks - a.playtime_2weeks
   );
 
-  // Highcharts 3D PieChart 옵션 설정
   const options = {
     chart: {
       type: 'pie',
@@ -114,7 +113,7 @@ const Chart = () => {
       pie: {
         allowPointSelect: true,
         cursor: 'pointer',
-        depth: 65,
+        depth: 85,
         center: ['50%', '50%'],
         dataLabels: {
           enabled: true,
@@ -169,7 +168,7 @@ const Chart = () => {
         <Typography.Title
           level={4}
           style={{
-            color: '#0ff', // 네온 스타일 파란색 텍스트
+            color: '#0ff',
             padding: '20px',
             fontSize: '39px',
             fontWeight: 'bold',
@@ -180,7 +179,7 @@ const Chart = () => {
               0 0 30px #00f,
               0 0 40px #00f,
               0 0 50px #00f,
-              0 0 75px #00f`, // 네온 효과를 위한 그림자 추가
+              0 0 75px #00f`,
             textAlign: 'center',
             marginTop: '-320px',
           }}
