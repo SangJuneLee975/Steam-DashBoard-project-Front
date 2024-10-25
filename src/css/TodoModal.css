@@ -4,18 +4,16 @@
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: white;
-  padding: 25px;
-  width: 700px;
+  padding: 15px;
+  width: 600px;
   border-radius: 12px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
+  z-index: 10;
   border: 1px solid black;
 }
 
 .modal-content {
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
+  display: block;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -23,13 +21,15 @@
   font-size: 32px;
   font-weight: 8900;
   color: #333;
+  margin-bottom: 20px;
 }
 
 .modal-content label {
   font-size: 22px;
   font-weight: 500;
   color: #555;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
+  display: block;
 }
 
 .button-group {
@@ -39,52 +39,49 @@
 }
 
 .input-container {
-  display: flex;
-  align-items: center;
-  position: relative;
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
-
 .mic-button {
-  position: absolute;
-  right: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: #007bff;
+  background-color: #6c757d;
   color: white;
   border: none;
   border-radius: 50%;
   padding: 10px;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .mic-button:hover {
-  background-color: #0056b3;
+  background-color: #5a6268;
 }
 
 .cancel-button,
 .save-button {
   padding: 10px 20px;
-  background-color: #007bff;
+  background-color: #343a40;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 22px;
 }
 
 .cancel-button:hover,
 .save-button:hover {
-  background-color: #0056b3;
+  background-color: #23272b;
 }
 
-input[type='text'] {
-  flex-grow: 1;
+input[type='text'],
+textarea {
+  width: calc(100% - 60px);
   padding: 12px;
   border: 1px solid #ddd;
   border-radius: 8px;
   font-size: 22px;
+  margin-right: 10px;
+  resize: none;
+  line-height: 1.5;
   transition: border-color 0.3s ease;
 }
 
@@ -94,17 +91,14 @@ input[type='text']:focus {
 }
 
 textarea {
-  flex-grow: 1;
+  width: calc(100% - 60px);
   padding: 12px;
   border: 1px solid #ddd;
   border-radius: 8px;
-  font-size: 18px;
-  transition: border-color 0.3s ease;
+  font-size: 22px;
   min-height: 120px;
+  margin-right: 10px;
   resize: none;
   line-height: 1.5;
-}
-
-textarea:focus {
-  border-color: #007bff;
+  transition: border-color 0.3s ease;
 }

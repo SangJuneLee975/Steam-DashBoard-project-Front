@@ -148,7 +148,7 @@ const Dashboard = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="background"></div>
+      <div className="dashboard-background"></div>
       <div className="content">
         <DashboardContainer>
           <Title variant="h4" gutterBottom className="title">

@@ -71,11 +71,12 @@ const GameList = () => {
 
   return (
     <div style={{ position: 'relative', minHeight: '100vh' }}>
-      <div className="background"></div>
+      <div className="game-list-background"></div>
       <div className="content">
-        <Typography.Title level={4} className="gradient-text">
-          소유한 게임 목록
-        </Typography.Title>
+        <Typography.Title
+          level={4}
+          className="gradient-text"
+        ></Typography.Title>
         <div className="scene">
           <div className="carousel">
             {currentGames.map((game, index) => (

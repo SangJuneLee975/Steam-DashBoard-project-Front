@@ -100,7 +100,7 @@ const TodoListPage = () => {
         <h1>My Tasks</h1>
         <div>
           <button className="add-todo-button" onClick={addTodo}>
-            할 일 추가
+            ➕ 할 일 추가하기
           </button>
         </div>
 

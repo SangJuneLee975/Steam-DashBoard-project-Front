@@ -97,15 +97,33 @@
   margin-bottom: 20px;
 }
 
+.controls .waveform p {
+  font-size: 1.5em;
+}
+
+.controls .waveform label {
+  font-size: 1.5em;
+}
+
 .controls .gain {
   margin-top: 10px;
 }
 
+.controls .gain p {
+  font-size: 1.5em;
+}
+
 .waveform label {
+  font-size: 2em;
   margin-right: 20px;
 }
 
+.score-list h3 {
+  font-size: 1.8em;
+}
+
 .score-list li {
+  font-size: 1.4em;
   list-style: none;
   margin: 10px 0;
   padding: 5px;

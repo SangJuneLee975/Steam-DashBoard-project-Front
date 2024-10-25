@@ -150,7 +150,7 @@ const Piano = () => {
 
           <div className="controls" style={{ marginTop: '20px' }}>
             <div className="waveform">
-              <p>파형 선택:</p>
+              <p>파형 선택</p>
               {['sine', 'square', 'triangle', 'sawtooth'].map((wave) => (
                 <label key={wave} style={{ marginRight: '15px' }}>
                   <input
@@ -165,7 +165,7 @@ const Piano = () => {
             </div>
 
             <div className="gain" style={{ marginTop: '10px' }}>
-              <p>음량: {Math.round(gain)}</p>
+              <p>음량 : {Math.round(gain)}</p>
               <input
                 type="range"
                 min="0"

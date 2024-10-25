@@ -9,7 +9,7 @@ const CustomAxis = ({ x, y, payload, games }) => {
         href={`http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`}
         x={-21}
         y={16}
-        height={48}
+        height={48} //x축 아이콘
         width={48}
       />
 

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import '../css/TodoModal.css';
+import '../css/TodoModal.css'; // CSS 파일을 따로 관리
 import { startSpeechRecognition } from './speechRecognition';
 import {
   startAudioVisualization,
@@ -96,7 +96,7 @@ const TodoModal = ({ todo = {}, onSave, onClose }) => {
       <div className="modal-content">
         <h2>{todo.id ? '할 일 수정' : '할 일 추가'}</h2>
         <div>
-          <div class="input-container">
+          <div className="input-container">
             <label>할 일 제목</label>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <input
@@ -104,7 +104,7 @@ const TodoModal = ({ todo = {}, onSave, onClose }) => {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="제목을 입력하세요"
-                style={{ width: '100%', marginBottom: '10px' }}
+                style={{ width: 'calc(100% - 50px)', marginBottom: '5px' }}
               />
               <button onClick={handleSpeechToTitle} className="mic-button">
                 <FontAwesomeIcon icon={faMicrophone} />
@@ -114,13 +114,13 @@ const TodoModal = ({ todo = {}, onSave, onClose }) => {
         </div>
         <div>
           <label>할 일 내용</label>
-          <div class="input-container">
+          <div className="input-container">
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="내용을 입력하세요"
-                style={{ width: '100%', marginBottom: '15px' }}
+                style={{ width: 'calc(100% - 50px)', marginBottom: '15px' }}
               />
               <button
                 onClick={handleSpeechToDescription}

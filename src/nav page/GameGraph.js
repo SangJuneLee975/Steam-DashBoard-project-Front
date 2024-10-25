@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { message, Typography } from 'antd';
-import axiosInstance from '../api/axiosInstance';
 import { getUserInfoFromToken } from '../components/parsejwt';
+import axiosInstance from '../api/axiosInstance';
 import {
   BarChart,
   Bar,
@@ -26,6 +26,33 @@ const ChartContainer = styled(MuiContainer)`
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 `;
 
+const CustomTooltip = ({ active, payload }) => {
+  if (active && payload && payload.length) {
+    const game = payload[0].payload;
+    return (
+      <div
+        style={{
+          backgroundColor: 'rgba(0, 0, 0, 0.75)',
+          color: '#fff',
+          padding: '10px',
+          borderRadius: '8px',
+          textAlign: 'center',
+        }}
+      >
+        <img
+          src={`http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`}
+          alt={game.name}
+          style={{ width: '100px', height: '100px', marginBottom: '10px' }}
+        />
+        <p>{game.name}</p>
+        <p>{`${game.playtime_forever.toFixed(2)} 시간 플레이`}</p>
+      </div>
+    );
+  }
+
+  return null;
+};
+
 const GameGraph = () => {
   const navigate = useNavigate();
   const [hasSteamId, setHasSteamId] = useState(false);
@@ -46,8 +73,6 @@ const GameGraph = () => {
           fetchGames(userInfo.steamId);
         } else {
           setHasSteamId(true);
-          //    message.warning('스팀 계정을 연동해 주세요.');
-          //   navigate('/profile');
         }
       } catch (error) {
         message.error('오류가 발생했습니다. 다시 시도해주세요.');
@@ -58,7 +83,6 @@ const GameGraph = () => {
     const fetchGames = async (steamId) => {
       try {
         const response = await axiosInstance.get(`/steam/ownedGames`, {});
-        //const response = await axiosInstance.get(`/steam/ownedGames`);
         const gamesInMinutes = response.data.response.games.map((game) => ({
           ...game,
           playtime_forever: game.playtime_forever / 60,
@@ -82,18 +106,6 @@ const GameGraph = () => {
     (a, b) => b.playtime_forever - a.playtime_forever
   );
 
-  const truncate = (str, n) => {
-    return str.length > n ? str.slice(0, n - 1) + '...' : str;
-  };
-
-  const formatXAxis = (tickItem) => {
-    return tickItem.length > 10 ? tickItem.slice(0, 12) + '...' : tickItem;
-  };
-
-  const tooltipFormatter = (value, name, props) => {
-    return [value, props.payload.name];
-  };
-
   const formatYAxis = (tickItem) => {
     return new Intl.NumberFormat().format(tickItem);
   };
@@ -113,24 +125,13 @@ const GameGraph = () => {
           left: 0,
           right: 0,
           bottom: 0,
-          zIndex: 0, // 배경 순서 위치
+          zIndex: 0,
         }}
       ></div>
 
       <div style={{ position: 'relative', zIndex: 1, padding: '1px' }}>
-        <Typography.Title
-          level={4}
-          style={{
-            color: 'white',
-            fontSize: '38px',
-            fontWeight: 'bold',
-            textShadow: '2px 2px 4px rgba(0, 0, 0, 0.6)',
-          }}
-        >
-          많이 플레이한 게임
-        </Typography.Title>
         <Box>
-          <ResponsiveContainer width="100%" height={1000}>
+          <ResponsiveContainer width="100%" height={1300}>
             <BarChart
               data={sortedGames.slice(0, 12)}
               margin={{ top: 20, right: 30, left: 20, bottom: 40 }}
@@ -156,18 +157,17 @@ const GameGraph = () => {
                     fontSize: '25px',
                     fontWeight: 'bold',
                     fill: '#FFFFFF',
-                  }, // 레이블 스타일
+                  },
                 }}
                 tick={{
                   fontSize: 24, // 숫자 글씨 크기
                   fontWeight: 'bold', // 숫자 글씨 굵게
-                  fill: '#FFFFFF',
-                  // 숫자 글씨 색상
+                  fill: '#FFFFFF', // 숫자 글씨 색상
                 }}
               />
-              <Tooltip />
-              <Bar dataKey="playtime_forever" fill="#8CB6E1" /> // 그래프 색깔
-              변경
+
+              <Tooltip content={<CustomTooltip />} />
+              <Bar dataKey="playtime_forever" fill="#8CB6E1" />
             </BarChart>
           </ResponsiveContainer>
         </Box>
