@@ -97,7 +97,7 @@ const TodoListPage = () => {
   return (
     <div className="todo-background">
       <div className="todo-list-container">
-        <h1>My Tasks</h1>
+        <h1></h1>
         <div>
           <button className="add-todo-button" onClick={addTodo}>
             ➕ 할 일 추가하기

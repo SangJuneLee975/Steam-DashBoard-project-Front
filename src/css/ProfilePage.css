@@ -1,4 +1,3 @@
-/* 전체 페이지 스타일 */
 .profile-page {
   display: flex;
   flex-direction: column;
@@ -8,70 +7,51 @@
   min-height: 100vh;
 }
 
-/* 카드 스타일 */
 .profile-card {
   background-color: #ffffff;
-  padding: 20px;
+  padding: 40px;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  max-width: 450px;
   width: 100%;
   text-align: center;
-  margin-bottom: 20px;
+  margin-top: 20px;
+  position: relative;
+  z-index: 1;
 }
 
-.profile-card h1 {
-  font-size: 24px;
+.profile-card h2 {
+  font-size: 22px;
   color: #333;
-  margin-bottom: 20px;
+  margin: 10px 0;
 }
 
 .profile-card p {
   font-size: 16px;
-  color: #666;
-}
-
-/* 프로필 정보 상단 레이아웃 */
-.profile-header {
+  color: #555;
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
-}
-
-.profile-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 20%;
-  margin-right: 10px;
-}
-
-.profile-info {
-  text-align: left;
-}
-
-.profile-info h2 {
-  font-size: 18px;
-  font-weight: bold;
-  color: #333;
-  margin: 0;
-}
-
-.profile-info p {
-  font-size: 14px;
-  color: #777;
+  justify-content: center;
   margin: 5px 0;
 }
 
-/* 아이콘 버튼 스타일 */
+.profile-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 4px solid #ffffff;
+  margin-bottom: 15px;
+}
+
 .profile-buttons {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 10px;
   margin-top: 20px;
+  font-size: 18px;
 }
 
 .profile-button {
-  display: flex;
-  align-items: center;
   background-color: #4caf50;
   color: white;
   padding: 10px 20px;
@@ -82,29 +62,18 @@
   transition: background-color 0.3s ease;
 }
 
-.profile-button svg {
-  margin-right: 8px;
-}
-
 .profile-button:hover {
   background-color: #45a049;
 }
 
-/* 추가 아이콘 스타일 */
-.profile-icons {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
+.profile-button img {
+  width: 24px;
+  margin-right: 10px;
 }
 
-.profile-icon {
+.steam-connected {
   display: flex;
   align-items: center;
-  font-size: 16px;
-  color: #333;
-}
-
-.profile-icon svg {
-  margin-right: 10px;
-  color: #666;
+  font-size: 18px;
+  color: #4caf50;
 }

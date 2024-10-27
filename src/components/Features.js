@@ -22,7 +22,7 @@ const items = [
     description: '스팀 계정과 연동하여 개인 맞춤형 게임 정보를 제공합니다.',
     image: `${IMAGE_PATH}DashBoardimage.PNG`, // IMAGE_PATH 사용
     link: '/dashboard',
-    imageStyles: { width: '100%', height: '100%', backgroundSize: 'cover' },
+    imageStyles: { width: '100%', height: '90%', backgroundSize: 'contain' },
   },
   {
     icon: <EdgesensorHighRoundedIcon />,
@@ -31,7 +31,7 @@ const items = [
       '스팀 계정의 게임 플레이 시간을 그래프로 시각화하여 제공합니다.',
     image: `${IMAGE_PATH}GameViewimage.PNG`, // IMAGE_PATH 사용
     link: '/chart',
-    imageStyles: { width: '80%', height: '80%', backgroundSize: 'contain' },
+    imageStyles: { width: '80%', height: '100%', backgroundSize: 'contain' },
   },
   {
     icon: <DevicesRoundedIcon />,

@@ -207,7 +207,7 @@ const CustomHeader = () => {
               style={{
                 color: '#FFF',
                 marginRight: 20,
-                fontSize: '1.1em',
+                fontSize: '1.8em',
                 textDecoration: 'none',
               }}
             >
@@ -218,7 +218,7 @@ const CustomHeader = () => {
               style={{
                 color: '#FFF',
                 marginLeft: 30,
-                fontSize: '1.1em',
+                fontSize: '1.8em',
                 textDecoration: 'none',
               }}
             >

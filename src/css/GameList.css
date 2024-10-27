@@ -48,7 +48,7 @@
 
 .carousel {
   width: 220px;
-  height: 500px;
+  height: 450px;
   position: relative;
   transform-style: preserve-3d;
   animation: spin 20s infinite linear;

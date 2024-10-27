@@ -78,7 +78,12 @@ const Chart = () => {
       },
       backgroundColor: 'transparent',
       width: 1600,
-      height: 900,
+      height: 1100,
+
+      style: {
+        boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.4)',
+        borderRadius: '15px',
+      },
     },
     colors: [
       '#FFD1DC',
@@ -122,7 +127,10 @@ const Chart = () => {
             color: '#ffffff',
             fontWeight: 'bold',
             fontSize: '24px',
-            textOutline: 'none',
+            textOutline: '1px solid rgba(0, 0, 0, 0.5)',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            padding: '5px',
+            borderRadius: '5px',
           },
         },
       },
@@ -181,7 +189,7 @@ const Chart = () => {
               0 0 50px #00f,
               0 0 75px #00f`,
             textAlign: 'center',
-            marginTop: '-320px',
+            marginTop: '-20px',
           }}
         >
           <FontAwesomeIcon icon={faGamepad} style={{ marginRight: '8px' }} />
